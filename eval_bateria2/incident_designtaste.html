@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101316">
+  <title>Incident Command Center</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #101316;
+      --surface: #171b20;
+      --surface-elevated: #1d2228;
+      --surface-subtle: #22282f;
+      --surface-hover: #282f37;
+      --surface-strong: #303841;
+      --ink: #f4f7fa;
+      --ink-secondary: #c3cbd4;
+      --ink-muted: #8f9aa6;
+      --line: #303840;
+      --line-strong: #414b56;
+      --primary: #64b5d2;
+      --primary-strong: #8bc9df;
+      --primary-soft: rgba(100, 181, 210, 0.14);
+      --danger: #d9a09e;
+      --danger-soft: rgba(217, 160, 158, 0.12);
+      --warning: #cfb384;
+      --warning-soft: rgba(207, 179, 132, 0.12);
+      --success: #87b6a0;
+      --success-soft: rgba(135, 182, 160, 0.12);
+      --neutral-soft: rgba(195, 203, 212, 0.09);
+      --overlay: rgba(4, 7, 10, 0.72);
+      --shadow: 0 16px 38px rgba(0, 0, 0, 0.22);
+      --shadow-soft: 0 5px 18px rgba(0, 0, 0, 0.14);
+      --focus: rgba(100, 181, 210, 0.42);
+      --radius-card: 20px;
+      --radius-inner: 12px;
+      --radius-control: 10px;
+      --radius-pill: 999px;
+      --sidebar: 248px;
+      --font-ui: "Segoe UI Variable", "Aptos", "Segoe UI", system-ui, sans-serif;
+      --font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--page); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100dvh;
+      background: var(--page);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, select { font: inherit; }
+    button, select, [role="button"] { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+    button:disabled { cursor: not-allowed; opacity: .48; }
+    svg { display: block; }
+    .icon { width: 18px; height: 18px; flex: 0 0 auto; }
+    .icon-sm { width: 16px; height: 16px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      z-index: 100;
+      padding: 10px 14px;
+      border-radius: var(--radius-control);
+      background: var(--ink);
+      color: var(--page);
+      transform: translateY(-150%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .tabular { font-variant-numeric: tabular-nums; }
+
+    .app-shell {
+      display: flex;
+      min-height: 100dvh;
+    }
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 30;
+      display: flex;
+      width: var(--sidebar);
+      min-height: 100dvh;
+      flex-direction: column;
+      padding: 20px 16px;
+      border-right: 1px solid var(--line);
+      background: var(--page);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 44px;
+      padding: 4px 8px;
+      color: var(--ink);
+    }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: var(--radius-control);
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+    }
+    .brand-copy { display: grid; line-height: 1.2; }
+    .brand-copy strong { font-size: 14px; letter-spacing: -0.01em; }
+    .brand-copy span { margin-top: 3px; color: var(--ink-muted); font-size: 12px; }
+    .nav-group { margin-top: 28px; }
+    .nav-label {
+      margin: 0 10px 8px;
+      color: var(--ink-muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: .02em;
+    }
+    .nav-list { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+    .nav-item {
+      display: flex;
+      min-height: 42px;
+      align-items: center;
+      gap: 11px;
+      padding: 0 11px;
+      border-radius: var(--radius-control);
+      color: var(--ink-secondary);
+      text-decoration: none;
+    }
+    .nav-item:hover { background: var(--surface); color: var(--ink); }
+    .nav-item.active {
+      background: var(--surface-elevated);
+      box-shadow: var(--shadow-soft);
+      color: var(--ink);
+    }
+    .nav-count {
+      min-width: 22px;
+      margin-left: auto;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--danger-soft);
+      color: var(--danger);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+    }
+    .sidebar-foot {
+      display: grid;
+      gap: 12px;
+      margin-top: auto;
+      padding: 12px 8px 4px;
+    }
+    .system-health {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-muted);
+      font-size: 12px;
+    }
+    .state-mark {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background: var(--success);
+      box-shadow: 0 0 0 4px var(--success-soft);
+    }
+    .profile-button {
+      display: flex;
+      width: 100%;
+      min-height: 48px;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 4px;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+    }
+    .avatar {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: var(--radius-pill);
+      background: var(--surface-strong);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .profile-copy { display: grid; min-width: 0; }
+    .profile-copy strong { font-size: 13px; }
+    .profile-copy span { color: var(--ink-muted); font-size: 12px; }
+    .profile-button .icon { margin-left: auto; color: var(--ink-muted); }
+
+    .page {
+      width: calc(100% - var(--sidebar));
+      min-width: 0;
+      margin-left: var(--sidebar);
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      height: 68px;
+      align-items: center;
+      gap: 12px;
+      padding: 0 28px;
+      border-bottom: 1px solid var(--line);
+      background: var(--page);
+    }
+    .mobile-menu { display: none; }
+    .breadcrumb {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-muted);
+      font-size: 13px;
+    }
+    .breadcrumb strong { color: var(--ink-secondary); font-weight: 600; }
+    .breadcrumb .icon { width: 14px; height: 14px; }
+    .top-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .timestamp { margin-right: 4px; color: var(--ink-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+    .btn {
+      display: inline-flex;
+      min-height: 40px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-control);
+      font-weight: 650;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--primary); color: var(--page); }
+    .btn-primary:hover { background: var(--primary-strong); }
+    .btn-outline { border-color: var(--line-strong); background: transparent; color: var(--ink-secondary); }
+    .btn-outline:hover { border-color: var(--ink-muted); background: var(--surface); color: var(--ink); }
+    .btn-ghost { border-color: transparent; background: transparent; color: var(--ink-secondary); }
+    .btn-ghost:hover { background: var(--surface-subtle); color: var(--ink); }
+    .btn-danger-soft { background: var(--danger-soft); color: var(--danger); }
+    .btn-danger-soft:hover { background: var(--neutral-soft); }
+    .icon-btn {
+      position: relative;
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-control);
+      background: transparent;
+      color: var(--ink-secondary);
+    }
+    .icon-btn:hover { background: var(--surface); color: var(--ink); }
+    .notify-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      display: grid;
+      min-width: 18px;
+      height: 18px;
+      place-items: center;
+      padding: 0 5px;
+      border: 2px solid var(--page);
+      border-radius: var(--radius-pill);
+      background: var(--danger);
+      color: var(--page);
+      font-size: 9px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    [data-tooltip]::after {
+      position: absolute;
+      right: 0;
+      bottom: -36px;
+      z-index: 50;
+      width: max-content;
+      max-width: 180px;
+      padding: 6px 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface-strong);
+      color: var(--ink);
+      box-shadow: var(--shadow-soft);
+      content: attr(data-tooltip);
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-3px);
+      transition: opacity .12s ease, transform .12s ease;
+    }
+    [data-tooltip]:hover::after, [data-tooltip]:focus-visible::after { opacity: 1; transform: translateY(0); }
+
+    main {
+      width: min(1540px, 100%);
+      margin: 0 auto;
+      padding: 32px 28px 48px;
+    }
+    .page-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .page-heading-copy { max-width: 620px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 7px; font-size: clamp(25px, 2.2vw, 34px); line-height: 1.15; letter-spacing: -.035em; }
+    .description { margin-bottom: 0; color: var(--ink-muted); font-size: 14px; }
+    .heading-actions { display: flex; gap: 8px; margin-left: auto; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.4fr) minmax(180px, 1fr) minmax(180px, 1fr) minmax(240px, 1.3fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .metric {
+      position: relative;
+      min-height: 104px;
+      padding: 18px;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+    }
+    .metric.primary-metric { background: var(--surface-elevated); box-shadow: var(--shadow-soft); }
+    .metric-label { display: block; margin-bottom: 12px; color: var(--ink-muted); font-size: 12px; }
+    .metric-value-row { display: flex; align-items: center; gap: 10px; }
+    .metric-value { font-size: 28px; font-weight: 720; line-height: 1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+    .metric-note { margin-top: 8px; color: var(--ink-secondary); font-size: 12px; }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 64px;
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+    }
+    .search-wrap { position: relative; flex: 1 1 240px; max-width: 360px; }
+    .search-wrap .icon { position: absolute; top: 11px; left: 12px; color: var(--ink-muted); pointer-events: none; }
+    .search-input, .select-control {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-control);
+      background: var(--surface-subtle);
+      color: var(--ink);
+    }
+    .search-input { padding: 0 12px 0 40px; }
+    .search-input::placeholder { color: var(--ink-muted); }
+    .search-input:hover, .select-control:hover { background: var(--surface-hover); }
+    .service-filters {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .service-filters::-webkit-scrollbar { display: none; }
+    .filter-chip {
+      display: inline-flex;
+      min-height: 40px;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 7px;
+      padding: 0 12px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+    .filter-chip:hover { background: var(--surface-subtle); color: var(--ink); }
+    .filter-chip.active { background: var(--primary-soft); color: var(--primary-strong); }
+    .chip-count { font-size: 12px; font-variant-numeric: tabular-nums; }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.28fr) minmax(390px, .92fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .panel {
+      min-width: 0;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+    }
+    .panel-header {
+      display: flex;
+      min-height: 68px;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+    }
+    .panel-title { min-width: 0; }
+    .panel-title h2 { margin-bottom: 2px; font-size: 15px; letter-spacing: -.01em; }
+    .panel-title p { margin-bottom: 0; color: var(--ink-muted); font-size: 12px; }
+    .panel-tools { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+    .small-select-wrap { min-width: 132px; max-width: 160px; }
+    .select-control { padding: 0 34px 0 11px; color: var(--ink-secondary); font-size: 12px; }
+
+    .incident-list { display: grid; gap: 8px; padding: 0 8px 8px; }
+    .incident-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      width: 100%;
+      min-height: 110px;
+      padding: 16px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-inner);
+      background: var(--surface-subtle);
+      color: var(--ink);
+      text-align: left;
+    }
+    .incident-card:hover { background: var(--surface-hover); }
+    .incident-card.selected { border-color: var(--line-strong); background: var(--surface-elevated); }
+    .incident-card.is-critical { min-height: 132px; }
+    .incident-main { min-width: 0; }
+    .incident-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .incident-id { color: var(--ink-muted); font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .incident-card h3 { margin-bottom: 5px; font-size: 15px; line-height: 1.35; letter-spacing: -.01em; }
+    .incident-card.is-critical h3 { font-size: 17px; }
+    .incident-summary { max-width: 680px; margin-bottom: 0; color: var(--ink-muted); font-size: 12px; }
+    .incident-side { display: flex; min-width: 118px; flex-direction: column; align-items: flex-end; justify-content: space-between; }
+    .incident-age { color: var(--ink-secondary); font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+    .incident-owner { display: flex; align-items: center; gap: 6px; color: var(--ink-muted); font-size: 12px; }
+    .mini-avatar {
+      display: grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border-radius: var(--radius-pill);
+      background: var(--surface-strong);
+      color: var(--ink-secondary);
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .chip {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 24px;
+      align-items: center;
+      gap: 5px;
+      padding: 0 8px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .chip-critical { background: var(--danger-soft); color: var(--danger); }
+    .chip-high { background: var(--warning-soft); color: var(--warning); }
+    .chip-success { background: var(--success-soft); color: var(--success); }
+    .chip-primary { background: var(--primary-soft); color: var(--primary-strong); }
+    .chip-neutral { background: var(--neutral-soft); color: var(--ink-secondary); }
+    .empty-state { padding: 54px 20px; color: var(--ink-muted); text-align: center; }
+    .empty-state h3 { margin-bottom: 6px; color: var(--ink-secondary); font-size: 15px; }
+
+    .incident-actions {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px 16px;
+    }
+    .incident-actions.visible { display: flex; }
+    .selected-summary { min-width: 0; margin-right: auto; }
+    .selected-summary strong { display: block; overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .selected-summary span { color: var(--ink-muted); font-size: 12px; }
+
+    .logs-panel { position: sticky; top: 84px; }
+    .live-state { display: inline-flex; align-items: center; gap: 7px; color: var(--success); font-size: 12px; font-weight: 650; }
+    .live-state::before {
+      width: 7px;
+      height: 7px;
+      border-radius: var(--radius-pill);
+      background: currentColor;
+      content: "";
+    }
+    .live-state.paused { color: var(--ink-muted); }
+    .log-toolbar { display: flex; gap: 8px; padding: 0 18px 12px; }
+    .log-toolbar .small-select-wrap { flex: 1; max-width: none; }
+    .log-stream {
+      height: 426px;
+      margin: 0 8px 8px;
+      padding: 12px;
+      overflow: auto;
+      border-radius: var(--radius-inner);
+      background: var(--page);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.65;
+      scrollbar-color: var(--surface-strong) transparent;
+    }
+    .log-line {
+      display: grid;
+      grid-template-columns: 78px 64px minmax(0, 1fr);
+      gap: 9px;
+      padding: 4px 6px;
+      border-radius: 7px;
+      color: var(--ink-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+    .log-line:hover { background: var(--surface); }
+    .log-time { color: var(--ink-muted); }
+    .log-service { overflow: hidden; color: var(--primary-strong); text-overflow: ellipsis; white-space: nowrap; }
+    .log-message { min-width: 0; overflow-wrap: anywhere; }
+    .log-line.error .log-message { color: var(--danger); }
+    .log-line.warn .log-message { color: var(--warning); }
+    .log-line.success .log-message { color: var(--success); }
+
+    .team-panel { grid-column: 1 / -1; }
+    .team-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      padding: 0 8px 8px;
+    }
+    .responder {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      min-height: 72px;
+      padding: 12px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-inner);
+      background: var(--surface-subtle);
+      color: var(--ink);
+      text-align: left;
+    }
+    .responder:hover { border-color: var(--line-strong); background: var(--surface-hover); }
+    .responder .avatar { width: 36px; height: 36px; }
+    .responder-copy { display: grid; min-width: 0; }
+    .responder-copy strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .responder-copy span { color: var(--ink-muted); font-size: 12px; }
+    .availability { display: flex; align-items: center; gap: 6px; color: var(--ink-muted); font-size: 10px; white-space: nowrap; }
+    .availability::before { width: 7px; height: 7px; border-radius: var(--radius-pill); background: currentColor; content: ""; }
+    .availability.responding { color: var(--danger); }
+    .availability.available { color: var(--success); }
+    .availability.break { color: var(--warning); }
+
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: var(--overlay);
+    }
+    .backdrop.open { display: grid; }
+    .dialog {
+      width: min(520px, 100%);
+      max-height: calc(100dvh - 40px);
+      overflow: auto;
+      border-radius: var(--radius-card);
+      background: var(--surface-elevated);
+      box-shadow: var(--shadow);
+    }
+    .dialog-head { display: flex; align-items: flex-start; gap: 12px; padding: 20px 20px 12px; }
+    .dialog-title { min-width: 0; }
+    .dialog-title h2 { margin-bottom: 4px; font-size: 18px; letter-spacing: -.02em; }
+    .dialog-title p { margin-bottom: 0; color: var(--ink-muted); font-size: 12px; }
+    .dialog-head .icon-btn { margin-left: auto; }
+    .dialog-body { display: grid; gap: 8px; padding: 8px 20px 20px; }
+    .mitigation-option {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: start;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-inner);
+      background: var(--surface-subtle);
+      cursor: pointer;
+    }
+    .mitigation-option:hover { border-color: var(--line-strong); background: var(--surface-hover); }
+    .mitigation-option:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
+    .mitigation-option input { width: 16px; height: 16px; margin: 3px 0 0; accent-color: var(--primary); }
+    .option-copy { display: grid; }
+    .option-copy strong { font-size: 13px; }
+    .option-copy span { margin-top: 2px; color: var(--ink-muted); font-size: 12px; }
+    .dialog-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 4px 0 0;
+      padding: 10px 12px;
+      border-radius: var(--radius-inner);
+      background: var(--warning-soft);
+      color: var(--warning);
+      font-size: 12px;
+    }
+    .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 0 20px 20px; }
+
+    .toast-region { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: grid; gap: 8px; }
+    .toast {
+      display: flex;
+      width: min(360px, calc(100vw - 40px));
+      align-items: flex-start;
+      gap: 10px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-inner);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow-soft);
+      color: var(--ink);
+      animation: toast-in .2s ease both;
+    }
+    .toast .icon { margin-top: 1px; color: var(--success); }
+    .toast strong { display: block; font-size: 12px; }
+    .toast span { color: var(--ink-secondary); font-size: 12px; }
+    @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .drawer-backdrop { display: none; }
+
+    @media (max-width: 1180px) {
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .workspace { grid-template-columns: minmax(0, 1fr); }
+      .logs-panel { position: static; }
+      .team-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 820px) {
+      :root { --sidebar: 272px; }
+      .btn { min-height: 44px; }
+      .icon-btn { width: 44px; height: 44px; }
+      .search-input, .select-control, .filter-chip { min-height: 44px; }
+      .sidebar { transform: translateX(-102%); transition: transform .18s ease; box-shadow: var(--shadow); }
+      .sidebar.open { transform: translateX(0); }
+      .drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 25;
+        display: block;
+        border: 0;
+        background: var(--overlay);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .18s ease;
+      }
+      .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+      .page { width: 100%; margin-left: 0; }
+      .topbar { height: 64px; padding: 0 16px; }
+      .mobile-menu { display: grid; }
+      .timestamp { display: none; }
+      main { padding: 24px 16px 40px; }
+      .page-heading { align-items: stretch; flex-direction: column; gap: 14px; }
+      .heading-actions { margin-left: 0; }
+      .filter-bar { align-items: stretch; flex-direction: column; }
+      .search-wrap { max-width: none; }
+      .service-filters { width: 100%; }
+      .incident-card { grid-template-columns: minmax(0, 1fr); }
+      .incident-side { min-width: 0; flex-direction: row; align-items: center; }
+    }
+    @media (max-width: 580px) {
+      .top-actions .btn-outline { display: none; }
+      .breadcrumb span { display: none; }
+      .metrics { grid-template-columns: minmax(0, 1fr); }
+      .heading-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .incident-actions { align-items: stretch; flex-direction: column; }
+      .selected-summary { width: 100%; }
+      .incident-actions .btn { width: 100%; }
+      .log-line { grid-template-columns: 68px 54px minmax(0, 1fr); gap: 6px; }
+      .team-strip { grid-template-columns: minmax(0, 1fr); }
+      .panel-header { align-items: flex-start; }
+      .panel-tools { flex-wrap: wrap; justify-content: flex-end; }
+      .dialog-actions { flex-direction: column-reverse; }
+      .dialog-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Pular para conteúdo principal</a>
+
+  <svg class="sr-only" aria-hidden="true" width="0" height="0">
+    <symbol id="i-command" viewBox="0 0 24 24"><path d="M7 8.5A3.5 3.5 0 1 1 10.5 5v14A3.5 3.5 0 1 1 7 15.5h10A3.5 3.5 0 1 1 13.5 19V5A3.5 3.5 0 1 1 17 8.5H7Z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4.5 21 20H3l9-15.5Z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M12 9v5m0 3v.1" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4.5h10a3 3 0 0 1 3 3v12H8a3 3 0 0 1-3-3v-12Z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M8 15.5h10M8 8h6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-team" viewBox="0 0 24 24"><path d="M8.5 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a3 3 0 1 0 0-6m-13 15v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2m1.5-6h.5a4 4 0 0 1 4 4v2" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.08A1.7 1.7 0 0 0 9 19.37a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15 1.7 1.7 0 0 0 3.08 14H3v-4h.08A1.7 1.7 0 0 0 4.63 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63 1.7 1.7 0 0 0 10 3.08V3h4v.08A1.7 1.7 0 0 0 15 4.63a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9 1.7 1.7 0 0 0 20.92 10H21v4h-.08A1.7 1.7 0 0 0 19.4 15Z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 8.5h18C21 16 18 16 18 9Zm-8 11h4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13.5 2.5-8 11H12l-1.5 8 8-11H12l1.5-8Z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M12 10.5V17m0-10v.1" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2.5-7 5 14L17 12h4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+      <div class="brand">
+        <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-command"></use></svg></span>
+        <span class="brand-copy"><strong>Northstar Ops</strong><span>Production control</span></span>
+      </div>
+
+      <nav class="nav-group" aria-label="Operações">
+        <p class="nav-label">Operações</p>
+        <ul class="nav-list">
+          <li><a class="nav-item" href="#overview"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg>Visão geral</a></li>
+          <li><a class="nav-item active" href="#incidents" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>Incidentes <span class="nav-count" id="navIncidentCount">4</span></a></li>
+          <li><a class="nav-item" href="#timeline"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>Linha do tempo</a></li>
+          <li><a class="nav-item" href="#runbooks"><svg class="icon" aria-hidden="true"><use href="#i-book"></use></svg>Runbooks</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-group" aria-label="Organização">
+        <p class="nav-label">Organização</p>
+        <ul class="nav-list">
+          <li><a class="nav-item" href="#oncall"><svg class="icon" aria-hidden="true"><use href="#i-team"></use></svg>Escalas on-call</a></li>
+          <li><a class="nav-item" href="#settings"><svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>Configurações</a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="system-health"><span class="state-mark" aria-hidden="true"></span>Ingestão operacional</div>
+        <button class="profile-button" type="button" aria-label="Abrir menu de Rafael Lima">
+          <span class="avatar">RL</span>
+          <span class="profile-copy"><strong>Rafael Lima</strong><span>Incident commander</span></span>
+          <svg class="icon" aria-hidden="true"><use href="#i-more"></use></svg>
+        </button>
+      </div>
+    </aside>
+
+    <button class="drawer-backdrop" id="drawerBackdrop" type="button" aria-label="Fechar navegação"></button>
+
+    <div class="page">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="mobileMenu" type="button" aria-label="Abrir navegação" aria-expanded="false" aria-controls="sidebar">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
+        </button>
+        <div class="breadcrumb" aria-label="Caminho atual">
+          <span>Operações</span><svg class="icon" aria-hidden="true"><use href="#i-chevron"></use></svg><strong>Incident Command Center</strong>
+        </div>
+        <div class="top-actions">
+          <span class="timestamp" id="utcClock">UTC 00:00:00</span>
+          <button class="btn btn-outline" type="button" id="openRunbook"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-book"></use></svg>Runbook</button>
+          <button class="icon-btn" type="button" aria-label="Abrir notificações" data-tooltip="Notificações">
+            <svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg><span class="notify-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <main id="main-content" tabindex="-1">
+        <header class="page-heading">
+          <div class="page-heading-copy">
+            <div><h1>Incident Command Center</h1></div>
+            <p class="description">Triage produção, coordene resposta e mantenha contexto compartilhado.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="btn btn-outline" type="button" id="ackAll">Reconhecer alertas</button>
+            <button class="btn btn-primary" type="button" id="newIncident">Declarar incidente</button>
+          </div>
+        </header>
+
+        <!-- mock -->
+        <section class="metrics" id="overview" aria-label="Resumo operacional" data-mock="true">
+          <article class="metric primary-metric">
+            <span class="metric-label">Incidentes ativos</span>
+            <div class="metric-value-row"><strong class="metric-value" id="activeCount">4</strong><span class="chip chip-critical">1 crítico</span></div>
+            <div class="metric-note">2 exigem ação imediata</div>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Tempo médio de reconhecimento</span>
+            <strong class="metric-value">03:42</strong>
+            <div class="metric-note">Meta operacional: 05:00</div>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Serviços impactados</span>
+            <strong class="metric-value">6</strong>
+            <div class="metric-note">de 42 serviços monitorados</div>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Cobertura on-call</span>
+            <div class="metric-value-row"><strong class="metric-value">4/5</strong><span class="chip chip-high">1 vaga</span></div>
+            <div class="metric-note">Cobertura parcial nesta rotação</div>
+          </article>
+        </section>
+
+        <section class="filter-bar" aria-label="Filtros de incidentes">
+          <label class="search-wrap">
+            <span class="sr-only">Buscar incidentes</span>
+            <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
+            <input class="search-input" id="incidentSearch" type="search" placeholder="Buscar por título ou ID" aria-label="Buscar por título ou ID">
+          </label>
+          <div class="service-filters" id="serviceFilters" role="group" aria-label="Filtrar por serviço"></div>
+        </section>
+
+        <div class="workspace" id="incidents">
+          <section class="panel" aria-labelledby="incidentListTitle">
+            <header class="panel-header">
+              <div class="panel-title">
+                <h2 id="incidentListTitle">Fila de incidentes</h2>
+                <p><span id="visibleCount">4</span> ativos, ordenados por severidade</p>
+              </div>
+              <div class="panel-tools">
+                <button class="icon-btn" type="button" id="refreshIncidents" aria-label="Atualizar incidentes" data-tooltip="Atualizar incidentes"><svg class="icon" aria-hidden="true"><use href="#i-activity"></use></svg></button>
+              </div>
+            </header>
+            <div class="incident-list" id="incidentList" aria-live="polite"></div>
+            <div class="incident-actions" id="incidentActions">
+              <div class="selected-summary"><strong id="selectedLabel">Nenhum incidente selecionado</strong><span id="selectedStatus">Selecione item para agir</span></div>
+              <button class="btn btn-outline" id="advanceStatus" type="button">Avançar status</button>
+              <button class="btn btn-primary" id="openMitigation" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-bolt"></use></svg>Mitigar</button>
+            </div>
+          </section>
+
+          <section class="panel logs-panel" aria-labelledby="logsTitle">
+            <header class="panel-header">
+              <div class="panel-title">
+                <h2 id="logsTitle">Logs ao vivo</h2>
+                <p class="live-state" id="liveState">Recebendo eventos</p>
+              </div>
+              <div class="panel-tools">
+                <button class="icon-btn" type="button" id="toggleLogs" aria-label="Pausar logs" data-tooltip="Pausar ou retomar logs"><svg class="icon" aria-hidden="true"><use id="toggleLogsIcon" href="#i-pause"></use></svg></button>
+                <button class="icon-btn" type="button" id="clearLogs" aria-label="Limpar logs" data-tooltip="Limpar logs"><svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg></button>
+              </div>
+            </header>
+            <div class="log-toolbar">
+              <label class="small-select-wrap">
+                <span class="sr-only">Filtrar logs por serviço</span>
+                <select class="select-control" id="logServiceFilter" aria-label="Filtrar logs por serviço"></select>
+              </label>
+              <button class="btn btn-ghost" type="button" id="autoScroll" aria-pressed="true">Auto: ligado</button>
+            </div>
+            <div class="log-stream" id="logStream" role="log" aria-live="off" aria-label="Fluxo de logs de produção"></div>
+          </section>
+
+          <section class="panel team-panel" id="oncall" aria-labelledby="teamTitle">
+            <header class="panel-header">
+              <div class="panel-title">
+                <h2 id="teamTitle">Equipe on-call</h2>
+                <p>Clique numa pessoa para atualizar disponibilidade.</p>
+              </div>
+              <div class="panel-tools"><span class="chip chip-success">4 disponíveis</span></div>
+            </header>
+            <div class="team-strip" id="teamStrip"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="backdrop" id="mitigationBackdrop" role="presentation">
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="mitigationTitle" aria-describedby="mitigationDescription">
+      <header class="dialog-head">
+        <div class="dialog-title">
+          <h2 id="mitigationTitle">Executar mitigação</h2>
+          <p id="mitigationDescription">Selecione ação segura para incidente atual.</p>
+        </div>
+        <button class="icon-btn" id="closeMitigation" type="button" aria-label="Fechar diálogo" data-tooltip="Fechar"><svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg></button>
+      </header>
+      <form id="mitigationForm">
+        <div class="dialog-body">
+          <label class="mitigation-option">
+            <input type="radio" name="mitigation" value="Desviar tráfego" checked>
+            <span class="option-copy"><strong>Desviar tráfego</strong><span>Move 25% das requisições para região secundária.</span></span>
+          </label>
+          <label class="mitigation-option">
+            <input type="radio" name="mitigation" value="Aplicar rollback">
+            <span class="option-copy"><strong>Aplicar rollback</strong><span>Restaura último deploy estável do serviço afetado.</span></span>
+          </label>
+          <label class="mitigation-option">
+            <input type="radio" name="mitigation" value="Ativar modo degradado">
+            <span class="option-copy"><strong>Ativar modo degradado</strong><span>Suspende rotas não essenciais e preserva checkout.</span></span>
+          </label>
+          <p class="dialog-note"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-info"></use></svg>Ação registrada na linha do tempo e visível para equipe.</p>
+        </div>
+        <footer class="dialog-actions">
+          <button class="btn btn-ghost" id="cancelMitigation" type="button">Cancelar</button>
+          <button class="btn btn-primary" type="submit">Executar mitigação</button>
+        </footer>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const services = ["Todos", "Payments", "API Gateway", "Checkout", "Identity"];
+      const incidents = [
+        {
+          id: "INC-2847",
+          service: "Payments",
+          severity: "Crítico",
+          status: "Investigando",
+          title: "Aumento de falhas na autorização de pagamentos",
+          summary: "Timeouts no provedor primário afetam cartões emitidos no Brasil.",
+          owner: "Marina S.",
+          initials: "MS",
+          started: Date.now() - 26 * 60 * 1000
+        },
+        {
+          id: "INC-2845",
+          service: "API Gateway",
+          severity: "Alto",
+          status: "Mitigando",
+          title: "Latência p95 acima do limite na região sa-east-1",
+          summary: "Fila de conexões cresceu após rotação automática de certificados.",
+          owner: "André P.",
+          initials: "AP",
+          started: Date.now() - 48 * 60 * 1000
+        },
+        {
+          id: "INC-2842",
+          service: "Checkout",
+          severity: "Alto",
+          status: "Monitorando",
+          title: "Sessões abandonadas após cálculo de frete",
+          summary: "Taxa voltou ao intervalo esperado; equipe acompanha recuperação.",
+          owner: "Lia C.",
+          initials: "LC",
+          started: Date.now() - 73 * 60 * 1000
+        },
+        {
+          id: "INC-2839",
+          service: "Identity",
+          severity: "Médio",
+          status: "Reconhecido",
+          title: "Renovação de token intermitente em clientes mobile",
+          summary: "Falha isolada na versão anterior do aplicativo Android.",
+          owner: "Caio N.",
+          initials: "CN",
+          started: Date.now() - 112 * 60 * 1000
+        }
+      ];
+
+      const responders = [
+        { name: "Marina Souza", role: "Incident commander", initials: "MS", state: "Em resposta" },
+        { name: "André Prado", role: "Backend", initials: "AP", state: "Disponível" },
+        { name: "Lia Costa", role: "SRE", initials: "LC", state: "Em resposta" },
+        { name: "Caio Nunes", role: "Mobile", initials: "CN", state: "Disponível" }
+      ];
+
+      const initialLogs = [
+        ["Payments", "error", "upstream timeout after 3000ms provider=primary"],
+        ["API Gateway", "warn", "connection pool saturation at 86 percent"],
+        ["Checkout", "success", "checkout completion rate returning to baseline"],
+        ["Identity", "info", "refresh token retry scheduled client=android"],
+        ["Payments", "warn", "circuit breaker threshold reached route=/authorize"],
+        ["API Gateway", "info", "certificate cache warmed instance=gw-18"],
+        ["Payments", "error", "authorization failed code=provider_unavailable"],
+        ["Checkout", "info", "shipping quote latency p95=420ms"],
+        ["Identity", "info", "token rotation completed shard=03"],
+        ["Payments", "warn", "fallback provider health check passed"]
+      ];
+
+      const generatedMessages = {
+        "Payments": [
+          ["error", "provider request exceeded timeout budget"],
+          ["warn", "fallback route carrying elevated traffic"],
+          ["info", "authorization queue depth sampled"],
+          ["success", "health probe succeeded region=sa-east-1"]
+        ],
+        "API Gateway": [
+          ["warn", "upstream latency crossed warning threshold"],
+          ["info", "connection pool rebalanced across instances"],
+          ["success", "certificate handshake returned to baseline"]
+        ],
+        "Checkout": [
+          ["info", "cart session completed with shipping quote"],
+          ["success", "completion rate within normal interval"],
+          ["warn", "shipping dependency retry count elevated"]
+        ],
+        "Identity": [
+          ["info", "refresh token accepted client=android"],
+          ["warn", "legacy client requested token retry"],
+          ["success", "session renewal completed"]
+        ]
+      };
+
+      const state = {
+        service: "Todos",
+        search: "",
+        selectedId: incidents[0].id,
+        logsPaused: false,
+        autoScroll: true,
+        logService: "Todos",
+        logs: [],
+        lastFocus: null
+      };
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+      const icon = (name, className = "icon") => `<svg class="${className}" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
+      const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
+
+      function formatAge(timestamp) {
+        const total = Math.max(0, Math.floor((Date.now() - timestamp) / 1000));
+        const hours = Math.floor(total / 3600);
+        const minutes = Math.floor((total % 3600) / 60);
+        const seconds = total % 60;
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      }
+
+      function severityClass(severity) {
+        if (severity === "Crítico") return "chip-critical";
+        if (severity === "Alto") return "chip-high";
+        return "chip-neutral";
+      }
+
+      function statusClass(status) {
+        if (status === "Mitigando") return "chip-primary";
+        if (status === "Monitorando" || status === "Resolvido") return "chip-success";
+        return "chip-neutral";
+      }
+
+      function serviceCount(service) {
+        return service === "Todos" ? incidents.length : incidents.filter((item) => item.service === service).length;
+      }
+
+      function renderServiceFilters() {
+        $("#serviceFilters").innerHTML = services.map((service) => `
+          <button class="filter-chip ${state.service === service ? "active" : ""}" type="button" data-service="${escapeHtml(service)}" aria-pressed="${state.service === service}">
+            ${escapeHtml(service)} <span class="chip-count">${serviceCount(service)}</span>
+          </button>`).join("");
+      }
+
+      function filteredIncidents() {
+        const needle = state.search.trim().toLocaleLowerCase("pt-BR");
+        return incidents.filter((item) => {
+          const matchesService = state.service === "Todos" || item.service === state.service;
+          const haystack = `${item.id} ${item.title} ${item.service}`.toLocaleLowerCase("pt-BR");
+          return matchesService && (!needle || haystack.includes(needle));
+        });
+      }
+
+      function renderIncidents() {
+        const visible = filteredIncidents();
+        $("#visibleCount").textContent = String(visible.length);
+        $("#activeCount").textContent = String(incidents.filter((item) => item.status !== "Resolvido").length);
+        $("#navIncidentCount").textContent = String(incidents.filter((item) => item.status !== "Resolvido").length);
+
+        if (!visible.length) {
+          $("#incidentList").innerHTML = `<div class="empty-state"><h3>Nenhum incidente encontrado</h3><p>Ajuste serviço ou termo de busca.</p></div>`;
+        } else {
+          $("#incidentList").innerHTML = visible.map((item) => `
+            <button class="incident-card ${item.id === state.selectedId ? "selected" : ""} ${item.severity === "Crítico" ? "is-critical" : ""}" type="button" data-incident-id="${item.id}" aria-pressed="${item.id === state.selectedId}">
+              <span class="incident-main">
+                <span class="incident-meta">
+                  <span class="chip ${severityClass(item.severity)}">${escapeHtml(item.severity)}</span>
+                  <span class="chip ${statusClass(item.status)}">${escapeHtml(item.status)}</span>
+                  <span class="incident-id">${item.id}</span>
+                  <span class="chip chip-neutral">${escapeHtml(item.service)}</span>
+                </span>
+                <h3>${escapeHtml(item.title)}</h3>
+                <p class="incident-summary">${escapeHtml(item.summary)}</p>
+              </span>
+              <span class="incident-side">
+                <span class="incident-age" data-started="${item.started}">${formatAge(item.started)}</span>
+                <span class="incident-owner"><span class="mini-avatar">${item.initials}</span>${escapeHtml(item.owner)}</span>
+              </span>
+            </button>`).join("");
+        }
+        renderSelectedAction();
+      }
+
+      function renderSelectedAction() {
+        const item = incidents.find((incident) => incident.id === state.selectedId);
+        const actions = $("#incidentActions");
+        if (!item) {
+          actions.classList.remove("visible");
+          return;
+        }
+        actions.classList.add("visible");
+        $("#selectedLabel").textContent = `${item.id} · ${item.service}`;
+        $("#selectedStatus").textContent = `Status atual: ${item.status}`;
+        $("#advanceStatus").disabled = item.status === "Resolvido";
+        $("#openMitigation").disabled = item.status === "Resolvido";
+      }
+
+      function renderLogServiceOptions() {
+        $("#logServiceFilter").innerHTML = services.map((service) => `<option value="${escapeHtml(service)}">${service === "Todos" ? "Todos os serviços" : escapeHtml(service)}</option>`).join("");
+        $("#logServiceFilter").value = state.logService;
+      }
+
+      function makeLog(service, level, message, index = 0) {
+        return {
+          id: `${Date.now()}-${index}-${Math.random()}`,
+          time: new Date(Date.now() - index * 17000),
+          service,
+          level,
+          message
+        };
+      }
+
+      function renderLogs() {
+        const stream = $("#logStream");
+        const visible = state.logs.filter((entry) => state.logService === "Todos" || entry.service === state.logService);
+        stream.innerHTML = visible.map((entry) => `
+          <div class="log-line ${entry.level}">
+            <span class="log-time">${entry.time.toISOString().slice(11, 19)}</span>
+            <span class="log-service">${escapeHtml(entry.service)}</span>
+            <span class="log-message">${escapeHtml(entry.message)}</span>
+          </div>`).join("");
+        if (state.autoScroll) stream.scrollTop = stream.scrollHeight;
+      }
+
+      function appendGeneratedLog() {
+        if (state.logsPaused) return;
+        const service = services[1 + Math.floor(Math.random() * (services.length - 1))];
+        const messages = generatedMessages[service];
+        const [level, message] = messages[Math.floor(Math.random() * messages.length)];
+        state.logs.push(makeLog(service, level, message));
+        if (state.logs.length > 80) state.logs.shift();
+        renderLogs();
+      }
+
+      function renderTeam() {
+        const available = responders.filter((person) => person.state === "Disponível").length;
+        $(".team-panel .panel-tools .chip").textContent = `${available} disponíveis`;
+        $("#teamStrip").innerHTML = responders.map((person, index) => {
+          const stateClass = person.state === "Em resposta" ? "responding" : person.state === "Disponível" ? "available" : "break";
+          return `<button class="responder" type="button" data-responder-index="${index}" aria-label="Alterar disponibilidade de ${escapeHtml(person.name)}">
+            <span class="avatar">${person.initials}</span>
+            <span class="responder-copy"><strong>${escapeHtml(person.name)}</strong><span>${escapeHtml(person.role)}</span></span>
+            <span class="availability ${stateClass}">${escapeHtml(person.state)}</span>
+          </button>`;
+        }).join("");
+      }
+
+      function selectIncident(id) {
+        state.selectedId = id;
+        renderIncidents();
+      }
+
+      function advanceStatus() {
+        const order = ["Investigando", "Reconhecido", "Mitigando", "Monitorando", "Resolvido"];
+        const item = incidents.find((incident) => incident.id === state.selectedId);
+        if (!item || item.status === "Resolvido") return;
+        item.status = order[Math.min(order.indexOf(item.status) + 1, order.length - 1)];
+        state.logs.push(makeLog(item.service, "info", `incident ${item.id} status changed to ${item.status.toLowerCase()}`));
+        renderIncidents();
+        renderLogs();
+        showToast("Status atualizado", `${item.id} agora está ${item.status.toLowerCase()}.`);
+      }
+
+      function showToast(title, message) {
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.innerHTML = `${icon("check")}<div><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span></div>`;
+        $("#toastRegion").appendChild(toast);
+        window.setTimeout(() => toast.remove(), 3600);
+      }
+
+      function openMitigation() {
+        const item = incidents.find((incident) => incident.id === state.selectedId);
+        if (!item) return;
+        state.lastFocus = document.activeElement;
+        $("#mitigationDescription").textContent = `${item.id}: ${item.title}`;
+        $("#mitigationBackdrop").classList.add("open");
+        document.body.style.overflow = "hidden";
+        window.setTimeout(() => $("#closeMitigation").focus(), 0);
+      }
+
+      function closeMitigation() {
+        $("#mitigationBackdrop").classList.remove("open");
+        document.body.style.overflow = "";
+        if (state.lastFocus && state.lastFocus.focus) state.lastFocus.focus();
+      }
+
+      function trapDialogFocus(event) {
+        if (event.key !== "Tab" || !$("#mitigationBackdrop").classList.contains("open")) return;
+        const focusables = $$("button:not([disabled]), input:not([disabled])", $("#mitigationBackdrop"));
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+
+      function toggleDrawer(open) {
+        $("#sidebar").classList.toggle("open", open);
+        $("#drawerBackdrop").classList.toggle("open", open);
+        $("#mobileMenu").setAttribute("aria-expanded", String(open));
+      }
+
+      function initialize() {
+        state.logs = initialLogs.slice().reverse().map((entry, index) => makeLog(entry[0], entry[1], entry[2], index)).reverse();
+        renderServiceFilters();
+        renderIncidents();
+        renderLogServiceOptions();
+        renderLogs();
+        renderTeam();
+
+        $("#serviceFilters").addEventListener("click", (event) => {
+          const button = event.target.closest("[data-service]");
+          if (!button) return;
+          state.service = button.dataset.service;
+          renderServiceFilters();
+          renderIncidents();
+        });
+
+        $("#incidentSearch").addEventListener("input", (event) => {
+          state.search = event.target.value;
+          renderIncidents();
+        });
+
+        $("#incidentList").addEventListener("click", (event) => {
+          const card = event.target.closest("[data-incident-id]");
+          if (card) selectIncident(card.dataset.incidentId);
+        });
+
+        $("#advanceStatus").addEventListener("click", advanceStatus);
+        $("#openMitigation").addEventListener("click", openMitigation);
+        $("#closeMitigation").addEventListener("click", closeMitigation);
+        $("#cancelMitigation").addEventListener("click", closeMitigation);
+        $("#mitigationBackdrop").addEventListener("click", (event) => {
+          if (event.target === $("#mitigationBackdrop")) closeMitigation();
+        });
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && $("#mitigationBackdrop").classList.contains("open")) closeMitigation();
+          trapDialogFocus(event);
+        });
+
+        $("#mitigationForm").addEventListener("submit", (event) => {
+          event.preventDefault();
+          const item = incidents.find((incident) => incident.id === state.selectedId);
+          const action = new FormData(event.currentTarget).get("mitigation");
+          if (!item || !action) return;
+          item.status = "Mitigando";
+          state.logs.push(makeLog(item.service, "success", `${String(action).toLowerCase()} requested by incident commander`));
+          renderIncidents();
+          renderLogs();
+          closeMitigation();
+          showToast("Mitigação iniciada", `${action} aplicada em ${item.service}.`);
+        });
+
+        $("#toggleLogs").addEventListener("click", () => {
+          state.logsPaused = !state.logsPaused;
+          $("#liveState").classList.toggle("paused", state.logsPaused);
+          $("#liveState").textContent = state.logsPaused ? "Fluxo pausado" : "Recebendo eventos";
+          $("#toggleLogs").setAttribute("aria-label", state.logsPaused ? "Retomar logs" : "Pausar logs");
+          $("#toggleLogsIcon").setAttribute("href", state.logsPaused ? "#i-play" : "#i-pause");
+        });
+
+        $("#clearLogs").addEventListener("click", () => {
+          state.logs = [];
+          renderLogs();
+          showToast("Logs limpos", "Fluxo continua recebendo novos eventos.");
+        });
+
+        $("#logServiceFilter").addEventListener("change", (event) => {
+          state.logService = event.target.value;
+          renderLogs();
+        });
+
+        $("#autoScroll").addEventListener("click", () => {
+          state.autoScroll = !state.autoScroll;
+          $("#autoScroll").textContent = `Auto: ${state.autoScroll ? "ligado" : "desligado"}`;
+          $("#autoScroll").setAttribute("aria-pressed", String(state.autoScroll));
+          if (state.autoScroll) renderLogs();
+        });
+
+        $("#teamStrip").addEventListener("click", (event) => {
+          const button = event.target.closest("[data-responder-index]");
+          if (!button) return;
+          const person = responders[Number(button.dataset.responderIndex)];
+          const cycle = ["Disponível", "Em resposta", "Em pausa"];
+          person.state = cycle[(cycle.indexOf(person.state) + 1) % cycle.length];
+          renderTeam();
+          showToast("Disponibilidade atualizada", `${person.name}: ${person.state.toLowerCase()}.`);
+        });
+
+        $("#refreshIncidents").addEventListener("click", () => {
+          renderIncidents();
+          showToast("Fila atualizada", "Dados operacionais sincronizados.");
+        });
+
+        $("#ackAll").addEventListener("click", () => {
+          incidents.forEach((item) => { if (item.status === "Investigando") item.status = "Reconhecido"; });
+          renderIncidents();
+          showToast("Alertas reconhecidos", "Fila atualizada para equipe on-call.");
+        });
+
+        $("#newIncident").addEventListener("click", () => {
+          showToast("Declaração preparada", "Fluxo de criação disponível no runbook operacional.");
+        });
+        $("#openRunbook").addEventListener("click", () => showToast("Runbook aberto", "Checklist de resposta vinculado ao incidente selecionado."));
+
+        $("#mobileMenu").addEventListener("click", () => toggleDrawer(!$("#sidebar").classList.contains("open")));
+        $("#drawerBackdrop").addEventListener("click", () => toggleDrawer(false));
+        $("#sidebar").addEventListener("click", (event) => { if (event.target.closest("a")) toggleDrawer(false); });
+
+        window.setInterval(() => {
+          const now = new Date();
+          $("#utcClock").textContent = `UTC ${now.toISOString().slice(11, 19)}`;
+          $$(".incident-age").forEach((node) => { node.textContent = formatAge(Number(node.dataset.started)); });
+        }, 1000);
+        window.setInterval(appendGeneratedLog, 1800);
+      }
+
+      initialize();
+    })();
+  </script>
+</body>
+</html>

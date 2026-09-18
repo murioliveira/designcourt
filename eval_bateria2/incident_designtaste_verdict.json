@@ -1,0 +1,16 @@
+{
+  "judge_version": "1.0",
+  "files_scanned": 1,
+  "findings": [],
+  "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "score": {
+    "slop_index": 0,
+    "layout_families": 2,
+    "contrast_failures": 0
+  },
+  "verdict": "clean"
+}

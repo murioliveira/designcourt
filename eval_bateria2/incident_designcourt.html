@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0f14">
+  <title>Incident Command Center</title>
+  <style>
+    :root {
+      --canvas: #0b0f14;
+      --surface: #111821;
+      --surface-raised: #17212d;
+      --surface-hover: #1d2a38;
+      --line: #334155;
+      --line-strong: #526176;
+      --text: #f1f5f9;
+      --muted: #a9b7c9;
+      --quiet: #8392a7;
+      --blue: #78a2ce;
+      --blue-deep: #1d2a38;
+      --red: #d1848f;
+      --red-deep: #321f23;
+      --amber: #c7a862;
+      --amber-deep: #30291c;
+      --green: #6eae95;
+      --green-deep: #1b2d26;
+      --focus: #9ab8d7;
+      --shadow: #000000;
+      --font-body: Tahoma, Verdana, sans-serif;
+      --font-mono: "Cascadia Code", Consolas, monospace;
+      --radius: 4px;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--canvas); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--canvas);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    button, input, select { font: inherit; }
+    button, select { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .mono, time, td:nth-child(3), td:nth-child(4), .metric-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+    .sr-only { position: absolute; top: 0; left: 0; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
+
+    .app-header {
+      height: 48px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-mark { width: 20px; height: 20px; border: 2px solid var(--red); display: grid; place-items: center; color: var(--red); font: 700 11px var(--font-mono); }
+    .brand-name { font-size: 14px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; }
+    .env { color: var(--muted); border-left: 1px solid var(--line); padding-left: 10px; white-space: nowrap; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .sync { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+    .button {
+      min-height: 32px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface-raised);
+      color: var(--text);
+      padding: 5px 10px;
+      font-weight: 600;
+    }
+    .button:hover { background: var(--surface-hover); }
+    .button.primary { background: var(--blue); border-color: var(--blue); color: var(--canvas); }
+    .button.danger { background: var(--red); border-color: var(--red); color: var(--canvas); }
+    .button.compact { min-height: 28px; padding: 3px 8px; font-size: 12px; }
+    .icon-button { width: 32px; padding: 0; display: grid; place-items: center; }
+
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 336px; min-height: calc(100dvh - 48px); }
+    .main-column { min-width: 0; }
+    .rail { min-width: 0; border-left: 1px solid var(--line); background: var(--surface); }
+    .block { border-bottom: 1px solid var(--line); }
+    .block-head { min-height: 37px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; border-bottom: 1px solid var(--line); background: var(--surface); }
+    .block-title { font-size: 12px; font-weight: 700; letter-spacing: .055em; text-transform: uppercase; }
+    .block-meta { color: var(--muted); font-size: 12px; }
+
+    .metric-strip { display: grid; grid-template-columns: 1.3fr .85fr .85fr .85fr; background: var(--surface); }
+    .metric { min-height: 72px; padding: 10px 12px; border-right: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
+    .metric:last-child { border-right: 0; }
+    .metric-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+    .metric-value { font-size: 16px; font-weight: 700; }
+    .metric-context { color: var(--quiet); font-size: 12px; }
+    .metric.alert .metric-value, .sev1, .service-down { color: var(--red); }
+    .metric.warn .metric-value, .sev2 { color: var(--amber); }
+    .metric.ok .metric-value, .status-good { color: var(--green); }
+    .focus-copy { color: var(--blue); }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th { height: 30px; padding: 5px 10px; color: var(--muted); background: var(--canvas); border-bottom: 1px solid var(--line); text-align: left; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    td { height: 43px; padding: 6px 10px; border-bottom: 1px solid var(--line); color: var(--muted); vertical-align: middle; }
+    tbody tr { background: var(--surface); }
+    tbody tr:nth-child(even) { background: var(--canvas); }
+    tbody tr:hover, tbody tr.selected { background: var(--surface-hover); }
+    tbody tr { cursor: pointer; }
+    th:nth-child(1) { width: 88px; }
+    th:nth-child(2) { width: auto; }
+    th:nth-child(3) { width: 78px; }
+    th:nth-child(4) { width: 80px; }
+    th:nth-child(5) { width: 110px; }
+    .incident-id { color: var(--text); font: 700 12px var(--font-mono); }
+    .incident-title { color: var(--text); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .incident-service { color: var(--quiet); font-size: 12px; }
+    .badge { display: inline-flex; align-items: center; min-height: 22px; border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 2px 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .badge.sev1 { background: var(--red-deep); border-color: var(--red); }
+    .badge.sev2 { background: var(--amber-deep); border-color: var(--amber); }
+    .badge.status-good { background: var(--green-deep); border-color: var(--green); }
+    .badge.focus-copy { background: var(--blue-deep); border-color: var(--blue); }
+
+    .split-detail-pane { display: grid; grid-template-columns: minmax(0, 1fr) 300px; min-height: 322px; }
+    .logs { min-width: 0; background: var(--canvas); }
+    .log-toolbar { padding: 7px 10px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
+    .filter-label { color: var(--muted); font-size: 12px; margin-right: 2px; }
+    .filter-chip { min-height: 27px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--muted); padding: 3px 8px; font-size: 12px; }
+    .filter-chip:hover { color: var(--text); border-color: var(--line-strong); }
+    .filter-chip[aria-pressed="true"] { color: var(--canvas); background: var(--blue); border-color: var(--blue); font-weight: 700; }
+    .log-stream { height: 268px; overflow: auto; font: 12px/1.65 var(--font-mono); }
+    .log-line { display: grid; grid-template-columns: 72px 86px 46px minmax(260px, 1fr); gap: 8px; padding: 3px 10px; border-bottom: 1px solid var(--surface); color: var(--muted); }
+    .log-line:hover { background: var(--surface); }
+    .log-service { color: var(--text); }
+    .log-level { font-weight: 700; }
+    .log-level.error { color: var(--red); }
+    .log-level.warn { color: var(--amber); }
+    .log-level.info { color: var(--blue); }
+    .empty-logs { padding: 36px 16px; text-align: center; color: var(--muted); }
+
+    .detail { border-left: 1px solid var(--line); background: var(--surface); }
+    .detail-body { padding: 12px; }
+    .detail-meta { color: var(--muted); font: 12px var(--font-mono); }
+    .detail-name { font-size: 16px; margin: 4px 0 12px; font-weight: 700; }
+    .detail-grid { display: grid; grid-template-columns: 92px 1fr; gap: 7px 10px; margin: 0 0 14px; }
+    .detail-grid dt { color: var(--quiet); }
+    .detail-grid dd { margin: 0; color: var(--text); }
+    .status-path { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 9px 0; margin-bottom: 12px; }
+    .status-path-label { color: var(--muted); font-size: 12px; margin-bottom: 5px; }
+    .status-current { font: 700 12px var(--font-mono); color: var(--blue); }
+    .detail-actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+
+    .status-queue { padding: 0; }
+    .queue-list { margin: 0; padding: 0; list-style: none; }
+    .queue-item { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; align-items: center; min-height: 46px; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+    .avatar { width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface-raised); color: var(--text); font: 700 11px var(--font-mono); }
+    .person { min-width: 0; }
+    .person-name { color: var(--text); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .person-role { color: var(--quiet); font-size: 12px; }
+    .presence { min-width: 72px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--canvas); color: var(--muted); padding: 4px; font-size: 12px; }
+    .handoff { padding: 9px 10px; color: var(--muted); font-size: 12px; }
+
+    .command-palette { padding: 10px; }
+    .command-trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; color: var(--muted); }
+    kbd { border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--canvas); color: var(--quiet); padding: 1px 5px; font: 11px var(--font-mono); }
+
+    .activity-list { margin: 0; padding: 0; list-style: none; max-height: 242px; overflow: auto; }
+    .activity { padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    .activity-line { color: var(--text); }
+    .activity-meta { margin-top: 2px; color: var(--quiet); font: 11px var(--font-mono); }
+
+    .dialog-backdrop { position: fixed; inset: 0; background: var(--shadow); opacity: .72; z-index: 50; }
+    .dialog { position: fixed; z-index: 60; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(460px, calc(100% - 28px)); border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface-raised); color: var(--text); }
+    .dialog-head { padding: 11px 13px; border-bottom: 1px solid var(--line); font-weight: 700; }
+    .dialog-body { padding: 13px; color: var(--muted); }
+    .dialog-actions { padding: 10px 13px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 8px; }
+    .command-box { padding: 10px; }
+    .command-input { width: 100%; height: 34px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--canvas); color: var(--text); padding: 6px 9px; }
+    .command-results { list-style: none; margin: 8px 0 0; padding: 0; max-height: 240px; overflow: auto; }
+    .command-item { width: 100%; min-height: 38px; border: 0; border-bottom: 1px solid var(--line); background: var(--surface-raised); color: var(--text); display: flex; align-items: center; justify-content: space-between; padding: 7px 8px; text-align: left; }
+    .command-item:hover, .command-item:focus { background: var(--surface-hover); }
+    .command-key { color: var(--quiet); font: 11px var(--font-mono); }
+    .toast { position: fixed; right: 16px; bottom: 16px; z-index: 80; width: min(360px, calc(100% - 32px)); border: 1px solid var(--green); border-radius: var(--radius); background: var(--green-deep); color: var(--text); padding: 10px 12px; }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 980px) {
+      .workspace { grid-template-columns: 1fr; }
+      .main-column { border-right: 0; }
+      .rail { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 0; }
+      .rail .block { border-right: 1px solid var(--line); }
+    }
+    @media (max-width: 720px) {
+      .sync, .env { display: none; }
+      .workspace { min-height: auto; }
+      .metric-strip { grid-template-columns: 1.3fr 1fr; }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .split-detail-pane { grid-template-columns: 1fr; }
+      .detail { border-left: 0; border-top: 1px solid var(--line); }
+      .rail { grid-template-columns: 1fr; }
+      .rail .block { border-right: 0; }
+      th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4) { display: none; }
+      th:nth-child(1) { width: 76px; }
+      th:nth-child(5) { width: 102px; }
+    }
+    @media (max-width: 460px) {
+      .app-header { padding: 0 10px; }
+      .brand-name { font-size: 12px; }
+      .header-actions .button:not(.icon-button) { display: none; }
+      .metric { padding: 9px 10px; }
+      .log-line { grid-template-columns: 64px 72px minmax(210px, 1fr); }
+      .log-level { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">IC</div>
+      <div class="brand-name">Incident Command Center</div>
+      <div class="env">prod-us-east-1</div>
+    </div>
+    <div class="header-actions">
+      <span class="sync" id="syncText">Atualizado agora</span>
+      <button class="button compact" id="declareBtn" type="button">Aplicar mitigação</button>
+      <button class="button icon-button" id="paletteTopBtn" type="button" aria-label="Abrir paleta de comandos">⌘</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <div class="main-column">
+      <div class="block" aria-labelledby="metricHeading">
+        <div class="block-head">
+          <div class="block-title" id="metricHeading" role="heading" aria-level="1">Metric strip</div>
+          <div class="block-meta">Janela: últimos 30 min</div>
+        </div>
+        <div class="metric-strip">
+          <div class="metric alert">
+            <span class="metric-label">Incidentes ativos</span>
+            <span class="metric-value" id="activeCount">3</span>
+            <span class="metric-context">1 requer comando</span>
+          </div>
+          <div class="metric warn">
+            <span class="metric-label">Serviços afetados</span>
+            <span class="metric-value">4</span>
+            <span class="metric-context">de 26 monitorados</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">MTTA hoje</span>
+            <span class="metric-value">04:12</span>
+            <span class="metric-context">meta abaixo de 05:00</span>
+          </div>
+          <div class="metric ok">
+            <span class="metric-label">Equipe disponível</span>
+            <span class="metric-value">5/6</span>
+            <span class="metric-context">cobertura confirmada</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="block" aria-labelledby="tableHeading">
+        <div class="block-head">
+          <div class="block-title" id="tableHeading" role="heading" aria-level="2">Dense data table</div>
+          <div class="block-meta">Selecione uma linha para inspecionar</div>
+        </div>
+        <div class="table-wrap">
+          <table aria-label="Incidentes ativos">
+            <thead>
+              <tr><th>ID</th><th>Incidente</th><th>Início</th><th>Duração</th><th>Estado</th></tr>
+            </thead>
+            <tbody id="incidentRows">
+              <tr class="selected" tabindex="0" data-id="INC-1842">
+                <td><span class="badge sev1">SEV-1</span></td>
+                <td><div class="incident-title">Falhas de autorização no checkout</div><div class="incident-service">checkout-api · identity-gateway</div></td>
+                <td>14:32</td><td>18 min</td><td><span class="badge focus-copy status-cell">Investigating</span></td>
+              </tr>
+              <tr tabindex="0" data-id="INC-1841">
+                <td><span class="badge sev2">SEV-2</span></td>
+                <td><div class="incident-title">Latência alta na fila de pagamentos</div><div class="incident-service">payments-worker</div></td>
+                <td>14:11</td><td>39 min</td><td><span class="badge focus-copy status-cell">Investigating</span></td>
+              </tr>
+              <tr tabindex="0" data-id="INC-1839">
+                <td><span class="badge sev2">SEV-2</span></td>
+                <td><div class="incident-title">Replicação atrasada no catálogo</div><div class="incident-service">catalog-db</div></td>
+                <td>13:46</td><td>64 min</td><td><span class="badge focus-copy status-cell">Mitigated</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="block" aria-labelledby="detailHeading">
+        <div class="block-head">
+          <div class="block-title" id="detailHeading" role="heading" aria-level="2">Split detail pane</div>
+          <div class="block-meta"><span id="visibleLogCount">7</span> eventos visíveis</div>
+        </div>
+        <div class="split-detail-pane">
+          <div class="logs">
+            <div class="log-toolbar" role="group" aria-label="Filtrar logs por serviço">
+              <span class="filter-label">Serviço</span>
+              <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">Todos</button>
+              <button class="filter-chip" type="button" data-filter="checkout-api" aria-pressed="false">checkout-api</button>
+              <button class="filter-chip" type="button" data-filter="identity-gateway" aria-pressed="false">identity-gateway</button>
+              <button class="filter-chip" type="button" data-filter="payments-worker" aria-pressed="false">payments-worker</button>
+            </div>
+            <div class="log-stream" id="logStream" aria-live="polite">
+              <div class="log-line" data-service="checkout-api"><time>14:49:58</time><span class="log-service">checkout-api</span><span class="log-level error">ERROR</span><span>token validation failed for checkout session</span></div>
+              <div class="log-line" data-service="identity-gateway"><time>14:49:51</time><span class="log-service">identity-gateway</span><span class="log-level warn">WARN</span><span>jwks cache refresh exceeded timeout</span></div>
+              <div class="log-line" data-service="payments-worker"><time>14:49:43</time><span class="log-service">payments-worker</span><span class="log-level info">INFO</span><span>queue depth remains above threshold</span></div>
+              <div class="log-line" data-service="checkout-api"><time>14:49:30</time><span class="log-service">checkout-api</span><span class="log-level error">ERROR</span><span>upstream returned 401 for payment intent</span></div>
+              <div class="log-line" data-service="identity-gateway"><time>14:49:12</time><span class="log-service">identity-gateway</span><span class="log-level info">INFO</span><span>config revision 381 loaded on 8 pods</span></div>
+              <div class="log-line" data-service="checkout-api"><time>14:48:57</time><span class="log-service">checkout-api</span><span class="log-level warn">WARN</span><span>error rate crossed operational threshold</span></div>
+              <div class="log-line" data-service="payments-worker"><time>14:48:41</time><span class="log-service">payments-worker</span><span class="log-level warn">WARN</span><span>consumer lag increasing on priority partition</span></div>
+              <div class="empty-logs" id="emptyLogs" hidden>Nenhum evento para este serviço na janela atual.</div>
+            </div>
+          </div>
+          <aside class="detail" aria-label="Detalhes do incidente selecionado">
+            <div class="detail-body">
+              <div class="detail-meta" id="detailId">INC-1842 · SEV-1</div>
+              <div class="detail-name" id="detailName">Falhas de autorização no checkout</div>
+              <dl class="detail-grid">
+                <dt>Comandante</dt><dd id="detailCommander">Marina Costa</dd>
+                <dt>Serviço líder</dt><dd id="detailService">checkout-api</dd>
+                <dt>Canal</dt><dd class="mono" id="detailChannel">#inc-1842</dd>
+                <dt>Impacto</dt><dd id="detailImpact">Checkouts autenticados</dd>
+              </dl>
+              <div class="status-path">
+                <div class="status-path-label">Estado operacional</div>
+                <div class="status-current" id="detailStatus">Investigating</div>
+              </div>
+              <div class="detail-actions">
+                <button class="button primary" id="advanceBtn" type="button">Marcar como mitigado</button>
+                <button class="button" id="detailToggleBtn" type="button" aria-expanded="false" aria-controls="extraDetail">Mais</button>
+              </div>
+              <div id="extraDetail" hidden>
+                <dl class="detail-grid" style="margin-top: 12px">
+                  <dt>Runbook</dt><dd>AUTH-07</dd>
+                  <dt>Última nota</dt><dd id="lastNote">Rotação de chave em análise</dd>
+                </dl>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <aside class="rail" aria-label="Coordenação operacional">
+      <div class="block status-queue" aria-labelledby="queueHeading">
+        <div class="block-head">
+          <div class="block-title" id="queueHeading" role="heading" aria-level="2">Status queue</div>
+          <div class="block-meta status-good">5 online</div>
+        </div>
+        <ul class="queue-list">
+          <li class="queue-item"><span class="avatar">MC</span><span class="person"><span class="person-name">Marina Costa</span><span class="person-role">Incident commander</span></span><select class="presence" aria-label="Status de Marina Costa"><option>Online</option><option>Ocupada</option><option>Offline</option></select></li>
+          <li class="queue-item"><span class="avatar">RL</span><span class="person"><span class="person-name">Rafael Lima</span><span class="person-role">SRE primário</span></span><select class="presence" aria-label="Status de Rafael Lima"><option>Online</option><option selected>Ocupado</option><option>Offline</option></select></li>
+          <li class="queue-item"><span class="avatar">AN</span><span class="person"><span class="person-name">Aisha Nunes</span><span class="person-role">Identity on-call</span></span><select class="presence" aria-label="Status de Aisha Nunes"><option selected>Online</option><option>Ocupada</option><option>Offline</option></select></li>
+          <li class="queue-item"><span class="avatar">TG</span><span class="person"><span class="person-name">Tiago Gomes</span><span class="person-role">Payments on-call</span></span><select class="presence" aria-label="Status de Tiago Gomes"><option selected>Online</option><option>Ocupado</option><option>Offline</option></select></li>
+          <li class="queue-item"><span class="avatar">JS</span><span class="person"><span class="person-name">Joana Silva</span><span class="person-role">Comms</span></span><select class="presence" aria-label="Status de Joana Silva"><option selected>Online</option><option>Ocupada</option><option>Offline</option></select></li>
+          <li class="queue-item"><span class="avatar">BO</span><span class="person"><span class="person-name">Bruno Oliveira</span><span class="person-role">Database on-call</span></span><select class="presence" aria-label="Status de Bruno Oliveira"><option>Online</option><option>Ocupado</option><option selected>Offline</option></select></li>
+        </ul>
+        <div class="handoff">Próxima troca de plantão às 18:00. Cobertura confirmada.</div>
+      </div>
+
+      <div class="block command-palette" aria-labelledby="commandHeading">
+        <div class="block-title" id="commandHeading" role="heading" aria-level="2" style="margin-bottom:8px">Command palette</div>
+        <button class="button command-trigger" id="paletteBtn" type="button"><span>Executar ação rápida</span><kbd>Ctrl K</kbd></button>
+      </div>
+
+      <div class="block" aria-labelledby="activityHeading">
+        <div class="block-head">
+          <div class="block-title" id="activityHeading" role="heading" aria-level="2">Atividade de comando</div>
+          <div class="block-meta">Ao vivo</div>
+        </div>
+        <ol class="activity-list" id="activityList">
+          <li class="activity"><div class="activity-line">Aisha entrou no canal de resposta</div><div class="activity-meta">14:48 · #inc-1842</div></li>
+          <li class="activity"><div class="activity-line">Marina assumiu comando do incidente</div><div class="activity-meta">14:42 · #inc-1842</div></li>
+          <li class="activity"><div class="activity-line">Alerta agrupado como SEV-1</div><div class="activity-meta">14:35 · policy-auth-prod</div></li>
+          <li class="activity"><div class="activity-line">Incidente declarado por Rafael</div><div class="activity-meta">14:32 · checkout-api</div></li>
+        </ol>
+      </div>
+    </aside>
+  </main>
+
+  <div class="dialog-backdrop" id="backdrop" hidden></div>
+  <div class="dialog" id="confirmDialog" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden>
+    <div class="dialog-head" id="confirmTitle">Confirmar mitigação</div>
+    <div class="dialog-body">Aplicar o runbook AUTH-07 em 8 pods de checkout-api? A ação reinicia o cache de chaves e registra a mudança no incidente.</div>
+    <div class="dialog-actions"><button class="button" id="cancelMitigation" type="button">Cancelar</button><button class="button danger" id="confirmMitigation" type="button">Aplicar mitigação</button></div>
+  </div>
+
+  <div class="dialog" id="commandDialog" role="dialog" aria-modal="true" aria-labelledby="commandDialogTitle" hidden>
+    <div class="dialog-head" id="commandDialogTitle">Paleta de comandos</div>
+    <div class="command-box">
+      <label for="commandInput" class="sr-only">Filtrar comandos</label>
+      <input class="command-input" id="commandInput" type="search" placeholder="Digite uma ação ou incidente" autocomplete="off">
+      <ul class="command-results" id="commandResults">
+        <li><button class="command-item" type="button" data-command="mitigate"><span>Aplicar mitigação no incidente selecionado</span><span class="command-key">M</span></button></li>
+        <li><button class="command-item" type="button" data-command="advance"><span>Avançar estado do incidente</span><span class="command-key">A</span></button></li>
+        <li><button class="command-item" type="button" data-command="filter"><span>Filtrar logs de checkout-api</span><span class="command-key">F</span></button></li>
+        <li><button class="command-item" type="button" data-command="detail"><span>Expandir detalhes do incidente</span><span class="command-key">D</span></button></li>
+      </ul>
+    </div>
+    <div class="dialog-actions"><button class="button" id="closeCommand" type="button">Fechar</button></div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>Mitigação aplicada. Cache reiniciado em 8 pods.</div>
+
+  <script>
+    const incidents = {
+      "INC-1842": { id: "INC-1842", severity: "SEV-1", name: "Falhas de autorização no checkout", commander: "Marina Costa", service: "checkout-api", channel: "#inc-1842", impact: "Checkouts autenticados", status: "Investigating" },
+      "INC-1841": { id: "INC-1841", severity: "SEV-2", name: "Latência alta na fila de pagamentos", commander: "Rafael Lima", service: "payments-worker", channel: "#inc-1841", impact: "Confirmação de pagamentos", status: "Investigating" },
+      "INC-1839": { id: "INC-1839", severity: "SEV-2", name: "Replicação atrasada no catálogo", commander: "Bruno Oliveira", service: "catalog-db", channel: "#inc-1839", impact: "Atualização de estoque", status: "Mitigated" }
+    };
+    let selectedId = "INC-1842";
+    let returnFocus = null;
+    let toastTimer = null;
+
+    const byId = id => document.getElementById(id);
+    const statusAction = status => status === "Investigating" ? "Marcar como mitigado" : status === "Mitigated" ? "Marcar como resolvido" : "Incidente resolvido";
+
+    function renderDetail() {
+      const incident = incidents[selectedId];
+      byId("detailId").textContent = `${incident.id} · ${incident.severity}`;
+      byId("detailName").textContent = incident.name;
+      byId("detailCommander").textContent = incident.commander;
+      byId("detailService").textContent = incident.service;
+      byId("detailChannel").textContent = incident.channel;
+      byId("detailImpact").textContent = incident.impact;
+      byId("detailStatus").textContent = incident.status;
+      byId("advanceBtn").textContent = statusAction(incident.status);
+      byId("advanceBtn").disabled = incident.status === "Resolved";
+      document.querySelectorAll("#incidentRows tr").forEach(row => {
+        const selected = row.dataset.id === selectedId;
+        row.classList.toggle("selected", selected);
+        row.setAttribute("aria-selected", String(selected));
+        if (selected) row.querySelector(".status-cell").textContent = incident.status;
+      });
+    }
+
+    function selectIncident(row) {
+      selectedId = row.dataset.id;
+      renderDetail();
+    }
+
+    document.querySelectorAll("#incidentRows tr").forEach(row => {
+      row.addEventListener("click", () => selectIncident(row));
+      row.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectIncident(row); }
+      });
+    });
+
+    function filterLogs(service) {
+      let visible = 0;
+      document.querySelectorAll(".log-line").forEach(line => {
+        const show = service === "all" || line.dataset.service === service;
+        line.hidden = !show;
+        if (show) visible += 1;
+      });
+      document.querySelectorAll(".filter-chip").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.filter === service)));
+      byId("visibleLogCount").textContent = visible;
+      byId("emptyLogs").hidden = visible !== 0;
+    }
+
+    document.querySelectorAll(".filter-chip").forEach(button => button.addEventListener("click", () => filterLogs(button.dataset.filter)));
+
+    function addActivity(text) {
+      const item = document.createElement("li");
+      item.className = "activity";
+      const line = document.createElement("div");
+      line.className = "activity-line";
+      line.textContent = text;
+      const meta = document.createElement("div");
+      meta.className = "activity-meta";
+      meta.textContent = `${new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })} · ${incidents[selectedId].channel}`;
+      item.append(line, meta);
+      byId("activityList").prepend(item);
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      byId("toast").textContent = message;
+      byId("toast").hidden = false;
+      toastTimer = setTimeout(() => { byId("toast").hidden = true; }, 4200);
+    }
+
+    function setDialog(dialog, open, trigger) {
+      if (open) {
+        returnFocus = trigger || document.activeElement;
+        byId("backdrop").hidden = false;
+        dialog.hidden = false;
+        const first = dialog.querySelector("input, button");
+        if (first) first.focus();
+      } else {
+        byId("backdrop").hidden = true;
+        dialog.hidden = true;
+        if (returnFocus) returnFocus.focus();
+      }
+    }
+
+    function advanceStatus() {
+      const incident = incidents[selectedId];
+      if (incident.status === "Resolved") return;
+      incident.status = incident.status === "Investigating" ? "Mitigated" : "Resolved";
+      renderDetail();
+      addActivity(`${incident.id} alterado para ${incident.status}`);
+      showToast(`Estado atualizado: ${incident.status}`);
+      if (incident.status === "Resolved") {
+        const active = Object.values(incidents).filter(item => item.status !== "Resolved").length;
+        byId("activeCount").textContent = active;
+      }
+    }
+
+    byId("advanceBtn").addEventListener("click", advanceStatus);
+    byId("detailToggleBtn").addEventListener("click", () => {
+      const expanded = byId("detailToggleBtn").getAttribute("aria-expanded") === "true";
+      byId("detailToggleBtn").setAttribute("aria-expanded", String(!expanded));
+      byId("detailToggleBtn").textContent = expanded ? "Mais" : "Menos";
+      byId("extraDetail").hidden = expanded;
+    });
+
+    byId("declareBtn").addEventListener("click", event => setDialog(byId("confirmDialog"), true, event.currentTarget));
+    byId("cancelMitigation").addEventListener("click", () => setDialog(byId("confirmDialog"), false));
+    byId("confirmMitigation").addEventListener("click", () => {
+      incidents[selectedId].status = "Mitigated";
+      byId("lastNote").textContent = "AUTH-07 aplicado em 8 pods";
+      renderDetail();
+      addActivity(`Mitigação AUTH-07 aplicada em ${selectedId}`);
+      setDialog(byId("confirmDialog"), false);
+      showToast("Mitigação aplicada. Cache reiniciado em 8 pods.");
+    });
+
+    function openCommands(trigger) {
+      setDialog(byId("commandDialog"), true, trigger);
+      byId("commandInput").value = "";
+      document.querySelectorAll(".command-results li").forEach(item => item.hidden = false);
+      byId("commandInput").focus();
+    }
+    byId("paletteBtn").addEventListener("click", event => openCommands(event.currentTarget));
+    byId("paletteTopBtn").addEventListener("click", event => openCommands(event.currentTarget));
+    byId("closeCommand").addEventListener("click", () => setDialog(byId("commandDialog"), false));
+    byId("commandInput").addEventListener("input", event => {
+      const query = event.target.value.toLowerCase();
+      document.querySelectorAll(".command-results li").forEach(item => { item.hidden = !item.textContent.toLowerCase().includes(query); });
+    });
+    document.querySelectorAll(".command-item").forEach(button => button.addEventListener("click", () => {
+      const command = button.dataset.command;
+      setDialog(byId("commandDialog"), false);
+      if (command === "mitigate") setDialog(byId("confirmDialog"), true, byId("paletteBtn"));
+      if (command === "advance") advanceStatus();
+      if (command === "filter") filterLogs("checkout-api");
+      if (command === "detail" && byId("extraDetail").hidden) byId("detailToggleBtn").click();
+    }));
+
+    byId("backdrop").addEventListener("click", () => {
+      if (!byId("commandDialog").hidden) setDialog(byId("commandDialog"), false);
+      if (!byId("confirmDialog").hidden) setDialog(byId("confirmDialog"), false);
+    });
+    document.addEventListener("keydown", event => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); openCommands(byId("paletteBtn")); }
+      if (event.key === "Escape") {
+        if (!byId("commandDialog").hidden) setDialog(byId("commandDialog"), false);
+        else if (!byId("confirmDialog").hidden) setDialog(byId("confirmDialog"), false);
+      }
+    });
+    document.querySelectorAll(".presence").forEach(select => select.addEventListener("change", () => {
+      addActivity(`${select.getAttribute("aria-label").replace("Status de ", "")} agora está ${select.value.toLowerCase()}`);
+      showToast("Status de plantão atualizado.");
+    }));
+
+    renderDetail();
+  </script>
+</body>
+</html>

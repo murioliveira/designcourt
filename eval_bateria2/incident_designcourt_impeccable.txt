@@ -1,0 +1,6 @@
+
+C:\Users\muzph\projetos\designcourt\eval_bateria2\incident_designcourt.html
+  [flat-type-hierarchy] Sizes: 11px, 12px, 13px, 16px (ratio 1.5:1)
+    → Font sizes are too close together — no clear visual hierarchy. Use fewer sizes with more contrast (aim for at least a 1.25 ratio between steps).
+
+1 anti-pattern found.

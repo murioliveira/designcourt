@@ -1,0 +1,212 @@
+{
+  "judge_version": "1.0",
+  "files_scanned": 1,
+  "findings": [
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 23,
+        "selector": "body",
+        "snippet": "background-color: var(--paper) | #edf1f0 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 25,
+        "selector": "body",
+        "snippet": "color: var(--ink) | #202523 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 34,
+        "selector": ":focus-visible",
+        "snippet": "outline: 3px solid var(--focus) | #7e2b0d is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 55,
+        "selector": ".site-header",
+        "snippet": "border-bottom: 1px solid var(--line) | #c5ceca is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 64,
+        "selector": ".header-price",
+        "snippet": "color: var(--muted) | #59625e is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 80,
+        "selector": ".eyebrow",
+        "snippet": "color: var(--accent) | #a43b16 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 113,
+        "selector": ".hero",
+        "snippet": "background-color: var(--paper-raised) | #f8faf9 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 158,
+        "selector": ".purchase-button",
+        "snippet": "color: var(--accent-ink) | #fff9f1 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 211,
+        "selector": ".kettle-detail",
+        "snippet": "color: var(--steel-dark) | #697570 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 273,
+        "selector": ".proof-grid p",
+        "snippet": "color: var(--steel) | #dce4e1 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 420,
+        "selector": "body > main#main > section.hero",
+        "snippet": "family hero is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 479,
+        "selector": "body > main#main > section.statement-stat",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 508,
+        "selector": "body > main#main > section.proof-grid",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 521,
+        "selector": "body > main#main > section.side-by-side-comparison",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 546,
+        "selector": "body > main#main > section.close-action",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    }
+  ],
+  "counts": {
+    "blocker": 0,
+    "major": 10,
+    "minor": 5
+  },
+  "score": {
+    "slop_index": 10,
+    "layout_families": 2,
+    "contrast_failures": 0
+  },
+  "verdict": "pass_with_notes"
+}

@@ -1,0 +1,73 @@
+{
+  "contract_version": "1.0",
+  "brief": {
+    "goal": "Research note on failure rates in automated deployment",
+    "audience": "Target users and operators",
+    "success_metric": "Observed goal completion"
+  },
+  "mode": "read",
+  "rationale": {
+    "problem": "User needs to achieve: Research note on failure rates in automated deployment",
+    "user": "Target users and operators",
+    "trade_off": "Deliberately prioritizing typographic rhythm and sustained legibility over interactive gadgetry"
+  },
+  "dials": {
+    "expressiveness": 2,
+    "density": 2,
+    "motion": 1,
+    "ornament": 1
+  },
+  "layout_plan": [
+    {
+      "section": "title byline strip",
+      "family": "title-byline-strip",
+      "why": "Chosen for mode read section 1 to avoid adjacent family repetition."
+    },
+    {
+      "section": "key findings deck",
+      "family": "key-findings-deck",
+      "why": "Chosen for mode read section 2 to avoid adjacent family repetition."
+    },
+    {
+      "section": "longform text spine",
+      "family": "longform-text-spine",
+      "why": "Chosen for mode read section 3 to avoid adjacent family repetition."
+    },
+    {
+      "section": "data exhibit",
+      "family": "data-exhibit",
+      "why": "Chosen for mode read section 4 to avoid adjacent family repetition."
+    },
+    {
+      "section": "citation register",
+      "family": "citation-register",
+      "why": "Chosen for mode read section 5 to avoid adjacent family repetition."
+    }
+  ],
+  "token_plan": {
+    "accent": "Understated editorial ink: deep navy or forest green used strictly for links and section markers.",
+    "neutrals": "Warm parchment or cool paper background; warm dark gray for body type to soften contrast for long reading.",
+    "type_scale": "Perfect fourth (1.333) classic book scale: 18px body with 1.6 line height and 65 character line length."
+  },
+  "bans": [
+    "em-dash",
+    "purple-gradient",
+    "neon-glow",
+    "inter-default",
+    "three-equal-cards",
+    "repeated-zigzag",
+    "fake-screenshot",
+    "filler-verbs",
+    "generic-names",
+    "fake-precise-numbers",
+    "scroll-cues",
+    "multi-marquee"
+  ],
+  "not_for": "Not for transactional dashboards, checkout flows, or rapid visual marketing.",
+  "decisions_used": [
+    "single-column-measure",
+    "margin-annotation-rail",
+    "contents-first-disclosure",
+    "no-chrome-text-page"
+  ]
+}

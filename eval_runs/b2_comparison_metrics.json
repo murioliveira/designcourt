@@ -1,0 +1,43 @@
+{
+  "benchmark": "B2-persuade-physical",
+  "product": "Kettle 03",
+  "goal": "Stovetop pour over kettle direct-to-consumer page (€89)",
+  "metrics": {
+    "designcourt_page": {
+      "file": "C:/Users/muzph/projetos/designcourt/eval_runs/b2_page.html",
+      "verdict": "pass_with_notes",
+      "exit_code": 0,
+      "blockers": 0,
+      "majors": 10,
+      "minors": 5,
+      "contrast_failures": 0,
+      "judge_runtime_ms": 235,
+      "impeccable": {
+        "anti_patterns_count": 0,
+        "exit_code": 0,
+        "runtime_ms": 1780
+      }
+    },
+    "competitor_standard": {
+      "file": "C:/Users/muzph/projetos/designcourt/eval_runs/b2_competitor_standard.html",
+      "verdict": "fail",
+      "exit_code": 1,
+      "blockers": 23,
+      "majors": 28,
+      "minors": 8,
+      "contrast_failures": 4,
+      "judge_runtime_ms": 247,
+      "impeccable": {
+        "anti_patterns_count": 38,
+        "exit_code": 2,
+        "runtime_ms": 1691
+      }
+    }
+  },
+  "summary": {
+    "blocker_delta": "-23 blockers (100% reduction)",
+    "impeccable_delta": "-38 anti-patterns (100% reduction: 38 down to 0)",
+    "contrast_delta": "0 failures vs 4 failures (WCAG AA compliant)",
+    "designcourt_verdict": "PASS vs FAIL"
+  }
+}

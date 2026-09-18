@@ -1,0 +1,6 @@
+
+C:\Users\muzph\projetos\designcourt\eval_runs\b3_page.html
+  [flat-type-hierarchy] Sizes: 12px, 16px, 20px (ratio 1.7:1)
+    → Font sizes are too close together — no clear visual hierarchy. Use fewer sizes with more contrast (aim for at least a 1.25 ratio between steps).
+
+1 anti-pattern found.

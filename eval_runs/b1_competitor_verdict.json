@@ -1,0 +1,1044 @@
+{
+  "judge_version": "1.0",
+  "files_scanned": 1,
+  "findings": [
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"split asymmetric\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"statement stat\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"proof grid\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"side by side comparison\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"close action\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-104",
+      "tell_id": "inter-default",
+      "severity": "blocker",
+      "title": "Inter as the default font",
+      "evidence": {
+        "line": 9,
+        "selector": "body",
+        "snippet": "font-family: Inter, sans-serif | first family is Inter"
+      },
+      "fix": "Use the system stack (system-ui, then the platform faces) or the brand face, not Inter.",
+      "why": "Inter as the first family is the default face of generated UI and flattens every page into the same voice."
+    },
+    {
+      "check_id": "DC-104",
+      "tell_id": "inter-default",
+      "severity": "blocker",
+      "title": "Inter as the default font",
+      "evidence": {
+        "line": 9,
+        "selector": "html > head > link",
+        "snippet": "<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap\" rel=\"stylesheet\"> | Google Fonts request …"
+      },
+      "fix": "Remove the Inter request and use the system stack.",
+      "why": "Inter as the first family is the default face of generated UI and flattens every page into the same voice."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 9,
+        "selector": "body",
+        "snippet": "#ffffff on #ec4899 = 3.53:1, needs 4.5:1 (background #ec4899 from .icon; font-size 22px)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 9,
+        "selector": "body",
+        "snippet": "background: var(--bg) | #090b1a is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 9,
+        "selector": "body",
+        "snippet": "banned tell \"inter-default\" detected: font-family: Inter, sans-serif | first family is Inter"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 18,
+        "selector": ".nav",
+        "snippet": "border-bottom: 1px solid rgba(255, 255, 255, 0.1) | literals: rgba(255, 255, 255, 0.1)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-107",
+      "tell_id": "multi-accent",
+      "severity": "major",
+      "title": "More than one accent hue family",
+      "evidence": {
+        "line": 26,
+        "selector": ".btn",
+        "snippet": "blue (2 uses, e.g. #2563eb at line 26); magenta (2 uses, e.g. #ec4899 at line 89); purple (2 uses, e.g. #7c3aed at line 26)"
+      },
+      "fix": "Keep the accent you use most, and rebuild the second hue as a neutral or a tint of the first.",
+      "why": "One accent per page is the lock: a second saturated hue family breaks the color hierarchy."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 34,
+        "selector": ".btn",
+        "snippet": "background: linear-gradient(135deg, #7c3aed, #2563eb) | stop #7c3aed"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 34,
+        "selector": ".btn",
+        "snippet": "background: linear-gradient(135deg, #7c3aed, #2563eb) | literals: #7c3aed, #2563eb"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 34,
+        "selector": ".btn",
+        "snippet": "background: linear-gradient(135deg, #7c3aed, #2563eb) | #7c3aed is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 34,
+        "selector": ".btn",
+        "snippet": "background: linear-gradient(135deg, #7c3aed, #2563eb) | #2563eb is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 34,
+        "selector": ".btn",
+        "snippet": "banned tell \"purple-gradient\" detected: background: linear-gradient(135deg, #7c3aed, #2563eb) | stop #7c3aed"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 36,
+        "selector": ".btn",
+        "snippet": "color: #ffffff | literals: #ffffff"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 38,
+        "selector": ".btn",
+        "snippet": "box-shadow: 0 0 34px rgba(124, 58, 237, 0.6) | literals: rgba(124, 58, 237, 0.6)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-311",
+      "tell_id": "property-animation",
+      "severity": "minor",
+      "title": "Transition or animation on a layout property",
+      "evidence": {
+        "line": 40,
+        "selector": ".btn",
+        "snippet": "transition: all 0.3s ease | transition: all covers layout properties"
+      },
+      "fix": "List the animated properties explicitly instead of \"all\".",
+      "why": "Animating width, height, top or left forces layout on every frame: animate transform and opacity instead."
+    },
+    {
+      "check_id": "DC-205",
+      "tell_id": "h-screen",
+      "severity": "minor",
+      "title": "Height in vh instead of dvh",
+      "evidence": {
+        "line": 43,
+        "selector": ".hero",
+        "snippet": "min-height: 90vh | vh unit in a height"
+      },
+      "fix": "Use dvh (min-height: 100dvh) or auto height for that section.",
+      "why": "vh does not follow the mobile browser chrome, so the section is clipped or leaves a gap on phones."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 45,
+        "selector": ".hero",
+        "snippet": "background: radial-gradient(circle at 50% 20%, rgba(124, 58, 237, 0.35), transparent 50%), linear-gradient(180deg, #111438, #090b1a) | stop #111438"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 45,
+        "selector": ".hero",
+        "snippet": "background: radial-gradient(circle at 50% 20%, rgba(124, 58, 237, 0.35), transparent 50%), linear-gradient(180deg, #111438, #090b1a) | lite…"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 45,
+        "selector": ".hero",
+        "snippet": "background: radial-gradient(circle at 50% 20%, rgba(124, 58, 237, 0.35), transparent 50%), linear-gradient(180deg, #111438, #090b1a) | #111…"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 52,
+        "selector": ".badge",
+        "snippet": "border: 1px solid rgba(255, 255, 255, 0.2) | literals: rgba(255, 255, 255, 0.2)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 54,
+        "selector": ".badge",
+        "snippet": "background: rgba(255, 255, 255, 0.08) | literals: rgba(255, 255, 255, 0.08)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 56,
+        "selector": ".badge",
+        "snippet": "color: #c4b5fd | literals: #c4b5fd"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 56,
+        "selector": ".badge",
+        "snippet": "color: #c4b5fd | #c4b5fd is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 64,
+        "selector": "h1",
+        "snippet": "background: linear-gradient(90deg, #ffffff, #c4b5fd, #60a5fa) | stop #c4b5fd"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 64,
+        "selector": "h1",
+        "snippet": "background: linear-gradient(90deg, #ffffff, #c4b5fd, #60a5fa) | literals: #ffffff, #c4b5fd, #60a5fa"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 64,
+        "selector": "h1",
+        "snippet": "background: linear-gradient(90deg, #ffffff, #c4b5fd, #60a5fa) | #60a5fa is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 67,
+        "selector": "h1",
+        "snippet": "transparent on #60a5fa = 1.00:1, needs 4.5:1 (background #60a5fa from h1; font-size could not be resolved, so the 4.5:1 body threshold is applied)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 70,
+        "selector": ".hero .lead",
+        "snippet": "color: var(--muted) | #aab0cb is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 76,
+        "selector": ".ghost",
+        "snippet": "background: rgba(255,255,255,0.08) | literals: rgba(255,255,255,0.08)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 78,
+        "selector": ".ghost",
+        "snippet": "border: 1px solid rgba(255,255,255,0.18) | literals: rgba(255,255,255,0.18)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 89,
+        "selector": ".card",
+        "snippet": "box-shadow: 0 18px 50px rgba(0,0,0,0.2) | literals: rgba(0,0,0,0.2)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 91,
+        "selector": ".icon",
+        "snippet": "background: linear-gradient(135deg, var(--primary), var(--pink)) | stop #7c3aed"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 91,
+        "selector": ".icon",
+        "snippet": "background: linear-gradient(135deg, var(--primary), var(--pink)) | #ec4899 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 96,
+        "selector": ".proof-section",
+        "snippet": "background: linear-gradient(180deg, #090b1a, #10132e, #090b1a) | stop #090b1a"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 96,
+        "selector": ".proof-section",
+        "snippet": "background: linear-gradient(180deg, #090b1a, #10132e, #090b1a) | literals: #090b1a, #10132e, #090b1a"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 96,
+        "selector": ".proof-section",
+        "snippet": "background: linear-gradient(180deg, #090b1a, #10132e, #090b1a) | #10132e is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 102,
+        "selector": ".screenshot-mockup",
+        "snippet": "border: 1px solid rgba(255,255,255,0.15) | literals: rgba(255,255,255,0.15)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 105,
+        "selector": ".screenshot-mockup",
+        "snippet": "background: rgba(255,255,255,0.05) | literals: rgba(255,255,255,0.05)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 107,
+        "selector": ".screenshot-mockup",
+        "snippet": "box-shadow: 0 0 60px rgba(37,99,235,0.2) | literals: rgba(37,99,235,0.2)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 116,
+        "selector": ".pane",
+        "snippet": "background: rgba(0,0,0,0.26) | literals: rgba(0,0,0,0.26)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 118,
+        "selector": "pre",
+        "snippet": "color: #bfdbfe | literals: #bfdbfe"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 118,
+        "selector": "pre",
+        "snippet": "color: #bfdbfe | #bfdbfe is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 120,
+        "selector": ".document",
+        "snippet": "color: #e5e7eb | literals: #e5e7eb"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 120,
+        "selector": ".document",
+        "snippet": "color: #e5e7eb | #e5e7eb is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 122,
+        "selector": ".source-chip",
+        "snippet": "background: rgba(124,58,237,0.3) | literals: rgba(124,58,237,0.3)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 122,
+        "selector": ".source-chip",
+        "snippet": "color: #ddd6fe | literals: #ddd6fe"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 122,
+        "selector": ".source-chip",
+        "snippet": "color: #ddd6fe | #ddd6fe is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 124,
+        "selector": ".close",
+        "snippet": "background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(37,99,235,0.35)) | literals: rgba(124,58,237,0.35), rgba(37,99,235,0.35)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-316",
+      "tell_id": "hero-discipline",
+      "severity": "major",
+      "title": "Hero breaks its discipline",
+      "evidence": {
+        "line": 151,
+        "selector": "html > body > section.hero",
+        "snippet": "<section class=\"hero\"> <span class=\"badge\">AI-powered incident intelligence</span> <h1>Transform incident chaos into clarity</h1> <p class=…"
+      },
+      "fix": "Cut the hero to a headline under two lines, a subtext under 20 words, four text elements and 6rem of top padding.",
+      "why": "The hero must fit the first viewport: two headline lines, a subtext under 20 words, at most four text elements, padding under 6rem."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 151,
+        "selector": "html > body > section.hero",
+        "snippet": "family hero is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 154,
+        "selector": "body > section.hero > p.lead",
+        "snippet": "seamless in \"Supercharge your workflow with a seamless, next-gen platform. Six hours of on ca\""
+      },
+      "fix": "Replace \"seamless\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 154,
+        "selector": "body > section.hero > p.lead",
+        "snippet": "next-gen in \"Supercharge your workflow with a seamless, next-gen platform. Six hours of on ca\""
+      },
+      "fix": "Replace \"next-gen\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 154,
+        "selector": "body > section.hero > p.lead",
+        "snippet": "Supercharge in \"Supercharge your workflow with a seamless, next-gen platform. Six hours of on ca\""
+      },
+      "fix": "Replace \"Supercharge\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 154,
+        "selector": "body > section.hero > p.lead",
+        "snippet": "banned tell \"filler-verbs\" detected: seamless in \"Supercharge your workflow with a seamless, next-gen platform. Six hours of on ca\""
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-005",
+      "tell_id": "duplicate-cta-intent",
+      "severity": "minor",
+      "title": "Two primary CTAs ask for the same thing",
+      "evidence": {
+        "line": 156,
+        "selector": "section.hero > div.hero-actions > a.btn",
+        "snippet": "\"Start free trial\" + \"Start free trial\" (intent exact:start free trial)"
+      },
+      "fix": "Keep one primary CTA per intent and demote the rest to a secondary style.",
+      "why": "One intent, one call to action: duplicate primaries split the decision instead of making it."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 156,
+        "selector": "section.hero > div.hero-actions > a.btn",
+        "snippet": "banned tell \"duplicate-cta-intent\" detected: \"Start free trial\" + \"Start free trial\" (intent exact:start free trial)"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 161,
+        "selector": "html > body > section.container",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-201",
+      "tell_id": "three-equal-cards",
+      "severity": "blocker",
+      "title": "Three or more equal cards in one row",
+      "evidence": {
+        "line": 164,
+        "selector": "body > section.container > div.three-cards",
+        "snippet": "<div class=\"three-cards\"> <article class=\"card\"><div class=\"icon\">🔌</div><h3>Connect sources</h3><p>Connect Slack, PagerDuty, and your dep…"
+      },
+      "fix": "Rebuild the row as an asymmetric grid or a zigzag, or make one card genuinely dominant.",
+      "why": "The named banned layout: three identical cards in a line is a grid standing in for a decision."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 164,
+        "selector": "body > section.container > div.three-cards",
+        "snippet": "banned tell \"three-equal-cards\" detected: <div class=\"three-cards\"> <article class=\"card\"><div class=\"icon\">🔌</div><h3>Connect sources</h3><p>Connect Slack, PagerDuty, and your dep…"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 165,
+        "selector": "div.three-cards > article.card > p",
+        "snippet": "seamless in \"Connect Slack, PagerDuty, and your deploy log in a seamless unified workflow.\""
+      },
+      "fix": "Replace \"seamless\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 171,
+        "selector": "html > body > section#example.proof-section",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-001",
+      "tell_id": "em-dash",
+      "severity": "blocker",
+      "title": "Em-dash or en-dash in visible text",
+      "evidence": {
+        "line": 174,
+        "selector": "section#example.proof-section > div.container > p.section-subtitle",
+        "snippet": "to a document your whole team can trust — instantly."
+      },
+      "fix": "Replace the dash with a comma, colon or plain hyphen: \"A, B\" or \"A: B\".",
+      "why": "The number one AI tell in production tests: a dash where a comma, colon or hyphen belongs."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 174,
+        "selector": "section#example.proof-section > div.container > p.section-subtitle",
+        "snippet": "banned tell \"em-dash\" detected: to a document your whole team can trust — instantly."
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-304",
+      "tell_id": "fake-screenshot",
+      "severity": "blocker",
+      "title": "Fake screenshot built from divs",
+      "evidence": {
+        "line": 175,
+        "selector": "section#example.proof-section > div.container > div.screenshot-mockup",
+        "snippet": "<div class=\"screenshot-mockup\"> <div class=\"mock-header\"><span class=\"dot\"></span><span class=\"dot\"></span><span class=\"dot\"></span></div> …"
+      },
+      "fix": "Render the real component, or use a real screenshot, or remove the mock.",
+      "why": "A UI made of rectangles is a lie about the product: use the real component, a real image or nothing."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 175,
+        "selector": "section#example.proof-section > div.container > div.screenshot-mockup",
+        "snippet": "banned tell \"fake-screenshot\" detected: <div class=\"screenshot-mockup\"> <div class=\"mock-header\"><span class=\"dot\"></span><span class=\"dot\"></span><span class=\"dot\"></span></div> …"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 181,
+        "selector": "div.mock-content > div.pane > pre",
+        "snippet": "elevated in \"09:08 DEPLOY checkout-api@7f2ca91 09:14 PAGER elevated 5xx on checkout-ap\""
+      },
+      "fix": "Replace \"elevated\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 188,
+        "selector": "div.mock-content > div.pane > p",
+        "snippet": "elevated in \"At 09:08, deploy 7f2ca91 changed checkout-api. PagerDuty alerted on elevated 5xx\""
+      },
+      "fix": "Replace \"elevated\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 196,
+        "selector": "html > body > section.container",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-201",
+      "tell_id": "three-equal-cards",
+      "severity": "blocker",
+      "title": "Three or more equal cards in one row",
+      "evidence": {
+        "line": 199,
+        "selector": "body > section.container > div.three-cards",
+        "snippet": "<div class=\"three-cards\"> <article class=\"card\"><div class=\"icon\">🔒</div><h3>Stored securely</h3><p>Source references, workspace access to…"
+      },
+      "fix": "Rebuild the row as an asymmetric grid or a zigzag, or make one card genuinely dominant.",
+      "why": "The named banned layout: three identical cards in a line is a grid standing in for a decision."
+    },
+    {
+      "check_id": "DC-308",
+      "tell_id": "emoji-as-icon",
+      "severity": "minor",
+      "title": "Emoji used as a UI icon",
+      "evidence": {
+        "line": 201,
+        "selector": "div.three-cards > article.card > div.icon",
+        "snippet": "<div class=\"icon\">🗑️</div> | emoji in an icon slot: 🗑️"
+      },
+      "fix": "Use one icon family in SVG, or drop the symbol.",
+      "why": "Emoji render differently on every platform and read as filler where an icon was needed."
+    },
+    {
+      "check_id": "DC-308",
+      "tell_id": "emoji-as-icon",
+      "severity": "minor",
+      "title": "Emoji used as a UI icon",
+      "evidence": {
+        "line": 202,
+        "selector": "div.three-cards > article.card > div.icon",
+        "snippet": "<div class=\"icon\">☁️</div> | emoji in an icon slot: ☁️"
+      },
+      "fix": "Use one icon family in SVG, or drop the symbol.",
+      "why": "Emoji render differently on every platform and read as filler where an icon was needed."
+    },
+    {
+      "check_id": "DC-201",
+      "tell_id": "three-equal-cards",
+      "severity": "blocker",
+      "title": "Three or more equal cards in one row",
+      "evidence": {
+        "line": 204,
+        "selector": "body > section.container > div.three-cards",
+        "snippet": "<div class=\"three-cards\" style=\"margin-top: 22px;\"> <article class=\"card\"><h3>Per seat</h3><p>Pricing scales with your team, not your incid…"
+      },
+      "fix": "Rebuild the row as an asymmetric grid or a zigzag, or make one card genuinely dominant.",
+      "why": "The named banned layout: three identical cards in a line is a grid standing in for a decision."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 211,
+        "selector": "html > body > section#trial.close",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 212,
+        "selector": "body > section#trial.close > h2",
+        "snippet": "revolutionize in \"Ready to revolutionize your incident workflow?\""
+      },
+      "fix": "Replace \"revolutionize\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    }
+  ],
+  "counts": {
+    "blocker": 21,
+    "major": 48,
+    "minor": 10
+  },
+  "score": {
+    "slop_index": 10,
+    "layout_families": 2,
+    "contrast_failures": 2
+  },
+  "verdict": "fail"
+}

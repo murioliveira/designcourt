@@ -1,0 +1,75 @@
+{
+  "contract_version": "1.0",
+  "brief": {
+    "goal": "Postmortem, incident timeline to doc",
+    "audience": "Target users and operators",
+    "success_metric": "Observed goal completion"
+  },
+  "mode": "persuade",
+  "rationale": {
+    "problem": "User needs to achieve: Postmortem, incident timeline to doc",
+    "user": "Target users and operators",
+    "trade_off": "Deliberately prioritizing hierarchy and clear single action over comprehensive feature lists"
+  },
+  "dials": {
+    "expressiveness": 4,
+    "density": 2,
+    "motion": 2,
+    "ornament": 2
+  },
+  "layout_plan": [
+    {
+      "section": "split asymmetric",
+      "family": "split-asymmetric",
+      "why": "Chosen for mode persuade section 1 to avoid adjacent family repetition."
+    },
+    {
+      "section": "statement stat",
+      "family": "statement-stat",
+      "why": "Chosen for mode persuade section 2 to avoid adjacent family repetition."
+    },
+    {
+      "section": "proof grid",
+      "family": "proof-grid",
+      "why": "Chosen for mode persuade section 3 to avoid adjacent family repetition."
+    },
+    {
+      "section": "side by side comparison",
+      "family": "side-by-side-comparison",
+      "why": "Chosen for mode persuade section 4 to avoid adjacent family repetition."
+    },
+    {
+      "section": "close action",
+      "family": "close-action",
+      "why": "Chosen for mode persuade section 5 to avoid adjacent family repetition."
+    }
+  ],
+  "token_plan": {
+    "accent": "Single warm or saturated accent, maximum one hue family. Neutral background with high contrast type.",
+    "neutrals": "Off-black text on off-white or dark neutral background, zero pure hex black or white in large fields.",
+    "type_scale": "Major third (1.25) scale with high contrast between display heading and body text."
+  },
+  "bans": [
+    "em-dash",
+    "purple-gradient",
+    "neon-glow",
+    "inter-default",
+    "three-equal-cards",
+    "repeated-zigzag",
+    "fake-screenshot",
+    "filler-verbs",
+    "generic-names",
+    "fake-precise-numbers",
+    "duplicate-cta-intent",
+    "scroll-cues",
+    "version-footer",
+    "text-logo-wall"
+  ],
+  "not_for": "Not for internal tools, high-frequency operational surfaces, or long-form reading.",
+  "decisions_used": [
+    "asymmetric-hero-over-centered",
+    "reject-three-equal-cards",
+    "sourced-metric-not-superlative",
+    "one-accent-one-primary-action"
+  ]
+}

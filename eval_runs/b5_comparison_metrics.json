@@ -1,0 +1,38 @@
+{
+  "benchmark_demand": "B5-read-research",
+  "topic": "Long-form technical research note on failure rates in automated deployment",
+  "word_count": 2382,
+  "artifacts": {
+    "designcourt_contract": "C:/Users/muzph/projetos/designcourt/eval_runs/b5_contract.json",
+    "designcourt_page": "C:/Users/muzph/projetos/designcourt/eval_runs/b5_page.html",
+    "competitor_page": "C:/Users/muzph/projetos/designcourt/eval_runs/b5_competitor_standard.html",
+    "designcourt_judge_verdict": "C:/Users/muzph/projetos/designcourt/eval_runs/b5_verdict.json",
+    "competitor_judge_verdict": "C:/Users/muzph/projetos/designcourt/eval_runs/b5_competitor_verdict.json",
+    "designcourt_impeccable_report": "C:/Users/muzph/projetos/designcourt/eval_runs/b5_impeccable.txt",
+    "competitor_impeccable_report": "C:/Users/muzph/projetos/designcourt/eval_runs/b5_competitor_impeccable.txt"
+  },
+  "comparison": {
+    "designcourt_version": {
+      "judge_verdict": "clean",
+      "slop_index": 2.5,
+      "blockers": 0,
+      "majors": 0,
+      "minors": 5,
+      "contrast_failures": 0,
+      "impeccable_anti_patterns": 0,
+      "judge_runtime_s": 0.25,
+      "impeccable_runtime_s": 1.68
+    },
+    "competitor_standard_version": {
+      "judge_verdict": "fail",
+      "slop_index": 10.0,
+      "blockers": 23,
+      "majors": 57,
+      "minors": 7,
+      "contrast_failures": 5,
+      "impeccable_anti_patterns": 58,
+      "judge_runtime_s": 0.29,
+      "impeccable_runtime_s": 1.82
+    }
+  }
+}

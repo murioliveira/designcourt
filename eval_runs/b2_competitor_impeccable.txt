@@ -1,0 +1,80 @@
+
+C:\Users\muzph\projetos\designcourt\eval_runs\b2_competitor_standard.html
+  [low-contrast] 3.7:1 (need 4.5:1) — text #ffffff on #3b82f6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [gradient-text] background-clip: text + gradient
+    → Gradient text is decorative rather than meaningful — a common AI tell, especially on headings and metrics. Use solid colors for text.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 3.7:1 (need 4.5:1) — text #ffffff on #3b82f6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 3.5:1 (need 4.5:1) — text #ffffff on #ec4899
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [gradient-text] background-clip: text + gradient
+    → Gradient text is decorative rather than meaningful — a common AI tell, especially on headings and metrics. Use solid colors for text.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [gradient-text] background-clip: text + gradient
+    → Gradient text is decorative rather than meaningful — a common AI tell, especially on headings and metrics. Use solid colors for text.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 4.2:1 (need 4.5:1) — text #ffffff on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 3.7:1 (need 4.5:1) — text #ffffff on #3b82f6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [low-contrast] 2.5:1 (need 4.5:1) — text #c9c5db on #8b5cf6
+    → Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.
+  [icon-tile-stack] 48x48px icon tile above h3 "Even heat"
+    → A small rounded-square icon container above a heading is the universal AI feature-card template — every generator outputs this exact shape. Try a side-by-side icon and heading, or let the icon sit in flow without its own container.
+  [icon-tile-stack] 48x48px icon tile above h3 "Premium steel"
+    → A small rounded-square icon container above a heading is the universal AI feature-card template — every generator outputs this exact shape. Try a side-by-side icon and heading, or let the icon sit in flow without its own container.
+  [extreme-negative-tracking] letter-spacing: -0.06em — "Elevate every pour with Kettle 03"
+    → Letter-spacing pulled tighter than the point where characters keep their own shapes costs legibility. Tighten display type optically, not destructively.
+  [overused-font] Primary font: inter
+    → Inter, Roboto, Fraunces, Geist, Plus Jakarta Sans, and Space Grotesk are used on so many sites they no longer feel distinctive. Each new wave of AI-generated UIs converges on the same handful of faces. Choose a face that gives your interface personality.
+  [gradient-text] background-clip: text + gradient
+    → Gradient text is decorative rather than meaningful — a common AI tell, especially on headings and metrics. Use solid colors for text.
+  [marketing-buzzword] 1 buzzword phrase: "e. Ready to revolutionize your pour o"
+    → Generic SaaS phrases (streamline / empower / supercharge / world-class / enterprise-grade / next-generation / cutting-edge / etc) are instant AI tells. Pick a specific verb and noun that says what the product literally does.
+
+38 anti-patterns found.

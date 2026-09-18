@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kettle 03 | Elevate every pour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: "Inter", system-ui, sans-serif;
+      --bg: #09071a;
+      --surface: rgba(255, 255, 255, 0.09);
+      --surface-strong: rgba(255, 255, 255, 0.14);
+      --text: #ffffff;
+      --muted: #c9c5db;
+      --purple: #8b5cf6;
+      --blue: #3b82f6;
+      --pink: #ec4899;
+      --line: rgba(255, 255, 255, 0.17);
+      --glow: rgba(139, 92, 246, 0.48);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --radius-card: 24px;
+      --radius-button: 999px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .nav {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+    .logo { font-size: 20px; font-weight: 800; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-link { color: var(--muted); font-size: 14px; }
+    .nav-cta, .cta-primary {
+      border: 0;
+      border-radius: var(--radius-button);
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      color: var(--text);
+      font-weight: 700;
+      box-shadow: 0 12px 34px var(--glow);
+      cursor: pointer;
+      transition: all 220ms ease;
+    }
+    .nav-cta { padding: 10px 18px; }
+    .cta-primary { padding: 15px 25px; font-size: 16px; }
+    .nav-cta:hover, .cta-primary:hover { transform: translateY(-2px) scale(1.02); }
+    .hero {
+      min-height: calc(100vh - 80px);
+      display: grid;
+      place-items: center;
+      padding: 76px 28px 110px;
+      text-align: center;
+    }
+    .hero-inner { max-width: 1060px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-button);
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .hero h1 {
+      margin: 0 auto 24px;
+      max-width: 900px;
+      font-size: clamp(54px, 7vw, 96px);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #c4b5fd, #60a5fa, #f9a8d4);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero-subtitle {
+      max-width: 650px;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      font-size: 19px;
+    }
+    .hero-actions { display: flex; justify-content: center; gap: 14px; }
+    .secondary-button {
+      padding: 14px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-button);
+      background: var(--surface);
+      color: var(--text);
+      backdrop-filter: blur(18px);
+    }
+    .price { margin: 20px 0 0; color: var(--muted); font-size: 14px; }
+    .product-mockup {
+      position: relative;
+      max-width: 760px;
+      margin: 70px auto 0;
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      background: linear-gradient(145deg, var(--surface-strong), var(--surface));
+      box-shadow: 0 30px 90px var(--shadow);
+      backdrop-filter: blur(24px);
+      overflow: hidden;
+    }
+    .product-mockup::before {
+      content: "";
+      position: absolute;
+      inset: 22% 28%;
+      background: var(--purple);
+      filter: blur(90px);
+      opacity: 0.6;
+    }
+    .product-mockup svg { position: relative; display: block; width: 100%; height: auto; }
+    .section { max-width: 1180px; margin: 0 auto; padding: 110px 28px; }
+    .section-heading { margin: 0 auto 16px; max-width: 760px; text-align: center; font-size: 48px; line-height: 1.08; }
+    .section-description { margin: 0 auto 52px; max-width: 660px; text-align: center; color: var(--muted); }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feature-card, .glass-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      box-shadow: 0 24px 60px var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .feature-card { padding: 30px; }
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--purple), var(--pink));
+      font-size: 23px;
+    }
+    .feature-card h3 { margin: 0 0 9px; font-size: 19px; }
+    .feature-card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 52px;
+    }
+    .detail-copy h2 { margin: 0 0 18px; font-size: 54px; line-height: 1.04; }
+    .detail-copy p { color: var(--muted); }
+    .metric {
+      margin: 22px 0 8px;
+      font-size: 92px;
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .glass-card { padding: 38px; }
+    .spout-diagram { display: block; width: 100%; }
+    .spec-list { margin: 24px 0 0; padding: 0; list-style: none; }
+    .spec-list li { padding: 14px 0; border-top: 1px solid var(--line); color: var(--muted); }
+    .care-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .care-card { padding: 34px; }
+    .care-card h3 { margin-top: 0; }
+    .care-card li { color: var(--muted); margin-bottom: 8px; }
+    .shipping-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .shipping-card { padding: 34px; }
+    .shipping-card h3 { margin-top: 0; }
+    .shipping-card p { margin-bottom: 0; color: var(--muted); }
+    .final-cta {
+      margin: 90px auto;
+      max-width: 1120px;
+      padding: 90px 28px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: radial-gradient(circle at top, var(--purple), transparent 68%), var(--surface);
+      text-align: center;
+      box-shadow: 0 28px 90px var(--glow);
+    }
+    .final-cta h2 { margin: 0 auto 18px; max-width: 760px; font-size: 54px; line-height: 1.08; }
+    .final-cta p { margin: 0 auto 30px; color: var(--muted); }
+    .status { min-height: 24px; margin-top: 16px; color: var(--text); }
+    footer { padding: 34px 28px; border-top: 1px solid var(--line); text-align: center; color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 768px) {
+      .nav-links .nav-link { display: none; }
+      .hero { min-height: auto; padding-top: 54px; }
+      .hero h1 { font-size: 54px; }
+      .hero-actions { flex-direction: column; }
+      .feature-grid, .detail-layout, .care-grid, .shipping-row { grid-template-columns: 1fr; }
+      .section { padding: 78px 22px; }
+      .section-heading, .detail-copy h2, .final-cta h2 { font-size: 40px; }
+      .product-mockup { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="logo" href="#">Kettle 03</a>
+    <div class="nav-links">
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#care">Care</a>
+      <button class="nav-cta" type="button" data-add>Add to cart</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="badge">✦ Next-gen pour over precision</div>
+        <h1>Elevate every pour with <span class="gradient-text">Kettle 03</span></h1>
+        <p class="hero-subtitle">A game-changing stovetop kettle engineered to transform your coffee ritual — seamless control, timeless steel, extraordinary results.</p>
+        <div class="hero-actions">
+          <button class="cta-primary" type="button" data-add>Add to cart · €89</button>
+          <a class="secondary-button" href="#features">Explore features</a>
+        </div>
+        <p class="price">€89 · No discount · Ships in four days</p>
+
+        <div class="product-mockup">
+          <svg viewBox="0 0 760 450" role="img" aria-label="Stylized drawing of Kettle 03">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M210 180C192 236 188 315 202 378H518C531 314 526 237 510 180Z" stroke-width="8"/>
+              <path d="M203 378H518" stroke-width="14"/>
+              <path d="M244 180C250 148 274 130 307 130H415C446 130 471 148 478 180" stroke-width="8"/>
+              <path d="M324 130V99H399V130M341 99C344 77 356 66 373 66C390 66 402 77 405 99" stroke-width="7"/>
+              <path d="M509 205C574 181 606 139 625 87C637 54 660 37 697 30" stroke-width="12"/>
+              <path d="M510 235C590 207 628 165 648 111C659 81 675 67 707 60" stroke-width="7"/>
+              <path d="M226 204C154 178 98 222 99 289C100 355 142 390 203 376" stroke-width="28"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <h2 class="section-heading">Precision meets performance</h2>
+      <p class="section-description">Discover the seamless design details that make Kettle 03 the ultimate companion for every coffee enthusiast.</p>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="icon-box">◌</div>
+          <h3>Precision flow</h3>
+          <p>Gooseneck spout machined to 0.6mm for a 4mm stream.</p>
+        </article>
+        <article class="feature-card">
+          <div class="icon-box">⌁</div>
+          <h3>Even heat</h3>
+          <p>Flat bottom plate for even heat, works on induction.</p>
+        </article>
+        <article class="feature-card">
+          <div class="icon-box">✦</div>
+          <h3>Premium steel</h3>
+          <p>0.9 litre, 480 grams empty, brushed 304 steel.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section detail-layout">
+      <div class="detail-copy">
+        <div class="metric">0.6mm</div>
+        <h2>Control down to the detail.</h2>
+        <p>The ultra-precise gooseneck spout delivers a 4mm stream, helping you unlock the perfect pour with effortless consistency.</p>
+      </div>
+      <div class="glass-card">
+        <svg class="spout-diagram" viewBox="0 0 600 260" role="img" aria-label="Close drawing of the Kettle 03 spout">
+          <g fill="none" stroke="currentColor" stroke-linecap="round">
+            <path d="M30 178C190 178 282 128 370 62" stroke-width="22"/>
+            <path d="M30 208C201 208 301 154 386 85" stroke-width="7"/>
+            <path d="M376 46L402 98M365 51L386 40M391 104L411 94" stroke-width="3"/>
+            <path d="M425 104C478 126 522 147 574 159" stroke-width="6" stroke-dasharray="7 9"/>
+          </g>
+          <text x="408" y="58" fill="currentColor" font-size="16">0.6MM SPOUT</text>
+          <text x="462" y="117" fill="currentColor" font-size="16">4MM STREAM</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="section detail-layout">
+      <div class="glass-card">
+        <h3>Brushed 304 steel</h3>
+        <ul class="spec-list">
+          <li>0.9 litre capacity</li>
+          <li>480 grams empty</li>
+          <li>Flat bottom plate</li>
+          <li>Works on induction</li>
+        </ul>
+      </div>
+      <div class="detail-copy">
+        <div class="metric">3 years</div>
+        <h2>Built for your daily ritual.</h2>
+        <p>Timeless materials meet next-gen performance, backed by a three year warranty for confidence in every pour.</p>
+      </div>
+    </section>
+
+    <section class="section" id="care">
+      <h2 class="section-heading">Simple care, lasting performance</h2>
+      <p class="section-description">A few seamless steps keep your Kettle 03 ready for the next perfect brew.</p>
+      <div class="care-grid">
+        <article class="glass-card care-card">
+          <h3>Care instructions</h3>
+          <ul>
+            <li>Wash by hand with mild soap.</li>
+            <li>Rinse and dry after use.</li>
+          </ul>
+        </article>
+        <article class="glass-card care-card">
+          <h3>What not to do</h3>
+          <ul>
+            <li>Do not heat the kettle empty.</li>
+            <li>Do not use abrasive cleaners.</li>
+            <li>Do not place it in a dishwasher.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-heading">From our studio to your stovetop</h2>
+      <p class="section-description">Everything you need to begin your elevated brewing journey.</p>
+      <div class="shipping-row">
+        <article class="glass-card shipping-card">
+          <h3>Fast shipping</h3>
+          <p>Ships in four days. Shipping cost is shown at checkout.</p>
+        </article>
+        <article class="glass-card shipping-card">
+          <h3>Simple returns</h3>
+          <p>Return terms are shown before purchase.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <h2>Ready to revolutionize your pour over?</h2>
+      <p>Kettle 03. Precision, performance, and possibility for €89.</p>
+      <button class="cta-primary" type="button" data-add>Get Kettle 03 · €89</button>
+      <div class="status" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>Kettle 03 · Brushed 304 steel · Three year warranty</footer>
+
+  <script>
+    const controls = document.querySelectorAll('[data-add]');
+    const status = document.querySelector('.status');
+    controls.forEach((control) => {
+      control.addEventListener('click', () => {
+        status.textContent = 'Kettle 03 added to cart.';
+      });
+    });
+  </script>
+</body>
+</html>

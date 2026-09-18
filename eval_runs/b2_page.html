@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf1f0">
+  <title>Kettle 03 | Stovetop pour over kettle</title>
+  <style>
+    :root {
+      --font-display: Georgia, "Times New Roman", serif;
+      --font-body: "Trebuchet MS", Arial, sans-serif;
+      --paper: #edf1f0;
+      --paper-raised: #f8faf9;
+      --ink: #202523;
+      --muted: #59625e;
+      --line: #c5ceca;
+      --steel: #dce4e1;
+      --steel-dark: #697570;
+      --accent: #a43b16;
+      --accent-hover: #7e2b0d;
+      --accent-ink: #fff9f1;
+      --focus: #7e2b0d;
+      --radius-sm: 4px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --space-page: clamp(24px, 5vw, 76px);
+      --content: 1280px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    button, a { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 4px;
+    }
+    .skip-link {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 20;
+      padding: 10px 14px;
+      background-color: var(--ink);
+      color: var(--paper);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .site-header {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-page);
+      border-bottom: 1px solid var(--line);
+      background-color: var(--paper);
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .header-price {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    main { overflow: hidden; }
+    section { border-bottom: 1px solid var(--line); }
+    .section-inner {
+      width: min(100%, var(--content));
+      margin: 0 auto;
+      padding: 96px var(--space-page);
+    }
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      text-wrap: balance;
+    }
+    h1 {
+      max-width: 9ch;
+      margin-bottom: 22px;
+      font-size: clamp(56px, 7vw, 102px);
+      line-height: 0.92;
+      letter-spacing: -0.055em;
+    }
+    h2 {
+      max-width: 15ch;
+      margin-bottom: 24px;
+      font-size: clamp(42px, 5vw, 72px);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+    h3 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+    p, dd, dt, figcaption, desc, li {
+      margin-top: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .hero {
+      background-color: var(--paper-raised);
+    }
+    .hero .section-inner {
+      min-height: calc(100dvh - 68px);
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(520px, 1.4fr);
+      align-items: center;
+      gap: clamp(36px, 6vw, 96px);
+      padding-top: 72px;
+      padding-bottom: 72px;
+    }
+    .hero-copy { position: relative; z-index: 2; }
+    .hero-sub {
+      max-width: 34ch;
+      margin-bottom: 28px;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+    .price {
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: 34px;
+    }
+    .price-note {
+      max-width: 16ch;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .purchase-button {
+      min-height: 50px;
+      padding: 13px 22px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-sm);
+      background-color: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 700;
+      transition: background-color 160ms ease-out, border-color 160ms ease-out;
+    }
+    .purchase-button:hover {
+      border-color: var(--accent-hover);
+      background-color: var(--accent-hover);
+    }
+    .hero-facts {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 0;
+      margin: 42px 0 0;
+      border-top: 1px solid var(--line);
+    }
+    .hero-facts div {
+      padding: 14px 20px;
+    }
+    .hero-facts div + div {
+      padding: 14px 20px;
+      border-left: 1px solid var(--line);
+    }
+    .hero-facts dt, .hero-facts dd {
+      padding-left: 4px;
+    }
+    .hero-facts dt {
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .hero-facts dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .technical-figure {
+      margin: 0;
+      color: var(--ink);
+    }
+    .technical-figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .technical-figure figcaption {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      line-height: 1.55;
+    }
+    .kettle-outline { color: var(--ink); }
+    .kettle-detail { color: var(--steel-dark); }
+    .kettle-accent { color: var(--accent); }
+    .statement-stat .section-inner {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: clamp(48px, 9vw, 140px);
+      align-items: center;
+    }
+    .dimension {
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-size: clamp(94px, 14vw, 198px);
+      line-height: 0.8;
+      letter-spacing: -0.07em;
+    }
+    .dimension small {
+      display: block;
+      margin-top: 18px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .spout-copy p {
+      max-width: 42ch;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+    .spout-close {
+      margin-top: 42px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .proof-grid {
+      padding: 12px 0;
+      background-color: var(--ink);
+      color: var(--paper);
+    }
+    .proof-grid .section-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.5fr);
+      gap: 1px;
+      padding-top: 0;
+      padding-bottom: 0;
+      background-color: var(--steel-dark);
+    }
+    .material-main,
+    .warranty-note {
+      background-color: var(--ink);
+      color: var(--paper);
+    }
+    .material-main { padding: 104px 10% 104px 32px; }
+    .warranty-note {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 104px 32px 104px 18%;
+    }
+    .proof-grid h2 { color: var(--paper); }
+    .proof-grid p { color: var(--steel); line-height: 32px; }
+    .spec-line {
+      max-width: 36ch;
+      margin-bottom: 16px;
+      font-size: 20px;
+      line-height: 32px;
+    }
+    .warranty-years {
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: 92px;
+      line-height: 0.85;
+      letter-spacing: -0.06em;
+    }
+    .warranty-years span {
+      display: block;
+      margin-top: 14px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .side-by-side-comparison .section-inner { padding-bottom: 112px; }
+    .care-intro { margin-bottom: 54px; }
+    .care-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .care-panel { padding: 42px 32px; }
+    .care-panel + .care-panel {
+      padding: 42px 32px;
+      border-left: 1px solid var(--line);
+    }
+    .care-panel ul {
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .care-panel li {
+      padding: 11px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      line-height: 1.55;
+    }
+    .close-action { background-color: var(--steel); }
+    .close-action .section-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(420px, 1.15fr);
+      align-items: end;
+      gap: clamp(48px, 9vw, 130px);
+    }
+    .fulfilment { margin: 0; }
+    .fulfilment div {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      padding: 18px 0;
+      border-top: 1px solid var(--steel-dark);
+    }
+    .fulfilment div:last-child { border-bottom: 1px solid var(--steel-dark); }
+    .fulfilment dt { font-weight: 700; }
+    .fulfilment dd { margin: 0; color: var(--muted); line-height: 1.55; }
+    .closing-copy h2 { margin-bottom: 18px; }
+    .closing-copy p { max-width: 34ch; margin-bottom: 28px; line-height: 1.55; }
+    .purchase-row { display: flex; align-items: center; gap: 18px; }
+    .purchase-row strong {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+    }
+    .cart-status {
+      min-height: 24px;
+      margin: 16px 0 0;
+      color: var(--ink);
+      font-size: 14px;
+    }
+    .site-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px var(--space-page);
+      background-color: var(--steel);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .purchase-button { transition: none; }
+      .skip-link { transform: none; }
+    }
+
+    @media (max-width: 768px) {
+      .site-header { height: 60px; }
+      .section-inner { padding: 72px 24px; }
+      .hero .section-inner,
+      .statement-stat .section-inner,
+      .close-action .section-inner {
+        min-height: auto;
+        grid-template-columns: 1fr;
+      }
+      .hero .section-inner { padding-top: 56px; padding-bottom: 64px; }
+      .hero-copy { order: 1; }
+      .technical-figure { order: 2; margin-top: 18px; }
+      h1 { font-size: clamp(54px, 17vw, 78px); }
+      h2 { font-size: 44px; }
+      .hero-facts,
+      .care-columns { grid-template-columns: 1fr; }
+      .hero-facts div + div {
+        padding-left: 0;
+        border-left: 0;
+      }
+      .proof-grid .section-inner { grid-template-columns: 1fr; }
+      .material-main,
+      .warranty-note { padding: 72px 24px; }
+      .warranty-note { border-top: 1px solid var(--steel-dark); }
+      .care-panel { padding: 34px 16px; }
+      .care-panel + .care-panel {
+        padding-left: 16px;
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+      .close-action .section-inner { gap: 64px; }
+      .purchase-row { align-items: stretch; flex-direction: column; }
+      .purchase-button { width: 100%; min-height: 52px; }
+      .site-footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to product</a>
+  <header class="site-header">
+    <div class="wordmark">Kettle 03</div>
+    <div class="header-price">€89 · No discount</div>
+  </header>
+
+  <main id="main">
+    <section class="hero split-asymmetric" aria-labelledby="product-title">
+      <div class="section-inner">
+        <div class="hero-copy">
+          <h1 id="product-title">Pour a 4mm stream.</h1>
+          <p class="hero-sub">Kettle 03 is a stovetop pour over kettle for filter coffee.</p>
+          <div class="price-row">
+            <span class="price">€89</span>
+            <span class="price-note">One price. No discount.</span>
+          </div>
+          <button class="purchase-button" type="button" data-add>Add to cart, €89</button>
+          <dl class="hero-facts">
+            <div>
+              <dt>Heat</dt>
+              <dd>Flat bottom plate for even heat, works on induction</dd>
+            </div>
+            <div>
+              <dt>Body</dt>
+              <dd>0.9 litre, 480 grams empty, brushed 304 steel</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="technical-figure" aria-labelledby="kettle-drawing-title">
+          <svg viewBox="0 0 760 620" role="img" aria-labelledby="kettle-drawing-title kettle-drawing-desc">
+            <title id="kettle-drawing-title">Kettle 03 drawn outline</title>
+            <desc id="kettle-drawing-desc">Technical line drawing of kettle body and spout.</desc>
+            <g class="kettle-detail" fill="none" stroke="currentColor" stroke-width="1.25">
+              <path d="M90 520H620" stroke-dasharray="6 8"/>
+              <path d="M205 548H520"/>
+              <path d="M85 132V520" stroke-dasharray="6 8"/>
+              <path d="M72 132H98M72 520H98"/>
+            </g>
+            <g class="kettle-outline" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M188 292C174 339 166 410 177 491C179 509 192 520 211 520H507C527 520 542 507 544 488C552 413 543 341 527 292Z" stroke-width="4"/>
+              <path d="M177 491H544" stroke-width="7"/>
+              <path d="M219 292C224 264 245 246 272 244H441C469 246 492 264 497 292" stroke-width="4"/>
+              <path d="M286 244V221C286 208 296 199 309 199H405C418 199 428 208 428 221V244" stroke-width="4"/>
+              <path d="M324 199C326 176 339 163 357 163C376 163 389 176 391 199" stroke-width="4"/>
+              <path d="M526 314C584 292 618 246 633 190C643 153 664 126 704 111" stroke-width="7"/>
+              <path d="M527 338C604 312 648 260 663 199C671 166 684 146 713 137" stroke-width="4"/>
+              <path d="M707 111L723 126L713 137" stroke-width="4"/>
+              <path d="M209 309C135 286 90 329 86 405C82 478 121 526 188 518" stroke-width="18"/>
+              <path d="M213 337C158 321 128 350 126 406C123 459 146 488 181 489" stroke-width="4"/>
+            </g>
+            <g class="kettle-accent" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M705 80V156"/>
+              <path d="M693 80H717M693 156H717"/>
+              <path d="M665 94L697 112M668 144L700 130" stroke-dasharray="4 5"/>
+            </g>
+            <g class="kettle-accent" fill="currentColor" font-family="Trebuchet MS, Arial, sans-serif">
+              <text x="550" y="78" font-size="16" letter-spacing="2">0.6MM SPOUT</text>
+              <text x="219" y="572" font-size="14" letter-spacing="2">FLAT BOTTOM PLATE</text>
+            </g>
+          </svg>
+          <figcaption>Drawn profile and dimension study, not a photograph</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="statement-stat" aria-labelledby="spout-title">
+      <div class="section-inner">
+        <div class="dimension" aria-hidden="true">0.6<small>millimetre spout</small></div>
+        <div class="spout-copy">
+          <p class="eyebrow">The close view</p>
+          <h2 id="spout-title">The dimension behind the stream.</h2>
+          <p>Gooseneck spout machined to 0.6mm for a 4mm stream. The machined dimension sets the narrow outlet before water leaves the kettle.</p>
+          <figure class="technical-figure spout-close">
+            <svg viewBox="0 0 720 220" role="img" aria-label="Close drawing of the 0.6 millimetre spout and 4 millimetre stream">
+              <g class="kettle-outline" fill="none" stroke="currentColor" stroke-linecap="round">
+                <path d="M52 136C174 136 263 94 348 52" stroke-width="18"/>
+                <path d="M52 158C184 158 280 113 360 70" stroke-width="5"/>
+              </g>
+              <g class="kettle-accent" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M351 38L378 83"/>
+                <path d="M342 43L360 32M369 88L386 77"/>
+                <path d="M408 80C470 102 530 126 657 150" stroke-width="4" stroke-dasharray="7 9"/>
+              </g>
+              <g class="kettle-accent" fill="currentColor" font-family="Trebuchet MS, Arial, sans-serif">
+                <text x="390" y="38" font-size="14" letter-spacing="2">0.6MM</text>
+                <text x="548" y="112" font-size="14" letter-spacing="2">4MM STREAM</text>
+              </g>
+            </svg>
+            <figcaption>Spout dimension and stream width shown as a drawn close view</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-grid" aria-labelledby="material-title">
+      <div class="section-inner">
+        <div class="material-main">
+          <h2 id="material-title">Steel where heat meets water.</h2>
+          <p class="spec-line">0.9 litre, 480 grams empty, brushed 304 steel.</p>
+          <p class="spec-line">Flat bottom plate for even heat, works on induction.</p>
+        </div>
+        <div class="warranty-note">
+          <div class="warranty-years">3<span>year warranty</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="side-by-side-comparison" aria-labelledby="care-title">
+      <div class="section-inner">
+        <div class="care-intro">
+          <h2 id="care-title">Care for the steel.</h2>
+        </div>
+        <div class="care-columns">
+          <div class="care-panel">
+            <h3>Care instructions</h3>
+            <ul>
+              <li>Wash by hand with mild soap.</li>
+              <li>Rinse and dry after use.</li>
+            </ul>
+          </div>
+          <div class="care-panel">
+            <h3>What not to do</h3>
+            <ul>
+              <li>Do not heat the kettle empty.</li>
+              <li>Do not use abrasive cleaners.</li>
+              <li>Do not place it in a dishwasher.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="close-action" aria-labelledby="closing-title">
+      <div class="section-inner">
+        <dl class="fulfilment">
+          <div>
+            <dt>Shipping</dt>
+            <dd>Ships in four days. Shipping cost is shown at checkout.</dd>
+          </div>
+          <div>
+            <dt>Returns</dt>
+            <dd>Return terms are shown before purchase.</dd>
+          </div>
+        </dl>
+        <div class="closing-copy">
+          <h2 id="closing-title">Kettle 03, ready for the stovetop.</h2>
+          <p>0.6mm spout, flat bottom plate, brushed 304 steel.</p>
+          <div class="purchase-row">
+            <strong>€89</strong>
+            <button class="purchase-button" type="button" data-add>Add Kettle 03, €89</button>
+          </div>
+          <p class="cart-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Kettle 03</span>
+    <span>Stovetop pour over kettle</span>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('[data-add]');
+    const status = document.querySelector('.cart-status');
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const original = button.textContent;
+        button.textContent = 'Added to cart';
+        button.disabled = true;
+        status.textContent = 'Kettle 03 added to cart at €89.';
+        window.setTimeout(() => {
+          button.textContent = original;
+          button.disabled = false;
+        }, 1800);
+      });
+    });
+  </script>
+</body>
+</html>

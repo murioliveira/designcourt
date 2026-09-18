@@ -1,0 +1,784 @@
+{
+  "judge_version": "1.0",
+  "files_scanned": 1,
+  "findings": [
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"split asymmetric\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"statement stat\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"proof grid\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"side by side comparison\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"close action\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-104",
+      "tell_id": "inter-default",
+      "severity": "blocker",
+      "title": "Inter as the default font",
+      "evidence": {
+        "line": 2,
+        "selector": ":root",
+        "snippet": "--font: \"Inter\", system-ui, sans-serif | first family is Inter"
+      },
+      "fix": "Use the system stack (system-ui, then the platform faces) or the brand face, not Inter.",
+      "why": "Inter as the first family is the default face of generated UI and flattens every page into the same voice."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 2,
+        "selector": ":root",
+        "snippet": "banned tell \"inter-default\" detected: --font: \"Inter\", system-ui, sans-serif | first family is Inter"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-104",
+      "tell_id": "inter-default",
+      "severity": "blocker",
+      "title": "Inter as the default font",
+      "evidence": {
+        "line": 9,
+        "selector": "html > head > link",
+        "snippet": "<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap\" rel=\"stylesheet\"> | Google Fonts request …"
+      },
+      "fix": "Remove the Inter request and use the system stack.",
+      "why": "Inter as the first family is the default face of generated UI and flattens every page into the same voice."
+    },
+    {
+      "check_id": "DC-104",
+      "tell_id": "inter-default",
+      "severity": "blocker",
+      "title": "Inter as the default font",
+      "evidence": {
+        "line": 15,
+        "selector": "body",
+        "snippet": "font-family: var(--font) | first family is Inter"
+      },
+      "fix": "Use the system stack (system-ui, then the platform faces) or the brand face, not Inter.",
+      "why": "Inter as the first family is the default face of generated UI and flattens every page into the same voice."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 15,
+        "selector": "body",
+        "snippet": "#ffffff on #ec4899 = 3.53:1, needs 4.5:1 (background #ec4899 from .icon-box; font-size 23px)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | stop #8b5cf6"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | stop #09071a"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | …"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | …"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | …"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | …"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | …"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 16,
+        "selector": "body",
+        "snippet": "banned tell \"purple-gradient\" detected: background: radial-gradient(circle at 80% 10%, var(--purple), transparent 31%), linear-gradient(145deg, var(--bg), #17123a 52%, #0b1731) | stop #8b5cf6"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 33,
+        "selector": ".nav-link",
+        "snippet": "color: var(--muted) | #c9c5db is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-107",
+      "tell_id": "multi-accent",
+      "severity": "major",
+      "title": "More than one accent hue family",
+      "evidence": {
+        "line": 36,
+        "selector": ".nav-cta, .cta-primary",
+        "snippet": "blue (3 uses, e.g. #3b82f6 at line 36); indigo (6 uses, e.g. #8b5cf6 at line 14)"
+      },
+      "fix": "Keep the accent you use most, and rebuild the second hue as a neutral or a tint of the first.",
+      "why": "One accent per page is the lock: a second saturated hue family breaks the color hierarchy."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 39,
+        "selector": ".nav-cta, .cta-primary",
+        "snippet": "background: linear-gradient(90deg, var(--purple), var(--blue)) | stop #8b5cf6"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 39,
+        "selector": ".nav-cta, .cta-primary",
+        "snippet": "background: linear-gradient(90deg, var(--purple), var(--blue)) | #3b82f6 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 42,
+        "selector": ".nav-cta, .cta-primary",
+        "snippet": "#ffffff on #3b82f6 = 3.68:1, needs 4.5:1 (background #3b82f6 from .nav-cta, .cta-primary; font-size could not be resolved, so the 4.5:1 body threshold is applied)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-311",
+      "tell_id": "property-animation",
+      "severity": "minor",
+      "title": "Transition or animation on a layout property",
+      "evidence": {
+        "line": 47,
+        "selector": ".nav-cta, .cta-primary",
+        "snippet": "transition: all 220ms ease | transition: all covers layout properties"
+      },
+      "fix": "List the animated properties explicitly instead of \"all\".",
+      "why": "Animating width, height, top or left forces layout on every frame: animate transform and opacity instead."
+    },
+    {
+      "check_id": "DC-205",
+      "tell_id": "h-screen",
+      "severity": "minor",
+      "title": "Height in vh instead of dvh",
+      "evidence": {
+        "line": 52,
+        "selector": ".hero",
+        "snippet": "min-height: calc(100vh - 80px) | vh unit in a height"
+      },
+      "fix": "Use dvh (min-height: 100dvh) or auto height for that section.",
+      "why": "vh does not follow the mobile browser chrome, so the section is clipped or leaves a gap on phones."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 75,
+        "selector": ".gradient-text",
+        "snippet": "background: linear-gradient(90deg, #c4b5fd, #60a5fa, #f9a8d4) | stop #c4b5fd"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 75,
+        "selector": ".gradient-text",
+        "snippet": "background: linear-gradient(90deg, #c4b5fd, #60a5fa, #f9a8d4) | literals: #c4b5fd, #60a5fa, #f9a8d4"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 75,
+        "selector": ".gradient-text",
+        "snippet": "background: linear-gradient(90deg, #c4b5fd, #60a5fa, #f9a8d4) | #c4b5fd is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 75,
+        "selector": ".gradient-text",
+        "snippet": "background: linear-gradient(90deg, #c4b5fd, #60a5fa, #f9a8d4) | #60a5fa is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 75,
+        "selector": ".gradient-text",
+        "snippet": "background: linear-gradient(90deg, #c4b5fd, #60a5fa, #f9a8d4) | #f9a8d4 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 79,
+        "selector": ".gradient-text",
+        "snippet": "transparent on #f9a8d4 = 1.00:1, needs 3:1 (background #f9a8d4 from .gradient-text; font-size 54px)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 3:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 140,
+        "selector": ".icon-box",
+        "snippet": "background: linear-gradient(145deg, var(--purple), var(--pink)) | stop #8b5cf6"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-401",
+      "tell_id": "undeclared-token",
+      "severity": "major",
+      "title": "Value not declared in the contract token plan",
+      "evidence": {
+        "line": 140,
+        "selector": ".icon-box",
+        "snippet": "background: linear-gradient(145deg, var(--purple), var(--pink)) | #ec4899 is not among the declared values black, white"
+      },
+      "fix": "Either use a declared token or add the value to the contract token plan.",
+      "why": "A color the contract never declared means the artifact invented part of its own palette."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 160,
+        "selector": ".metric",
+        "snippet": "background: linear-gradient(90deg, var(--purple), var(--blue)) | stop #8b5cf6"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 164,
+        "selector": ".metric",
+        "snippet": "transparent on #3b82f6 = 1.00:1, needs 3:1 (background #3b82f6 from .metric; font-size 92px)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 3:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 187,
+        "selector": ".final-cta",
+        "snippet": "background: radial-gradient(circle at top, var(--purple), transparent 68%), var(--surface) | stop #8b5cf6"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 230,
+        "selector": "body > main > section.hero",
+        "snippet": "family hero is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 232,
+        "selector": "section.hero > div.hero-inner > div.badge",
+        "snippet": "Next-gen in \"✦ Next-gen pour over precision\""
+      },
+      "fix": "Replace \"Next-gen\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-308",
+      "tell_id": "emoji-as-icon",
+      "severity": "minor",
+      "title": "Emoji used as a UI icon",
+      "evidence": {
+        "line": 232,
+        "selector": "section.hero > div.hero-inner > div.badge",
+        "snippet": "<div class=\"badge\">✦ Next-gen pour over precision</div> | emoji in an icon slot: ✦ Next-gen pour over precision"
+      },
+      "fix": "Use one icon family in SVG, or drop the symbol.",
+      "why": "Emoji render differently on every platform and read as filler where an icon was needed."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 232,
+        "selector": "section.hero > div.hero-inner > div.badge",
+        "snippet": "banned tell \"filler-verbs\" detected: Next-gen in \"✦ Next-gen pour over precision\""
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 233,
+        "selector": "section.hero > div.hero-inner > h1",
+        "snippet": "Elevate in \"Elevate every pour with\""
+      },
+      "fix": "Replace \"Elevate\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-001",
+      "tell_id": "em-dash",
+      "severity": "blocker",
+      "title": "Em-dash or en-dash in visible text",
+      "evidence": {
+        "line": 234,
+        "selector": "section.hero > div.hero-inner > p.hero-subtitle",
+        "snippet": "ineered to transform your coffee ritual — seamless control, timeless steel, extr"
+      },
+      "fix": "Replace the dash with a comma, colon or plain hyphen: \"A, B\" or \"A: B\".",
+      "why": "The number one AI tell in production tests: a dash where a comma, colon or hyphen belongs."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 234,
+        "selector": "section.hero > div.hero-inner > p.hero-subtitle",
+        "snippet": "seamless in \"A game-changing stovetop kettle engineered to transform your coffee ritual — sea\""
+      },
+      "fix": "Replace \"seamless\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 234,
+        "selector": "section.hero > div.hero-inner > p.hero-subtitle",
+        "snippet": "transform your in \"A game-changing stovetop kettle engineered to transform your coffee ritual — sea\""
+      },
+      "fix": "Replace \"transform your\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 234,
+        "selector": "section.hero > div.hero-inner > p.hero-subtitle",
+        "snippet": "game-changing in \"A game-changing stovetop kettle engineered to transform your coffee ritual — sea\""
+      },
+      "fix": "Replace \"game-changing\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 234,
+        "selector": "section.hero > div.hero-inner > p.hero-subtitle",
+        "snippet": "banned tell \"em-dash\" detected: ineered to transform your coffee ritual — seamless control, timeless steel, extr"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-304",
+      "tell_id": "fake-screenshot",
+      "severity": "blocker",
+      "title": "Fake screenshot built from divs",
+      "evidence": {
+        "line": 241,
+        "selector": "section.hero > div.hero-inner > div.product-mockup",
+        "snippet": "<div class=\"product-mockup\"> <svg viewBox=\"0 0 760 450\" role=\"img\" aria-label=\"Stylized drawing of Kettle 03\"> <g fill=\"none\" stroke=\"curr …"
+      },
+      "fix": "Render the real component, or use a real screenshot, or remove the mock.",
+      "why": "A UI made of rectangles is a lie about the product: use the real component, a real image or nothing."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 241,
+        "selector": "section.hero > div.hero-inner > div.product-mockup",
+        "snippet": "banned tell \"fake-screenshot\" detected: <div class=\"product-mockup\"> <svg viewBox=\"0 0 760 450\" role=\"img\" aria-label=\"Stylized drawing of Kettle 03\"> <g fill=\"none\" stroke=\"curr …"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 257,
+        "selector": "body > main > section#features.section",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 259,
+        "selector": "main > section#features.section > p.section-description",
+        "snippet": "seamless in \"Discover the seamless design details that make Kettle 03 the ultimate companion \""
+      },
+      "fix": "Replace \"seamless\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-201",
+      "tell_id": "three-equal-cards",
+      "severity": "blocker",
+      "title": "Three or more equal cards in one row",
+      "evidence": {
+        "line": 260,
+        "selector": "main > section#features.section > div.feature-grid",
+        "snippet": "<div class=\"feature-grid\"> <article class=\"feature-card\"> <div class=\"icon-box\">◌</div> <h3>Precision flow</h3> <p>Goosene | 3 children of …"
+      },
+      "fix": "Rebuild the row as an asymmetric grid or a zigzag, or make one card genuinely dominant.",
+      "why": "The named banned layout: three identical cards in a line is a grid standing in for a decision."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 260,
+        "selector": "main > section#features.section > div.feature-grid",
+        "snippet": "banned tell \"three-equal-cards\" detected: <div class=\"feature-grid\"> <article class=\"feature-card\"> <div class=\"icon-box\">◌</div> <h3>Precision flow</h3> <p>Goosene | 3 children of …"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 279,
+        "selector": "body > main > section.section",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 299,
+        "selector": "body > main > section.section",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 312,
+        "selector": "section.section > div.detail-copy > p",
+        "snippet": "next-gen in \"Timeless materials meet next-gen performance, backed by a three year warranty fo\""
+      },
+      "fix": "Replace \"next-gen\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 316,
+        "selector": "body > main > section#care.section",
+        "snippet": "family text-only is not in the plan (split asymmetric, statement stat, proof grid, side by side comparison, close action)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 318,
+        "selector": "main > section#care.section > p.section-description",
+        "snippet": "seamless in \"A few seamless steps keep your Kettle 03 ready for the next perfect brew.\""
+      },
+      "fix": "Replace \"seamless\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 340,
+        "selector": "main > section.section > p.section-description",
+        "snippet": "elevated in \"Everything you need to begin your elevated brewing journey.\""
+      },
+      "fix": "Replace \"elevated\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 354,
+        "selector": "main > section.final-cta > h2",
+        "snippet": "revolutionize in \"Ready to revolutionize your pour over?\""
+      },
+      "fix": "Replace \"revolutionize\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    }
+  ],
+  "counts": {
+    "blocker": 23,
+    "major": 28,
+    "minor": 8
+  },
+  "score": {
+    "slop_index": 10,
+    "layout_families": 2,
+    "contrast_failures": 4
+  },
+  "verdict": "fail"
+}

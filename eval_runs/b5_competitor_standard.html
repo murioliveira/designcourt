@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deployment Failure Insights</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --purple:#7c3aed; --violet:#4f46e5; --ink:#172033; --muted:#64748b; --line:#e6e9f2; --card:#ffffff; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; color:var(--ink); background:linear-gradient(135deg,#f8f5ff 0%,#eef2ff 45%,#f8fafc 100%); font-family:Inter,system-ui,sans-serif; font-size:16px; line-height:1.7; }
+    a { color:var(--purple); }
+    .skip-link { position:absolute; left:-9999px; }
+    .skip-link:focus { left:1rem; top:1rem; z-index:5; padding:.7rem 1rem; color:white; background:var(--purple); }
+    .topbar { position:sticky; top:0; z-index:3; display:flex; align-items:center; justify-content:space-between; padding:1rem 5vw; background:rgba(255,255,255,.78); border-bottom:1px solid rgba(124,58,237,.12); backdrop-filter:blur(14px); }
+    .brand { font-weight:800; letter-spacing:-.03em; }
+    .brand span { color:var(--purple); }
+    .topbar a { padding:.7rem 1.1rem; color:white; background:linear-gradient(135deg,var(--violet),var(--purple)); border-radius:999px; text-decoration:none; font-weight:700; box-shadow:0 8px 24px rgba(124,58,237,.24); }
+    .page { width:min(1180px,calc(100% - 2rem)); margin:2rem auto 5rem; }
+    .hero-card { padding:5rem clamp(1.5rem,6vw,5.5rem); text-align:center; color:white; background:linear-gradient(135deg,#312e81 0%,#6d28d9 52%,#9333ea 100%); border-radius:32px; box-shadow:0 28px 80px rgba(76,29,149,.28); }
+    .series { display:inline-block; margin:0 0 1.2rem; padding:.45rem .8rem; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); border-radius:999px; font-size:.76rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; backdrop-filter:blur(10px); }
+    h1 { max-width:900px; margin:0 auto; font-size:clamp(3rem,7vw,5.5rem); line-height:1; letter-spacing:-.055em; }
+    .dek { max-width:760px; margin:1.6rem auto; color:#ede9fe; font-size:1.3rem; line-height:1.5; }
+    .byline { display:flex; justify-content:center; flex-wrap:wrap; gap:.6rem 1.2rem; margin:0; color:#ddd6fe; font-size:.85rem; }
+    .hero-actions { display:flex; justify-content:center; gap:.8rem; margin-top:1.8rem; }
+    .button { padding:.85rem 1.2rem; border-radius:12px; font-weight:700; text-decoration:none; }
+    .button-primary { color:#5b21b6; background:white; }
+    .button-secondary { color:white; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.1); }
+    .value-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin:1.5rem 0; }
+    .value-card { padding:1.6rem; text-align:center; background:rgba(255,255,255,.82); border:1px solid rgba(124,58,237,.1); border-radius:20px; box-shadow:0 14px 40px rgba(63,42,106,.1); backdrop-filter:blur(14px); }
+    .icon { display:grid; place-items:center; width:48px; height:48px; margin:0 auto .9rem; color:white; background:linear-gradient(135deg,var(--violet),#a855f7); border-radius:14px; font-weight:800; }
+    .value-card h2 { margin:0 0 .3rem; font-size:1.12rem; }
+    .value-card p { margin:0; color:var(--muted); font-size:.9rem; }
+    .insights-grid { margin:1.5rem 0; padding:2rem; background:white; border-radius:24px; box-shadow:0 18px 50px rgba(51,32,93,.1); }
+    .section-label { margin:0 0 1rem; color:var(--purple); font-size:.76rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .findings { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; padding:0; list-style:none; counter-reset:finding; }
+    .findings li { position:relative; padding:1.4rem 1.3rem 1.3rem 3.4rem; background:linear-gradient(145deg,#faf9ff,#f3f0ff); border:1px solid #e9e1ff; border-radius:16px; }
+    .findings li:before { counter-increment:finding; content:counter(finding); position:absolute; left:1.1rem; top:1.35rem; display:grid; place-items:center; width:1.6rem; height:1.6rem; color:white; background:var(--purple); border-radius:8px; font-size:.72rem; font-weight:800; }
+    .contents { margin:1.5rem 0; padding:1.5rem 2rem; background:white; border-radius:20px; box-shadow:0 12px 32px rgba(51,32,93,.08); }
+    .contents ol { display:flex; flex-wrap:wrap; gap:.7rem 1.6rem; padding-left:1.2rem; }
+    .article-content { width:min(900px,100%); margin:2rem auto; }
+    .essay-section { margin:1.5rem 0; padding:clamp(1.5rem,4vw,3.2rem); background:white; border:1px solid var(--line); border-radius:24px; box-shadow:0 18px 50px rgba(51,32,93,.08); }
+    .essay-section h2 { margin:.2rem 0 1.3rem; font-size:clamp(2rem,4vw,3.1rem); line-height:1.12; letter-spacing:-.04em; background:linear-gradient(90deg,#312e81,var(--purple)); -webkit-background-clip:text; color:transparent; }
+    .margin-note { float:right; width:260px; margin:0 0 1rem 1.5rem; padding:1rem; color:#5b21b6; background:#f5f3ff; border-left:4px solid var(--purple); border-radius:0 14px 14px 0; font-size:.82rem; }
+    p { margin:0 0 1.2rem; }
+    .data-card { clear:both; margin:2rem 0; padding:1.4rem; background:linear-gradient(145deg,#fbfaff,#f5f3ff); border:1px solid #e9e1ff; border-radius:18px; }
+    figure { margin:0; }
+    figcaption,table caption { margin:0 0 1rem; color:#312e81; font-size:.84rem; font-weight:800; text-align:left; }
+    .exhibit-number { color:var(--purple); }
+    .table-wrap { overflow:auto; }
+    table { width:100%; border-collapse:collapse; font-size:.82rem; }
+    th,td { padding:.72rem .6rem; border-bottom:1px solid #ddd6fe; text-align:right; }
+    th:first-child,td:first-child { text-align:left; }
+    th { color:var(--purple); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; }
+    .source-note { margin:.8rem 0 0; color:var(--muted); font-size:.72rem; }
+    .chart { display:grid; grid-template-columns:repeat(5,1fr); gap:.7rem; align-items:end; height:260px; padding:1rem; background:white; border-radius:14px; box-shadow:inset 0 0 0 1px #ede9fe; }
+    .bar-group { display:grid; grid-template-rows:1fr auto; align-items:end; height:100%; text-align:center; }
+    .bar { display:flex; justify-content:center; align-items:flex-start; width:72%; min-height:2rem; margin:auto auto 0; padding-top:.35rem; color:white; background:linear-gradient(to top,var(--violet),#c084fc); border-radius:8px 8px 2px 2px; font-size:.65rem; font-weight:800; box-shadow:0 8px 20px rgba(124,58,237,.2); }
+    .bar-label { padding-top:.45rem; color:var(--muted); font-size:.64rem; }
+    .references-card { width:min(900px,100%); margin:1.5rem auto; padding:2rem 3rem; background:white; border-radius:24px; box-shadow:0 18px 50px rgba(51,32,93,.1); }
+    .references-card h2 { margin:.2rem 0 1rem; font-size:2rem; }
+    .references-card li { margin-bottom:.8rem; color:#475569; }
+    .end-mark { width:70px; height:6px; margin-top:2rem; background:linear-gradient(90deg,var(--violet),#c084fc); border-radius:999px; }
+    @media (max-width:768px) { .topbar{padding:.8rem 1rem}.page{margin-top:1rem}.hero-card{border-radius:20px;padding-top:3.5rem;padding-bottom:3.5rem}.value-grid,.findings{grid-template-columns:1fr}.margin-note{float:none;width:auto;margin:0 0 1rem}.essay-section{border-radius:18px}.references-card{padding:1.5rem}.button-secondary{display:none} }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#article">Skip to article</a>
+  <header class="topbar"><div class="brand">Deploy<span>IQ</span></div><a href="#findings-title">Explore insights</a></header>
+  <div class="page">
+    <section class="hero-card" aria-labelledby="note-title">
+      <p class="series">Next generation deployment intelligence</p>
+      <h1 id="note-title">Transform failure into your competitive advantage</h1>
+      <p class="dek">Unlock actionable insights from 38,214 deployments and empower your engineering organization to ship faster, smarter, and with confidence.</p>
+      <p class="byline"><span>Mara Voss, Reliability Research</span><span>18 September 2026</span><span>Ultimate 2,400 word guide</span></p>
+      <div class="hero-actions"><a class="button button-primary" href="#article">Read research</a><a class="button button-secondary" href="#citations">View sources</a></div>
+    </section>
+
+    <section class="value-grid" aria-label="Benefits">
+      <article class="value-card"><div class="icon">S</div><h2>Ship faster</h2><p>Accelerate delivery with data driven clarity.</p></article>
+      <article class="value-card"><div class="icon">R</div><h2>Reduce risk</h2><p>Turn every deployment into an advantage.</p></article>
+      <article class="value-card"><div class="icon">C</div><h2>Scale confidently</h2><p>Future proof your release workflow.</p></article>
+    </section>
+
+    <section class="insights-grid" aria-labelledby="findings-title">
+      <p class="section-label" id="findings-title">Game changing insights</p>
+      <ol class="findings">
+        <li>Small deployments failed less often, while the sharpest increase appeared once a release crossed fifty changed files.</li>
+        <li>Configuration faults caused fewer events than code faults, yet their slower detection made them the most expensive class per incident.</li>
+        <li>Rollback readiness cut median recovery time more reliably than adding approval steps before an automated deployment.</li>
+        <li>Observed associations support smaller batches and better recovery paths, but they do not prove either practice caused lower failure.</li>
+      </ol>
+    </section>
+
+    <nav class="contents" aria-label="Contents"><p class="section-label">Jump into the insights</p><ol><li><a href="#method">Method</a></li><li><a href="#sample">Sample</a></li><li><a href="#failure-classes">Three failure classes</a></li><li><a href="#cost-model">Cost model</a></li><li><a href="#limitations">Limitations</a></li><li><a href="#citations">Citations</a></li></ol></nav>
+
+    <main id="article" class="article-content">
+      <section class="essay-section" id="method">
+        <p class="section-label">01 · Research framework</p><h2>Method: follow the deployment, not the ticket</h2>
+        <aside class="margin-note">Unit of analysis: one production deployment. Failure window: start of deployment through the next 24 hours.</aside>
+        <p>Automated deployment is often discussed as a binary capability: a team either has a pipeline or it does not. That framing hides the operational question. Pipelines fail in several ways, at different points, with different consequences. This note treats each production deployment as an exposure and asks whether it produced a service impairment, urgent remediation, or rollback within twenty four hours. The definition follows the practical spirit of change failure rate used in software delivery research, while keeping the event boundary visible enough for audit.<sup><a href="#cite-1">1</a></sup></p>
+        <p>We assembled deployment records, incident timelines, repository metadata, and change tickets from participating teams for a twelve month observation window. A deployment entered the study when an automated system moved a versioned artifact or configuration set into a customer serving environment. Manual database maintenance, planned resilience tests, and releases to internal sandboxes were excluded. Retries of the same release counted once unless a later retry introduced a new artifact. This avoids inflating failure counts when a controller makes several attempts to converge on one desired state.</p>
+        <p>A failure required evidence in at least two records. Examples include a monitoring alert paired with a rollback, a customer impact note paired with an emergency patch, or an incident declaration paired with a deployment identifier. A red pipeline stage alone did not qualify if production remained unchanged. Likewise, an error discovered in production counted even when a progressive delivery controller contained it before most customers saw it. This distinction matters because automation can reduce impact without preventing the initiating defect.</p>
+        <p>Deploy size was estimated from changed files in the source revision set because that field was available across all participating systems. It is an imperfect proxy. A one line policy edit may carry more risk than hundreds of generated files. We therefore used broad bands and checked the pattern against changed line count and number of touched components. The direction remained stable, although exact rates moved. The analysis is descriptive. It reports observed frequencies and costs, then tests whether alternative groupings erase the main pattern.</p>
+        <p>Two reviewers coded every qualifying event into one primary failure class. Disagreements were resolved against the earliest action that could have prevented customer impact, rather than the final symptom. That rule assigns a malformed feature flag to configuration even if it later exhausts application threads. It assigns an incompatible schema assumption to dependency or data even if application code emitted the first visible error. The taxonomy is intentionally small so engineering leaders can use it without a specialist incident database.</p>
+      </section>
+
+      <section class="essay-section" id="sample">
+        <p class="section-label">02 · Data at scale</p><h2>Sample: diverse systems, shared selection pressure</h2>
+        <aside class="margin-note">The sample favors teams with enough instrumentation to reconstruct events. That improves measurement and limits generalization.</aside>
+        <p>The final sample contains 38,214 production deployments across 342 services operated by 61 teams. Participants ranged from consumer software groups with frequent edge releases to business systems teams deploying several times each week. Most services ran on managed container platforms. A smaller group used serverless runtimes or virtual machines. No team was selected at random. Participation depended on usable logs, stable identifiers, and willingness to share deidentified operational records.</p>
+        <p>That selection pressure is visible in the composition. These teams automate more of the path to production than the wider software industry. They also keep richer records when a release goes wrong. The observed overall failure rate should not be read as an industry benchmark. Its value is comparative: the same inclusion rules can be applied across deployment sizes, failure classes, and recovery conditions inside the sample.</p>
+        <section class="data-card"><div class="table-wrap"><table><caption><span class="exhibit-number">Table 1.</span> Sample composition by primary runtime</caption><thead><tr><th>Runtime</th><th>Teams</th><th>Services</th><th>Deployments</th><th>Share</th></tr></thead><tbody><tr><td>Managed containers</td><td>35</td><td>205</td><td>25,736</td><td>67.4%</td></tr><tr><td>Serverless</td><td>14</td><td>79</td><td>7,948</td><td>20.8%</td></tr><tr><td>Virtual machines</td><td>12</td><td>58</td><td>4,530</td><td>11.9%</td></tr><tr><td><strong>Total</strong></td><td><strong>61</strong></td><td><strong>342</strong></td><td><strong>38,214</strong></td><td><strong>100.0%</strong></td></tr></tbody></table></div><p class="source-note">Source: study deployment ledger. Shares may not sum exactly because of rounding.</p></section>
+        <p>Team size and deployment frequency varied together, so a simple comparison could mistake organizational scale for release risk. We calculated rates within each team first, then combined those estimates with deployment weighted summaries. We also reviewed the pattern separately for high frequency and lower frequency teams. Large batches failed more often in both groups. The gap was narrower among teams with automated rollback, strong health checks, and rehearsed incident ownership.</p>
+        <p>The study recorded 4,729 qualifying failures. Most were contained without a public incident, which explains why incident registers alone understate deployment problems. Conversely, raw pipeline error counts overstate customer risk because many errors occur before production changes. The linked record method sits between those extremes. It captures production remediation while refusing to label every failed automation step as a deployment failure.</p>
+      </section>
+
+      <section class="essay-section" id="failure-classes">
+        <p class="section-label">03 · Deep dive</p><h2>Three failure classes, three control points</h2>
+        <aside class="margin-note">Classes name earliest useful control point: code behavior, configuration state, or dependency and data compatibility.</aside>
+        <p>Code behavior failures were the most common class. They included exceptions on newly exercised paths, incorrect business logic, resource leaks, and performance regressions introduced by an application revision. These events were usually detected quickly because the changed process emitted familiar signals. Tests and staged rollout reduced exposure, but neither removed it. The useful control was often a narrow canary with explicit abort criteria, followed by a rollback that did not require rebuilding the artifact.</p>
+        <p>Configuration failures were less frequent and more elusive. Invalid limits, permission changes, routing rules, feature flags, and environment differences often produced partial symptoms rather than a clean crash. A service could remain healthy under platform checks while serving the wrong behavior to one region or customer segment. Detection therefore depended on product and policy signals, not only infrastructure telemetry. Teams paid for this gap in investigation time. The initiating edit was small, yet the search space crossed deployment systems, secret stores, policy engines, and application owners.</p>
+        <p>Dependency and data failures joined compatibility mistakes that became visible only when a new version met an external service, schema, queue, cache, or persistent record. They were not always caused by the deployed component. A release could expose an old invariant that previous traffic never exercised. Forward compatible schema changes, contract tests, and explicit dependency budgets reduced these events. Recovery was difficult when the deployment had already written data that an older version could not read.</p>
+        <section class="data-card"><figure><figcaption><span class="exhibit-number">Figure 1.</span> Observed failure rate by deploy size, changed files</figcaption><div class="chart" role="img" aria-label="Failure rate rises from 8.1 percent for 1 to 5 changed files to 27.6 percent above 100 changed files"><div class="bar-group"><div class="bar" style="height:29.3%">8.1%</div><div class="bar-label">1 to 5</div></div><div class="bar-group"><div class="bar" style="height:34.1%">9.4%</div><div class="bar-label">6 to 15</div></div><div class="bar-group"><div class="bar" style="height:46%">12.7%</div><div class="bar-label">16 to 50</div></div><div class="bar-group"><div class="bar" style="height:68.5%">18.9%</div><div class="bar-label">51 to 100</div></div><div class="bar-group"><div class="bar" style="height:100%">27.6%</div><div class="bar-label">Over 100</div></div></div><p class="source-note">Source: study deployment ledger, 38,214 deployments. Size bands use source files changed.</p></figure></section>
+        <p>The size curve is monotonic, but size does not act alone. Bigger deployments touched more components, waited longer in queues, and more often combined application, configuration, and schema changes. Each trait can raise risk. The chart should therefore be read as a planning signal, not a natural law. Dividing work into smaller independently deployable units may help, provided the split does not create hidden coordination or force users through incompatible intermediate states.</p>
+        <p>Across classes, reliable recovery had three properties. Detection used a signal tied to customer behavior. The prior version remained deployable without manual reconstruction. Ownership was assigned before the release, including authority to stop rollout. Teams sometimes substituted approval layers for these capabilities. Approvals caught known hazards but did little for novel interactions after production traffic arrived. The most resilient systems treated release as a reversible experiment, an approach consistent with continuous delivery practice and research on high performing technology organizations.<sup><a href="#cite-2">2</a></sup><sup><a href="#cite-3">3</a></sup></p>
+      </section>
+
+      <section class="essay-section" id="cost-model">
+        <p class="section-label">04 · ROI analysis</p><h2>Cost model: time, interruption, and delayed learning</h2>
+        <aside class="margin-note">Cost is engineering labor valued at a common loaded rate. Revenue loss and customer compensation are excluded.</aside>
+        <p>A failure rate alone cannot rank improvement work. A frequent fault that rolls back automatically in four minutes may consume less engineering capacity than a rare configuration error that remains ambiguous for two hours. We estimated direct cost from active response time, number of responders, follow up repair time, and interruption overhead. To compare organizations without disclosing pay data, labor was valued at a common loaded rate of 140 dollars per engineer hour. This is a modeling choice, not a claim about compensation.</p>
+        <p>Interruption overhead adds fifteen minutes for each responder pulled from planned work. The allowance represents context recovery after an urgent page, not time spent in the incident itself. Follow up includes the durable repair and tests directly linked to the failure, but excludes broad platform projects proposed during review. Customer loss, contractual penalties, and reputational effects are omitted because participants measured them inconsistently. As a result, the table is a lower bound on business cost and a more useful view of engineering demand.</p>
+        <section class="data-card"><div class="table-wrap"><table><caption><span class="exhibit-number">Table 2.</span> Median direct engineering cost per failure class</caption><thead><tr><th>Failure class</th><th>Failures</th><th>Detect</th><th>Recover</th><th>Cost</th></tr></thead><tbody><tr><td>Code behavior</td><td>2,601</td><td>7 min</td><td>24 min</td><td>$620</td></tr><tr><td>Configuration</td><td>1,135</td><td>31 min</td><td>46 min</td><td>$1,480</td></tr><tr><td>Dependency and data</td><td>993</td><td>18 min</td><td>58 min</td><td>$1,310</td></tr></tbody></table></div><p class="source-note">Source: incident timelines and linked repair records. Cost excludes revenue loss and uses a common labor rate.</p></section>
+        <p>Configuration produced the highest median direct cost despite representing fewer events. Detection lag was the main difference. Responders spent time establishing whether the application, platform, identity layer, or rollout controller owned the symptom. This suggests a practical priority: make effective configuration visible beside the running version, record who changed it, and test customer level behavior after rollout. Faster rollback helps only when teams know what state to restore.</p>
+        <p>Dependency and data failures had the longest recovery. Once a release changed durable state, reverting code could deepen incompatibility. The safer response often required a forward repair, migration pause, or compatibility bridge. Investments in expand and contract schema changes, replayable writes, and consumer driven contract tests target this cost. They may add work before release, but the cost model asks whether that work replaces more expensive emergency coordination rather than whether it makes every individual deployment faster.</p>
+        <p>We tested the model with labor rates from 90 to 220 dollars per hour and interruption allowances from zero to thirty minutes. The class ordering did not change. Absolute amounts did. This stability supports prioritizing detection for configuration and reversibility for data changes. It does not justify a universal return estimate. Each organization should replace the common labor rate, include its own customer impact, and separate time that would have been spent on the repair even without an incident.</p>
+      </section>
+
+      <section class="essay-section" id="limitations">
+        <p class="section-label">05 · Strategic outlook</p><h2>Limitations: useful pattern, bounded claim</h2>
+        <aside class="margin-note">Strongest claim: these variables travel together in this instrumented sample. Causality remains unproven.</aside>
+        <p>This study is observational. Teams choose batch size, architecture, controls, and deployment frequency together. A team that ships small changes may also have clearer ownership, better tests, and a simpler system. Statistical adjustment cannot remove unmeasured differences. The association between deploy size and failure should not be interpreted as proof that splitting any given change will reduce risk by the amount shown in the chart.</p>
+        <p>The sample is also selective. Participating teams had stable deployment identifiers and incident evidence rich enough to link records. Less instrumented organizations may experience different rates and much larger detection gaps. Container platforms dominate the sample, while mobile clients, embedded software, safety critical systems, and long lived enterprise releases are absent. Practices suited to these services may transfer poorly where rollback is impossible or releases require coordinated physical action.</p>
+        <p>Measurement choices shape results. Changed files is a crude size proxy. The twenty four hour window misses latent faults and may include unrelated failures. Two record confirmation reduces false positives but misses quiet customer harm. Primary class coding compresses incidents with several contributing causes. Cost estimates omit revenue, trust, and opportunity cost, while the common labor rate obscures regional and role differences. Median values hide a long tail of rare, severe events.</p>
+        <p>Automation maturity changed during the observation period. Several teams added progressive delivery, policy checks, or new telemetry. The analysis treats their records as one sample rather than a controlled before and after experiment. Shared vendors and platform services also create dependence between events, so the effective sample is smaller than the deployment count suggests. Confidence in exact percentages should therefore be lower than the large denominator implies.</p>
+        <p>Even with those limits, three decisions are supported. Measure production remediation, not pipeline redness. Review release size as a risk signal without turning it into a quota. Fund detection and reversible state transitions alongside prevention. These choices align with established continuous delivery guidance, the emphasis on small batches in delivery research, and systems safety work that treats accidents as interactions rather than single component defects.<sup><a href="#cite-4">4</a></sup><sup><a href="#cite-5">5</a></sup><sup><a href="#cite-6">6</a></sup></p>
+        <p>The conclusion is narrower than a slogan: within this sample, larger deployments failed more often, while slow detection and irreversible state made failures expensive. Leaders should use that pattern to ask better local questions. Which releases cannot be reversed? Which signals reveal wrong customer behavior? Which configuration changes lack an owner? The answers matter more than copying a benchmark, because deployment safety is produced by the whole operating system around a change.</p>
+      </section>
+    </main>
+
+    <section class="references-card" id="citations" aria-labelledby="citations-title"><p class="section-label">Powerful research foundation</p><h2 id="citations-title">Citations</h2><ol><li id="cite-1">Google Cloud. <cite>Accelerate State of DevOps Report 2023</cite>. DORA, 2023. Change failure rate and software delivery performance framework.</li><li id="cite-2">Forsgren, Nicole, Jez Humble, and Gene Kim. <cite>Accelerate: The Science of Lean Software and DevOps</cite>. IT Revolution, 2018.</li><li id="cite-3">Humble, Jez, and David Farley. <cite>Continuous Delivery</cite>. Addison Wesley, 2010.</li><li id="cite-4">Allspaw, John, and Paul Hammond. <cite>10+ Deploys Per Day: Dev and Ops Cooperation at Flickr</cite>. Velocity Conference, 2009.</li><li id="cite-5">Beyer, Betsy, Chris Jones, Jennifer Petoff, and Niall Richard Murphy, editors. <cite>Site Reliability Engineering</cite>. O'Reilly Media, 2016.</li><li id="cite-6">Leveson, Nancy G. <cite>Engineering a Safer World</cite>. MIT Press, 2011.</li></ol><div class="end-mark"></div></section>
+  </div>
+</body>
+</html>

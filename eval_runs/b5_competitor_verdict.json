@@ -1,0 +1,1148 @@
+{
+  "judge_version": "1.0",
+  "files_scanned": 1,
+  "findings": [
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"title byline strip\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"key findings deck\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"longform text spine\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"data exhibit\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-404",
+      "tell_id": "contract-section-missing",
+      "severity": "major",
+      "title": "Section from the contract is missing",
+      "evidence": {
+        "line": 1,
+        "selector": "document",
+        "snippet": "contract section \"citation register\" has no matching id, class, heading or copy in the artifact"
+      },
+      "fix": "Build the missing section, or remove it from the contract layout plan.",
+      "why": "A declare-then-build contract is only a ruling if every declared section exists in the artifact."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 7,
+        "selector": "body",
+        "snippet": "background:linear-gradient(135deg,#f8f5ff 0%,#eef2ff 45%,#f8fafc 100%) | stop #f8f5ff"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 7,
+        "selector": "body",
+        "snippet": "background:linear-gradient(135deg,#f8f5ff 0%,#eef2ff 45%,#f8fafc 100%) | literals: #f8f5ff, #eef2ff, #f8fafc"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 7,
+        "selector": "body",
+        "snippet": "banned tell \"purple-gradient\" detected: background:linear-gradient(135deg,#f8f5ff 0%,#eef2ff 45%,#f8fafc 100%) | stop #f8f5ff"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-104",
+      "tell_id": "inter-default",
+      "severity": "blocker",
+      "title": "Inter as the default font",
+      "evidence": {
+        "line": 8,
+        "selector": "body",
+        "snippet": "font-family:Inter,system-ui,sans-serif | first family is Inter"
+      },
+      "fix": "Use the system stack (system-ui, then the platform faces) or the brand face, not Inter.",
+      "why": "Inter as the first family is the default face of generated UI and flattens every page into the same voice."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 8,
+        "selector": "body",
+        "snippet": "banned tell \"inter-default\" detected: font-family:Inter,system-ui,sans-serif | first family is Inter"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-104",
+      "tell_id": "inter-default",
+      "severity": "blocker",
+      "title": "Inter as the default font",
+      "evidence": {
+        "line": 9,
+        "selector": "html > head > link",
+        "snippet": "<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap\" rel=\"stylesheet\"> | Google Fonts request …"
+      },
+      "fix": "Remove the Inter request and use the system stack.",
+      "why": "Inter as the first family is the default face of generated UI and flattens every page into the same voice."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 14,
+        "selector": ".topbar",
+        "snippet": "background:rgba(255,255,255,.78) | literals: rgba(255,255,255,.78)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 14,
+        "selector": ".topbar",
+        "snippet": "border-bottom:1px solid rgba(124,58,237,.12) | literals: rgba(124,58,237,.12)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 17,
+        "selector": ".topbar a",
+        "snippet": "background:linear-gradient(135deg,var(--violet),var(--purple)) | stop #4f46e5"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-107",
+      "tell_id": "multi-accent",
+      "severity": "major",
+      "title": "More than one accent hue family",
+      "evidence": {
+        "line": 17,
+        "selector": ".topbar a",
+        "snippet": "indigo (4 uses, e.g. #4f46e5 at line 17); purple (17 uses, e.g. #7c3aed at line 9)"
+      },
+      "fix": "Keep the accent you use most, and rebuild the second hue as a neutral or a tint of the first.",
+      "why": "One accent per page is the lock: a second saturated hue family breaks the color hierarchy."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 18,
+        "selector": ".topbar a",
+        "snippet": "box-shadow:0 8px 24px rgba(124,58,237,.24) | literals: rgba(124,58,237,.24)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-108",
+      "tell_id": "mixed-radii",
+      "severity": "minor",
+      "title": "More than one radius scale in use",
+      "evidence": {
+        "line": 18,
+        "selector": ".topbar a",
+        "snippet": "border-radius:999px | radius bins in use: none, sm, md, lg, pill"
+      },
+      "fix": "Pick one radius scale (for example sm inputs, md cards, pill buttons) and delete the rest.",
+      "why": "A shape lock means one radius language: mixing scales is visible even when nobody can name it."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 19,
+        "selector": ".hero-card",
+        "snippet": "background:linear-gradient(135deg,#312e81 0%,#6d28d9 52%,#9333ea 100%) | stop #312e81"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 19,
+        "selector": ".hero-card",
+        "snippet": "background:linear-gradient(135deg,#312e81 0%,#6d28d9 52%,#9333ea 100%) | literals: #312e81, #6d28d9, #9333ea"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 21,
+        "selector": ".hero-card",
+        "snippet": "box-shadow:0 28px 80px rgba(76,29,149,.28) | literals: rgba(76,29,149,.28)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 21,
+        "selector": ".series",
+        "snippet": "background:rgba(255,255,255,.14) | literals: rgba(255,255,255,.14)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 21,
+        "selector": ".series",
+        "snippet": "border:1px solid rgba(255,255,255,.25) | literals: rgba(255,255,255,.25)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 24,
+        "selector": ".dek",
+        "snippet": "color:#ede9fe | literals: #ede9fe"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 24,
+        "selector": ".byline",
+        "snippet": "color:#ddd6fe | literals: #ddd6fe"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 24,
+        "selector": ".byline",
+        "snippet": "#ddd6fe on #9333ea = 3.88:1, needs 4.5:1 (background #9333ea from .hero-card; font-size .85rem)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 26,
+        "selector": ".button-primary",
+        "snippet": "color:#5b21b6 | literals: #5b21b6"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 26,
+        "selector": ".button-secondary",
+        "snippet": "border:1px solid rgba(255,255,255,.35) | literals: rgba(255,255,255,.35)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 27,
+        "selector": ".button-secondary",
+        "snippet": "background:rgba(255,255,255,.1) | literals: rgba(255,255,255,.1)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 28,
+        "selector": ".value-card",
+        "snippet": "background:rgba(255,255,255,.82) | literals: rgba(255,255,255,.82)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 29,
+        "selector": ".value-card",
+        "snippet": "border:1px solid rgba(124,58,237,.1) | literals: rgba(124,58,237,.1)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 29,
+        "selector": ".value-card",
+        "snippet": "box-shadow:0 14px 40px rgba(63,42,106,.1) | literals: rgba(63,42,106,.1)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 31,
+        "selector": ".icon",
+        "snippet": "background:linear-gradient(135deg,var(--violet),#a855f7) | stop #4f46e5"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 31,
+        "selector": ".icon",
+        "snippet": "background:linear-gradient(135deg,var(--violet),#a855f7) | literals: #a855f7"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 31,
+        "selector": ".icon",
+        "snippet": "white on #a855f7 = 3.96:1, needs 4.5:1 (background #a855f7 from .icon; font-size 16px)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 33,
+        "selector": ".insights-grid",
+        "snippet": "box-shadow:0 18px 50px rgba(51,32,93,.1) | literals: rgba(51,32,93,.1)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 37,
+        "selector": ".findings li",
+        "snippet": "background:linear-gradient(145deg,#faf9ff,#f3f0ff) | stop #faf9ff"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 37,
+        "selector": ".findings li",
+        "snippet": "background:linear-gradient(145deg,#faf9ff,#f3f0ff) | literals: #faf9ff, #f3f0ff"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 37,
+        "selector": ".findings li",
+        "snippet": "border:1px solid #e9e1ff | literals: #e9e1ff"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 40,
+        "selector": ".contents",
+        "snippet": "box-shadow:0 12px 32px rgba(51,32,93,.08) | literals: rgba(51,32,93,.08)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 41,
+        "selector": ".essay-section",
+        "snippet": "box-shadow:0 18px 50px rgba(51,32,93,.08) | literals: rgba(51,32,93,.08)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 43,
+        "selector": ".essay-section h2",
+        "snippet": "background:linear-gradient(90deg,#312e81,var(--purple)) | stop #312e81"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 43,
+        "selector": ".essay-section h2",
+        "snippet": "background:linear-gradient(90deg,#312e81,var(--purple)) | literals: #312e81"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 44,
+        "selector": ".essay-section h2",
+        "snippet": "transparent on #7c3aed = 1.00:1, needs 4.5:1 (background #7c3aed from .essay-section h2; font-size could not be resolved, so the 4.5:1 body threshold is applied)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 45,
+        "selector": ".margin-note",
+        "snippet": "color:#5b21b6 | literals: #5b21b6"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 45,
+        "selector": ".margin-note",
+        "snippet": "background:#f5f3ff | literals: #f5f3ff"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 46,
+        "selector": ".data-card",
+        "snippet": "background:linear-gradient(145deg,#fbfaff,#f5f3ff) | stop #fbfaff"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 46,
+        "selector": ".data-card",
+        "snippet": "background:linear-gradient(145deg,#fbfaff,#f5f3ff) | literals: #fbfaff, #f5f3ff"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 46,
+        "selector": ".data-card",
+        "snippet": "border:1px solid #e9e1ff | literals: #e9e1ff"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 47,
+        "selector": "figcaption,table caption",
+        "snippet": "color:#312e81 | literals: #312e81"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 49,
+        "selector": "th,td",
+        "snippet": "border-bottom:1px solid #ddd6fe | literals: #ddd6fe"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 51,
+        "selector": ".source-note",
+        "snippet": "#64748b on #f5f3ff = 4.34:1, needs 4.5:1 (background #f5f3ff from .data-card; font-size .72rem)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 55,
+        "selector": ".chart",
+        "snippet": "box-shadow:inset 0 0 0 1px #ede9fe | literals: #ede9fe"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 59,
+        "selector": ".bar",
+        "snippet": "background:linear-gradient(to top,var(--violet),#c084fc) | stop #4f46e5"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 59,
+        "selector": ".bar",
+        "snippet": "background:linear-gradient(to top,var(--violet),#c084fc) | literals: #c084fc"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 59,
+        "selector": ".bar",
+        "snippet": "box-shadow:0 8px 20px rgba(124,58,237,.2) | literals: rgba(124,58,237,.2)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-106",
+      "tell_id": "contrast-aa",
+      "severity": "blocker",
+      "title": "Text below WCAG AA contrast",
+      "evidence": {
+        "line": 59,
+        "selector": ".bar",
+        "snippet": "white on #c084fc = 2.64:1, needs 4.5:1 (background #c084fc from .bar; font-size .65rem)"
+      },
+      "fix": "Darken the text token or lighten the surface until the pair clears 4.5:1.",
+      "why": "Body text under 4.5:1 (or 3:1 for large text) is unreadable for a large share of users."
+    },
+    {
+      "check_id": "DC-101",
+      "tell_id": "purple-gradient",
+      "severity": "blocker",
+      "title": "Purple, violet or indigo gradient",
+      "evidence": {
+        "line": 61,
+        "selector": ".end-mark",
+        "snippet": "background:linear-gradient(90deg,var(--violet),#c084fc) | stop #4f46e5"
+      },
+      "fix": "Replace the purple stop with a neutral surface or the single declared accent.",
+      "why": "The named number one AI design tell: a saturated purple wash over a section."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 61,
+        "selector": ".references-card",
+        "snippet": "box-shadow:0 18px 50px rgba(51,32,93,.1) | literals: rgba(51,32,93,.1)"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 61,
+        "selector": ".references-card li",
+        "snippet": "color:#475569 | literals: #475569"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-105",
+      "tell_id": "hardcoded-hex",
+      "severity": "major",
+      "title": "Color literal outside the token block",
+      "evidence": {
+        "line": 61,
+        "selector": ".end-mark",
+        "snippet": "background:linear-gradient(90deg,var(--violet),#c084fc) | literals: #c084fc"
+      },
+      "fix": "Declare these as custom properties in the token block and reference them with var().",
+      "why": "A raw hex or rgb value in a component bypasses the token system, so the palette drifts one patch at a time."
+    },
+    {
+      "check_id": "DC-316",
+      "tell_id": "hero-discipline",
+      "severity": "major",
+      "title": "Hero breaks its discipline",
+      "evidence": {
+        "line": 74,
+        "selector": "body > div.page > section.hero-card",
+        "snippet": "<section class=\"hero-card\" aria-labelledby=\"note-title\"> <p class=\"series\">Next generation deployment intelligence</p> <h1 id=\"note-title\">…"
+      },
+      "fix": "Cut the hero to a headline under two lines, a subtext under 20 words, four text elements and 6rem of top padding.",
+      "why": "The hero must fit the first viewport: two headline lines, a subtext under 20 words, at most four text elements, padding under 6rem."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 74,
+        "selector": "body > div.page > section.hero-card",
+        "snippet": "family hero is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-201",
+      "tell_id": "three-equal-cards",
+      "severity": "blocker",
+      "title": "Three or more equal cards in one row",
+      "evidence": {
+        "line": 82,
+        "selector": "body > div.page > section.value-grid",
+        "snippet": "<section class=\"value-grid\" aria-label=\"Benefits\"> <article class=\"value-card\"><div class=\"icon\">S</div><h2>Ship faster</h2><p>Accelerate d…"
+      },
+      "fix": "Rebuild the row as an asymmetric grid or a zigzag, or make one card genuinely dominant.",
+      "why": "The named banned layout: three identical cards in a line is a grid standing in for a decision."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 82,
+        "selector": "body > div.page > section.value-grid",
+        "snippet": "family text-only is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 82,
+        "selector": "body > div.page > section.value-grid",
+        "snippet": "banned tell \"three-equal-cards\" detected: <section class=\"value-grid\" aria-label=\"Benefits\"> <article class=\"value-card\"><div class=\"icon\">S</div><h2>Ship faster</h2><p>Accelerate d…"
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 88,
+        "selector": "body > div.page > section.insights-grid",
+        "snippet": "family divide-list is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-002",
+      "tell_id": "filler-verbs",
+      "severity": "major",
+      "title": "Filler verb in shipped copy",
+      "evidence": {
+        "line": 89,
+        "selector": "div.page > section.insights-grid > p#findings-title.section-label",
+        "snippet": "Game changing in \"Game changing insights\""
+      },
+      "fix": "Replace \"Game changing\" with the concrete verb of what the product does.",
+      "why": "These verbs promise nothing and are the strongest lexical signal of generated copy."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 89,
+        "selector": "div.page > section.insights-grid > p#findings-title.section-label",
+        "snippet": "banned tell \"filler-verbs\" detected: Game changing in \"Game changing insights\""
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-201",
+      "tell_id": "three-equal-cards",
+      "severity": "blocker",
+      "title": "Three or more equal cards in one row",
+      "evidence": {
+        "line": 100,
+        "selector": "body > div.page > main#article.article-content",
+        "snippet": "<main id=\"article\" class=\"article-content\"> <section class=\"essay-section\" id=\"method\"> <p class=\"section-label\">01 · Research framework</p…"
+      },
+      "fix": "Rebuild the row as an asymmetric grid or a zigzag, or make one card genuinely dominant.",
+      "why": "The named banned layout: three identical cards in a line is a grid standing in for a decision."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 101,
+        "selector": "div.page > main#article.article-content > section#method.essay-section",
+        "snippet": "family text-only is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-307",
+      "tell_id": "numbered-eyebrow",
+      "severity": "major",
+      "title": "Numbered eyebrow",
+      "evidence": {
+        "line": 102,
+        "selector": "main#article.article-content > section#method.essay-section > p.section-label",
+        "snippet": "<p class=\"section-label\">01 · Research framework</p> | eyebrow text \"01 · Research framework\""
+      },
+      "fix": "Drop the number; the eyebrow word is enough.",
+      "why": "Numbers over sections (00, INDEX, 001.Capabilities) are the AI slide deck applied to a web page."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 111,
+        "selector": "div.page > main#article.article-content > section#sample.essay-section",
+        "snippet": "family text-only is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-307",
+      "tell_id": "numbered-eyebrow",
+      "severity": "major",
+      "title": "Numbered eyebrow",
+      "evidence": {
+        "line": 112,
+        "selector": "main#article.article-content > section#sample.essay-section > p.section-label",
+        "snippet": "<p class=\"section-label\">02 · Data at scale</p> | eyebrow text \"02 · Data at scale\""
+      },
+      "fix": "Drop the number; the eyebrow word is enough.",
+      "why": "Numbers over sections (00, INDEX, 001.Capabilities) are the AI slide deck applied to a web page."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 116,
+        "selector": "tbody > tr > td",
+        "snippet": "67.4% in \"67.4%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 116,
+        "selector": "tbody > tr > td",
+        "snippet": "20.8% in \"20.8%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 116,
+        "selector": "tbody > tr > td",
+        "snippet": "11.9% in \"11.9%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 116,
+        "selector": "tr > td > strong",
+        "snippet": "100.0% in \"100.0%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-403",
+      "tell_id": "contract-ban-violated",
+      "severity": "blocker",
+      "title": "Artifact violates a ban from the contract",
+      "evidence": {
+        "line": 116,
+        "selector": "tbody > tr > td",
+        "snippet": "banned tell \"fake-precise-numbers\" detected: 67.4% in \"67.4%\""
+      },
+      "fix": "Remove the banned tell, or remove it from contract.bans with a written reason.",
+      "why": "The contract listed this tell as banned: shipping it means the build ignored the ruling it was given."
+    },
+    {
+      "check_id": "DC-301",
+      "tell_id": "eyebrow-density",
+      "severity": "minor",
+      "title": "Too many eyebrows",
+      "evidence": {
+        "line": 122,
+        "selector": "main#article.article-content > section#failure-classes.essay-section > p.section-label",
+        "snippet": "<p class=\"section-label\">03 · Deep dive</p> | 8 eyebrows in 12 sections, limit 4"
+      },
+      "fix": "Delete the eyebrows past the limit and let the headline carry the section.",
+      "why": "One eyebrow per three sections maximum (the hero counts as one), otherwise every section shouts the same way."
+    },
+    {
+      "check_id": "DC-307",
+      "tell_id": "numbered-eyebrow",
+      "severity": "major",
+      "title": "Numbered eyebrow",
+      "evidence": {
+        "line": 122,
+        "selector": "main#article.article-content > section#failure-classes.essay-section > p.section-label",
+        "snippet": "<p class=\"section-label\">03 · Deep dive</p> | eyebrow text \"03 · Deep dive\""
+      },
+      "fix": "Drop the number; the eyebrow word is enough.",
+      "why": "Numbers over sections (00, INDEX, 001.Capabilities) are the AI slide deck applied to a web page."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 127,
+        "selector": "div.chart > div.bar-group > div.bar",
+        "snippet": "8.1% in \"8.1%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 127,
+        "selector": "div.chart > div.bar-group > div.bar",
+        "snippet": "9.4% in \"9.4%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 127,
+        "selector": "div.chart > div.bar-group > div.bar",
+        "snippet": "12.7% in \"12.7%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 127,
+        "selector": "div.chart > div.bar-group > div.bar",
+        "snippet": "18.9% in \"18.9%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-004",
+      "tell_id": "fake-precise-numbers",
+      "severity": "major",
+      "title": "Fake precise number without a source",
+      "evidence": {
+        "line": 127,
+        "selector": "div.chart > div.bar-group > div.bar",
+        "snippet": "27.6% in \"27.6%\""
+      },
+      "fix": "Cite the source inline, mark the block with a mock comment, or drop the precision.",
+      "why": "A precise figure with no origin reads as invented data, which is the fastest way to lose trust."
+    },
+    {
+      "check_id": "DC-307",
+      "tell_id": "numbered-eyebrow",
+      "severity": "major",
+      "title": "Numbered eyebrow",
+      "evidence": {
+        "line": 133,
+        "selector": "main#article.article-content > section#cost-model.essay-section > p.section-label",
+        "snippet": "<p class=\"section-label\">04 · ROI analysis</p> | eyebrow text \"04 · ROI analysis\""
+      },
+      "fix": "Drop the number; the eyebrow word is enough.",
+      "why": "Numbers over sections (00, INDEX, 001.Capabilities) are the AI slide deck applied to a web page."
+    },
+    {
+      "check_id": "DC-307",
+      "tell_id": "numbered-eyebrow",
+      "severity": "major",
+      "title": "Numbered eyebrow",
+      "evidence": {
+        "line": 144,
+        "selector": "main#article.article-content > section#limitations.essay-section > p.section-label",
+        "snippet": "<p class=\"section-label\">05 · Strategic outlook</p> | eyebrow text \"05 · Strategic outlook\""
+      },
+      "fix": "Drop the number; the eyebrow word is enough.",
+      "why": "Numbers over sections (00, INDEX, 001.Capabilities) are the AI slide deck applied to a web page."
+    }
+  ],
+  "counts": {
+    "blocker": 23,
+    "major": 57,
+    "minor": 7
+  },
+  "score": {
+    "slop_index": 10,
+    "layout_families": 4,
+    "contrast_failures": 5
+  },
+  "verdict": "fail"
+}

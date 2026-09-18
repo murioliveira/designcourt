@@ -1,0 +1,31 @@
+{
+  "demand": "B1-persuade-devtool",
+  "product": "Postmortem",
+  "brief": "Postmortem, incident timeline to doc",
+  "designcourt_artifact": {
+    "file": "C:/Users/muzph/projetos/designcourt/eval_runs/b1_page.html",
+    "contract": "C:/Users/muzph/projetos/designcourt/eval_runs/b1_contract.json",
+    "verdict": "clean",
+    "slop_score": 0,
+    "designcourt_counts": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0
+    },
+    "impeccable_antipatterns_count": 0,
+    "judge_runtime_ms": 262
+  },
+  "competitor_standard_artifact": {
+    "file": "C:/Users/muzph/projetos/designcourt/eval_runs/b1_competitor_standard.html",
+    "contract": "C:/Users/muzph/projetos/designcourt/eval_runs/b1_contract.json",
+    "verdict": "fail",
+    "slop_score": 10,
+    "designcourt_counts": {
+      "blocker": 21,
+      "major": 48,
+      "minor": 10
+    },
+    "impeccable_antipatterns_count": 20,
+    "judge_runtime_ms": 223
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "judge_version": "1.0",
+  "files_scanned": 1,
+  "findings": [
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 299,
+        "selector": "body > div.page > section.title-byline-strip",
+        "snippet": "family hero is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 306,
+        "selector": "body > div.page > section.key-findings-deck",
+        "snippet": "family divide-list is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 330,
+        "selector": "div.page > main#article.longform-text-spine > section#method.essay-section",
+        "snippet": "family text-only is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 340,
+        "selector": "div.page > main#article.longform-text-spine > section#sample.essay-section",
+        "snippet": "family text-only is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 345,
+        "selector": "main#article.longform-text-spine > section#sample.essay-section > section.data-exhibit",
+        "snippet": "family text-only is not in the plan (title byline strip, key findings deck, longform text spine, data exhibit, citation register)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    }
+  ],
+  "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 5
+  },
+  "score": {
+    "slop_index": 2.5,
+    "layout_families": 4,
+    "contrast_failures": 0
+  },
+  "verdict": "clean"
+}

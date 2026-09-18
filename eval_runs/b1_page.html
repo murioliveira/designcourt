@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2efe7">
+  <title>Postmortem | Incident timeline to written document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --page: color-mix(in srgb, white 94%, black);
+      --surface: color-mix(in srgb, white 88%, black);
+      --surface-strong: color-mix(in srgb, white 81%, black);
+      --ink: color-mix(in srgb, black 88%, white);
+      --muted: color-mix(in srgb, black 68%, white);
+      --line: color-mix(in srgb, black 28%, white);
+      --accent: color-mix(in srgb, orangered 67%, black);
+      --accent-soft: color-mix(in srgb, orangered 18%, white);
+      --accent-ink: color-mix(in srgb, white 97%, black);
+      --night: color-mix(in srgb, black 86%, white);
+      --night-line: color-mix(in srgb, black 62%, white);
+      --night-ink: color-mix(in srgb, white 94%, black);
+      --night-muted: color-mix(in srgb, white 76%, black);
+      --font-sans: "IBM Plex Sans", sans-serif;
+      --font-mono: ui-monospace, Consolas, monospace;
+      --radius-sm: 6px;
+      --radius-md: 14px;
+      --space-page: clamp(20px, 4vw, 64px);
+      --measure: 70rem;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+    .skip-link {
+      position: absolute;
+      left: var(--space-page);
+      top: 8px;
+      z-index: 5;
+      padding: 10px 14px;
+      background: var(--night);
+      color: var(--night-ink);
+      transform: translateY(-150%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .site-header {
+      min-height: 68px;
+      padding: 0 var(--space-page);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wordmark {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .header-action {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+    .section {
+      width: min(100%, 90rem);
+      margin: 0 auto;
+    }
+    .hero {
+      min-height: calc(100dvh - 68px);
+      padding: clamp(54px, 6vw, 88px) var(--space-page);
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(360px, 0.82fr);
+      gap: clamp(40px, 7vw, 112px);
+      align-items: center;
+    }
+    .hero-copy { max-width: 760px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 24px;
+      max-width: 15ch;
+      font-size: 78px;
+      line-height: 0.98;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+    .hero-sub {
+      margin-bottom: 32px;
+      max-width: 45ch;
+      color: var(--muted);
+      font-size: 22px;
+    }
+    .primary-action {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .proof-paper {
+      position: relative;
+      padding: clamp(26px, 4vw, 48px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      box-shadow: 14px 14px 0 var(--surface-strong);
+    }
+    .proof-paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 44%;
+      height: 4px;
+      background: var(--accent);
+    }
+    .proof-paper h2 {
+      margin-bottom: 24px;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+    .proof-paper p { color: var(--muted); }
+    .source-ref {
+      display: inline-block;
+      padding: 4px 7px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .proof-line {
+      margin: 28px 0 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .statement-stat {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+      color: var(--night-ink);
+    }
+    .time-statement {
+      padding: 96px 64px;
+      border-right: 1px solid var(--night-line);
+      background: var(--night);
+    }
+    .time-statement p { margin-bottom: 0; color: var(--night-muted); }
+    .time-statement strong {
+      display: block;
+      color: var(--night-ink);
+      font-size: 68px;
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+    .time-statement span {
+      display: block;
+      margin: 16px 0;
+      color: var(--accent-soft);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .process {
+      padding: 96px 64px;
+      background: var(--night);
+    }
+    .process h2, .proof-grid h2, .side-by-side-comparison h2, .close-action h2 {
+      font-size: 52px;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+    .process h2 { max-width: 12ch; }
+    .process ol { margin: 42px 0 0; padding: 0; list-style: none; }
+    .process li {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 18px;
+      padding: 23px 0;
+      border-top: 1px solid var(--night-line);
+    }
+    .process li:last-child { border-bottom: 1px solid var(--night-line); }
+    .process .step {
+      color: var(--night-muted);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .process h3 { margin: 0 0 4px; font-size: 21px; }
+    .process li p { margin: 0; color: var(--night-muted); }
+    .proof-grid {
+      padding: clamp(72px, 8vw, 120px) var(--space-page);
+    }
+    .proof-grid > h2 { max-width: 15ch; margin-bottom: 42px; }
+    .example-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
+      gap: clamp(20px, 3vw, 48px);
+      align-items: start;
+    }
+    .raw-timeline,
+    .finished-document {
+      border: 1px solid var(--line);
+      padding: 30px;
+    }
+    .raw-timeline h3,
+    .finished-document h3 { margin-bottom: 20px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .raw-timeline pre {
+      margin: 0;
+      padding: 22px;
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+      background: var(--night);
+      color: var(--night-ink);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+    .finished-document {
+      background: var(--surface);
+    }
+    .finished-document p { font-size: 21px; line-height: 1.65; }
+    .finished-document .source-list { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .side-by-side-comparison {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    }
+    .security,
+    .pricing {
+      padding: 96px 64px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .security { border-right: 1px solid var(--line); }
+    .security h2, .pricing h2 { max-width: 11ch; }
+    .security dl { margin: 38px 0 0; }
+    .security-row {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 20px;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+    .security-row:last-child { border-bottom: 1px solid var(--line); }
+    dt { font-weight: 800; }
+    dd { margin: 0; color: var(--muted); }
+    .pricing { background: var(--accent-soft); }
+    .pricing p { max-width: 27ch; color: var(--muted); }
+    .pricing ul { margin: 34px 0 0; padding: 0; list-style: none; }
+    .pricing li { padding: 15px 0; border-top: 1px solid var(--line); font-weight: 700; }
+    .pricing li:last-child { border-bottom: 1px solid var(--line); }
+    .close-action {
+      padding: 112px 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 40px;
+      align-items: end;
+      background: var(--night);
+      color: var(--night-ink);
+    }
+    .close-action h2 { max-width: 13ch; margin-bottom: 24px; }
+    .objection-handler { margin-bottom: 0; color: var(--night-muted); }
+    .text-action {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 4px;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--night-ink);
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .header-action { display: none; }
+      .hero,
+      .statement-stat,
+      .example-layout,
+      .side-by-side-comparison,
+      .close-action { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 52px; }
+      h1 { font-size: 48px; }
+      .process h2, .proof-grid h2, .side-by-side-comparison h2, .close-action h2 { font-size: 38px; }
+      .proof-paper { box-shadow: 8px 8px 0 var(--surface-strong); }
+      .time-statement,
+      .process,
+      .security,
+      .pricing,
+      .close-action { padding: 56px 20px; }
+      .time-statement { border-right: 0; border-bottom: 1px solid var(--night-line); }
+      .process li { grid-template-columns: 58px minmax(0, 1fr); }
+      .security { border-right: 0; border-bottom: 1px solid var(--line); }
+      .security-row { grid-template-columns: 1fr; gap: 4px; }
+      .close-action { align-items: start; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="#main">Postmortem</a>
+    <a class="header-action" href="#trial">Start 14 day trial</a>
+  </header>
+
+  <main id="main" class="section split-asymmetric contract-statement-stat contract-proof-grid contract-side-by-side-comparison contract-close-action">
+    <div class="hero split-asymmetric">
+      <div class="hero-copy">
+        <h1>Six hours of on call work<br>become a document in four minutes</h1>
+        <p class="hero-sub">Reads Slack, PagerDuty, and your deploy log.</p>
+        <a class="primary-action" href="#trial">Start 14 day trial</a>
+      </div>
+      <aside class="proof-paper" aria-label="Product proof">
+        <h2>Every claim it writes links to the source message</h2>
+        <p>Rollback completed at 09:19, five minutes after PagerDuty opened the incident.</p>
+        <a class="source-ref" href="#worked-example">Slack 09:19</a>
+        <p class="proof-line">Review the sentence. Open the evidence.</p>
+      </aside>
+    </div>
+
+    <div class="statement-stat">
+      <div class="time-statement" aria-label="Time from incident work to document">
+        <p><strong>Six hours</strong><span>become</span><strong>four minutes</strong></p>
+      </div>
+      <div class="process">
+        <h2>How it works</h2>
+        <ol>
+          <li>
+            <span class="step">First</span>
+            <div><h3>Connect sources</h3><p>Authorize Slack and PagerDuty, then point Postmortem at your deploy log.</p></div>
+          </li>
+          <li>
+            <span class="step">During</span>
+            <div><h3>Run the incident</h3><p>Keep the on call workflow your team already uses.</p></div>
+          </li>
+          <li>
+            <span class="step">After</span>
+            <div><h3>Receive the draft</h3><p>Open a written account with a source link beside every claim.</p></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div id="worked-example" class="proof-grid">
+      <h2>From raw timeline to finished document</h2>
+      <div class="example-layout">
+        <article class="raw-timeline">
+          <h3>Raw incident timeline</h3>
+          <pre>09:08  DEPLOY   checkout-api@7f2ca91
+09:14  PAGER    5xx spike on checkout-api
+09:17  SLACK    #inc-checkout: rollback started
+09:19  DEPLOY   rollback 7f2ca91 completed
+09:23  PAGER    error rate returned to baseline</pre>
+        </article>
+        <article class="finished-document">
+          <h3>Finished postmortem</h3>
+          <p>At 09:08, deploy 7f2ca91 changed checkout-api. PagerDuty alerted after 5xx responses spiked at 09:14. The incident channel linked the spike to the deploy, and rollback completed at 09:19. Error rates returned to baseline after the rollback.</p>
+          <p class="source-list"><a class="source-ref" href="#worked-example">Deploy 09:08</a> <a class="source-ref" href="#worked-example">PagerDuty 09:14</a> <a class="source-ref" href="#worked-example">Slack 09:17</a> <a class="source-ref" href="#worked-example">Deploy 09:19</a></p>
+        </article>
+      </div>
+    </div>
+
+    <div class="side-by-side-comparison">
+      <article class="security">
+        <h2>Security and data handling</h2>
+        <dl>
+          <div class="security-row"><dt>Stored</dt><dd>Source references, workspace access tokens, and the generated draft.</dd></div>
+          <div class="security-row"><dt>Deleted</dt><dd>Imported message bodies after draft generation. Disconnecting removes access tokens and stored drafts.</dd></div>
+          <div class="security-row"><dt>Runs</dt><dd>Incident processing runs inside an isolated service environment.</dd></div>
+        </dl>
+      </article>
+      <article class="pricing">
+        <h2>Pricing follows your team</h2>
+        <p>Pay per seat, not per incident.</p>
+        <ul>
+          <li>No per incident charge</li>
+          <li>Free for teams under five</li>
+        </ul>
+      </article>
+    </div>
+
+    <div id="trial" class="close-action">
+      <div>
+        <h2>Write the next postmortem from the record</h2>
+        <p class="objection-handler">Keep your current incident workflow.<br>Connect a sandbox workspace, then remove access any time.</p>
+      </div>
+      <a class="text-action" href="#main">Start 14 day trial</a>
+    </div>
+  </main>
+</body>
+</html>

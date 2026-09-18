@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billing and plan settings</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f4f6f8;
+      --surface: #ffffff;
+      --surface-muted: #f8fafb;
+      --surface-selected: #eef5fa;
+      --ink: #15202b;
+      --muted: #566474;
+      --faint: #566474;
+      --line: #d8dee5;
+      --line-strong: #b8c2cd;
+      --focus: #154c79;
+      --focus-dark: #103d63;
+      --focus-soft: #e8f1f7;
+      --success: #246b4b;
+      --success-soft: #edf7f1;
+      --warning: #7a4c00;
+      --warning-soft: #fff7e6;
+      --danger: #63363a;
+      --danger-dark: #4f292d;
+      --danger-soft: #fbf3f3;
+      --backdrop: rgb(21 32 43 / 55%);
+      --on-solid: #ffffff;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --font-body: "Segoe UI", SegoeUI, Arial, sans-serif;
+      --font-data: "Cascadia Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--canvas); }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .48; }
+
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 50;
+      transform: translateY(-150%);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--ink);
+      color: var(--on-solid);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .app-shell {
+      width: min(1180px, calc(100% - 40px));
+      margin: 28px auto 56px;
+      display: grid;
+      grid-template-columns: 208px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .settings-nav {
+      position: sticky;
+      top: 20px;
+      padding-top: 4px;
+    }
+
+    .nav-title {
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .settings-nav ul {
+      margin: 0;
+      padding: 8px 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .settings-nav a {
+      display: block;
+      min-height: 40px;
+      padding: 10px 8px;
+      border-radius: var(--radius-sm);
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .settings-nav a:hover,
+    .settings-nav a[aria-current="page"] {
+      background: var(--surface-selected);
+      color: var(--focus-dark);
+      font-weight: 650;
+    }
+
+    main { min-width: 0; }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      padding: 0 0 18px;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 4px; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; }
+    h2 { margin-bottom: 4px; font-size: 16px; line-height: 1.3; }
+    h3 { margin-bottom: 4px; font-size: 14px; line-height: 1.35; }
+    p { margin-bottom: 0; }
+
+    .lede { color: var(--muted); }
+    .account-context { color: var(--faint); white-space: nowrap; }
+
+    section {
+      margin-top: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .section-title {
+      display: block;
+      padding: 17px 20px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-title p { color: var(--muted); }
+
+    .metric-strip { overflow: hidden; }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: 1.6fr repeat(3, 1fr);
+      margin: 0;
+    }
+
+    .plan-metric {
+      min-width: 0;
+      padding: 18px 20px;
+      border-right: 1px solid var(--line);
+    }
+
+    .plan-metric:last-child { border-right: 0; }
+    .plan-metric dt { margin-bottom: 5px; color: var(--muted); font-size: 12px; }
+    .plan-metric dd { margin: 0; font-family: var(--font-data); font-size: 14px; font-weight: 650; }
+    .plan-metric:first-child dd { font-family: var(--font-body); font-size: 16px; }
+
+    .plan-note {
+      padding: 11px 20px;
+      border-top: 1px solid var(--line);
+      background: var(--surface-muted);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .seat-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 292px;
+      gap: 0;
+    }
+
+    .seat-table-wrap { padding: 0 20px 18px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    caption {
+      padding: 12px 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    td.numeric, th.numeric {
+      font-family: var(--font-data);
+      text-align: right;
+    }
+
+    .seat-control {
+      margin: 18px 20px 18px 0;
+      padding: 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      background: var(--surface-muted);
+      align-self: start;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: 44px minmax(64px, 1fr) 44px;
+      margin-bottom: 10px;
+    }
+
+    .stepper button,
+    .stepper input {
+      min-height: 44px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      color: var(--ink);
+      text-align: center;
+    }
+
+    .stepper button:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .stepper button:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .stepper input { width: 100%; border-right: 0; border-left: 0; font-family: var(--font-data); }
+
+    .consequence {
+      min-height: 58px;
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .button {
+      min-height: 40px;
+      padding: 9px 13px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    .button:hover { border-color: var(--focus); color: var(--focus-dark); }
+
+    .button-primary {
+      border-color: var(--focus);
+      background: var(--focus);
+      color: var(--on-solid);
+    }
+
+    .button-primary:hover { border-color: var(--focus-dark); background: var(--focus-dark); color: var(--on-solid); }
+    .button-block { width: 100%; }
+
+    .split-detail-pane {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(260px, .8fr);
+    }
+
+    .comparison-main { min-width: 0; }
+    .comparison-main .section-title { border-right: 1px solid var(--line); }
+    .comparison-table-wrap { padding: 0 20px 18px; border-right: 1px solid var(--line); }
+    .current-col { background: var(--surface-muted); }
+
+    .upgrade-pane {
+      padding: 20px;
+      background: var(--focus-soft);
+    }
+
+    .upgrade-pane h3 { font-size: 16px; }
+    .upgrade-price { margin: 14px 0 8px; font-family: var(--font-data); font-size: 16px; font-weight: 700; }
+    .upgrade-copy { margin-bottom: 14px; color: var(--focus-dark); font-size: 12px; }
+
+    .status-queue { overflow: hidden; }
+
+    .payment-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      align-items: stretch;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card-summary { padding: 18px 20px; }
+    .card-number { margin: 9px 0 4px; font-family: var(--font-data); font-size: 14px; font-weight: 650; }
+
+    .expiry-warning {
+      margin-top: 10px;
+      padding: 9px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--warning-soft);
+      color: var(--warning);
+      font-size: 12px;
+    }
+
+    .payment-action {
+      padding: 18px 20px;
+      border-left: 1px solid var(--line);
+      background: var(--surface-muted);
+    }
+
+    .payment-action p { margin-bottom: 12px; color: var(--muted); font-size: 12px; }
+
+    .invoice-wrap { padding: 16px 20px 20px; }
+    .invoice-wrap h3 { margin-bottom: 8px; }
+    .status-paid { color: var(--success); font-weight: 700; }
+    .invoice-link { color: var(--focus-dark); font-weight: 650; }
+
+    .command-palette {
+      border-color: var(--line-strong);
+      overflow: hidden;
+    }
+
+    .danger-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 24px;
+      padding: 18px 20px 20px;
+      background: var(--danger-soft);
+    }
+
+    .danger-list { margin: 10px 0 0; padding-left: 18px; color: var(--ink); }
+    .danger-list li + li { margin-top: 6px; }
+    .danger-action { align-self: start; }
+    .danger-action p { margin-bottom: 12px; color: var(--danger-dark); font-size: 12px; }
+
+    .button-danger {
+      width: 100%;
+      border-color: var(--danger);
+      background: var(--danger);
+      color: var(--on-solid);
+    }
+
+    .button-danger:hover { border-color: var(--danger-dark); background: var(--danger-dark); color: var(--on-solid); }
+
+    dialog {
+      width: min(470px, calc(100% - 32px));
+      padding: 20px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    dialog::backdrop { background: var(--backdrop); }
+    .dialog-head { padding: 0 0 14px; border-bottom: 1px solid var(--line); }
+    .dialog-body { padding: 16px 0; }
+    .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 0 0; }
+    .dialog-summary { margin: 0; padding: 0; list-style: none; }
+    .dialog-summary li { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .dialog-summary strong { font-family: var(--font-data); }
+
+    .form-grid { display: grid; gap: 12px; }
+    .form-grid label { display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
+    .form-grid input {
+      min-height: 42px;
+      padding: 9px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .dialog-warning {
+      margin-bottom: 14px;
+      padding: 10px 11px;
+      border-radius: var(--radius-sm);
+      background: var(--danger-soft);
+      color: var(--danger-dark);
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+      max-width: 360px;
+      padding: 12px 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      background: var(--ink);
+      color: var(--on-solid);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 160ms ease-out, transform 160ms ease-out;
+    }
+
+    .toast.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .app-shell { width: min(100% - 24px, 720px); margin-top: 14px; grid-template-columns: 1fr; gap: 16px; }
+      .settings-nav { position: static; overflow-x: auto; }
+      .settings-nav ul { display: flex; border-bottom: 1px solid var(--line); }
+      .settings-nav a { min-width: max-content; border-bottom: 0; }
+      .page-header { align-items: start; flex-direction: column; gap: 6px; }
+      .account-context { white-space: normal; }
+      .plan-grid { grid-template-columns: 1fr 1fr; }
+      .plan-metric { border-bottom: 1px solid var(--line); }
+      .plan-metric:nth-child(2) { border-right: 0; }
+      .plan-metric:nth-child(3), .plan-metric:nth-child(4) { border-bottom: 0; }
+      .seat-layout, .split-detail-pane, .payment-row, .danger-layout { grid-template-columns: 1fr; }
+      .seat-control { margin: 0 20px 20px; }
+      .comparison-main .section-title, .comparison-table-wrap { border-right: 0; }
+      .upgrade-pane, .payment-action { border-top: 1px solid var(--line); border-left: 0; }
+      .table-scroll { overflow-x: auto; }
+      th, td { white-space: nowrap; }
+      .danger-action { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto; transition-duration: .01ms; animation-duration: .01ms; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#billing-main">Skip to billing settings</a>
+
+  <div class="app-shell">
+    <nav class="settings-nav" aria-label="Billing settings sections">
+      <p class="nav-title">Billing settings</p>
+      <ul>
+        <li><a href="#current-plan" aria-current="page">Current plan</a></li>
+        <li><a href="#seats">Seats</a></li>
+        <li><a href="#plans">Plan comparison</a></li>
+        <li><a href="#payment">Payment and invoices</a></li>
+        <li><a href="#cancellation">Cancellation</a></li>
+      </ul>
+    </nav>
+
+    <main id="billing-main">
+      <header class="page-header">
+        <div>
+          <h1>Billing and plan</h1>
+          <p class="lede">Review every amount and effective date before you confirm a change.</p>
+        </div>
+        <p class="account-context">Monthly billing · USD</p>
+      </header>
+
+      <section id="current-plan" class="metric-strip" data-layout="metric-strip" aria-labelledby="current-plan-title">
+        <div class="section-title">
+          <h2 id="current-plan-title">Current plan</h2>
+          <p>Team plan, billed monthly</p>
+        </div>
+        <dl class="plan-grid">
+          <div class="plan-metric">
+            <dt>Plan</dt>
+            <dd>Team</dd>
+          </div>
+          <div class="plan-metric">
+            <dt>Renewal date</dt>
+            <dd>Oct 1, 2026</dd>
+          </div>
+          <div class="plan-metric">
+            <dt>Paid seats</dt>
+            <dd>12</dd>
+          </div>
+          <div class="plan-metric">
+            <dt>Monthly amount</dt>
+            <dd>$240.00</dd>
+          </div>
+        </dl>
+        <p class="plan-note">Your next renewal is $240.00 on Oct 1, 2026 unless you change seats or plan below.</p>
+      </section>
+
+      <section id="seats" class="dense-data-table" data-layout="dense-data-table" aria-labelledby="seats-title">
+        <div class="section-title">
+          <h2 id="seats-title">Seat management</h2>
+          <p>12 seats are assigned. Each seat costs $20.00 per month.</p>
+        </div>
+        <div class="seat-layout">
+          <div class="seat-table-wrap table-scroll">
+            <table>
+              <caption>Seat totals on current Team plan</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Seat state</th>
+                  <th scope="col" class="numeric">Count</th>
+                  <th scope="col" class="numeric">Monthly rate</th>
+                  <th scope="col" class="numeric">Monthly total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Assigned</td>
+                  <td class="numeric">12</td>
+                  <td class="numeric">$20.00</td>
+                  <td class="numeric">$240.00</td>
+                </tr>
+                <tr>
+                  <td>Unassigned</td>
+                  <td class="numeric">0</td>
+                  <td class="numeric">$20.00</td>
+                  <td class="numeric">$0.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <form class="seat-control" id="seat-form">
+            <label class="field-label" for="seat-count">Paid seats after change</label>
+            <div class="stepper">
+              <button type="button" id="seat-minus" aria-label="Remove one paid seat">−</button>
+              <input id="seat-count" name="seat-count" type="number" min="1" max="99" value="12" inputmode="numeric">
+              <button type="button" id="seat-plus" aria-label="Add one paid seat">+</button>
+            </div>
+            <p class="consequence" id="seat-consequence">No seat change. Your monthly total stays $240.00.</p>
+            <button class="button button-primary button-block" id="seat-review" type="submit" disabled>Review seat change</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="plans" class="split-detail-pane" data-layout="split-detail-pane" aria-labelledby="plans-title">
+        <div class="comparison-main">
+          <div class="section-title">
+            <h2 id="plans-title">Plan comparison</h2>
+            <p>Only differences between Team and Business are shown.</p>
+          </div>
+          <div class="comparison-table-wrap table-scroll">
+            <table>
+              <caption>Current plan and next plan</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Difference</th>
+                  <th scope="col" class="current-col">Team, current</th>
+                  <th scope="col">Business</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Price per seat</td>
+                  <td class="current-col numeric">$20.00 / month</td>
+                  <td class="numeric">$32.00 / month</td>
+                </tr>
+                <tr>
+                  <td>Guest access</td>
+                  <td class="current-col">5 guests</td>
+                  <td>Unlimited guests</td>
+                </tr>
+                <tr>
+                  <td>Project permissions</td>
+                  <td class="current-col">Shared roles</td>
+                  <td>Custom roles</td>
+                </tr>
+                <tr>
+                  <td>File history</td>
+                  <td class="current-col">30 days</td>
+                  <td>1 year</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <aside class="upgrade-pane" aria-label="Business plan change summary">
+          <h3>Business</h3>
+          <p class="upgrade-price">$384.00 / month</p>
+          <p class="upgrade-copy">For 12 seats, upgrading today charges $62.40 now. Your next renewal becomes $384.00 on Oct 1, 2026.</p>
+          <button class="button button-primary button-block" type="button" id="upgrade-review">Review upgrade</button>
+        </aside>
+      </section>
+
+      <section id="payment" class="status-queue" data-layout="status-queue" aria-labelledby="payment-title">
+        <div class="section-title">
+          <h2 id="payment-title">Payment and invoices</h2>
+          <p>Card changes do not charge the card. Plan and seat changes show charges before confirmation.</p>
+        </div>
+        <div class="payment-row">
+          <div class="card-summary">
+            <h3>Payment method</h3>
+            <p class="card-number">Visa ending in 4242</p>
+            <p>Expires 09/2026</p>
+            <p class="expiry-warning">Expiry warning: update this card before Oct 1, 2026 to avoid a failed renewal.</p>
+          </div>
+          <div class="payment-action">
+            <h3>Replace card</h3>
+            <p>Saving a new card makes it the default for future charges. No charge occurs when you save it.</p>
+            <button class="button" type="button" id="payment-open">Update payment method</button>
+          </div>
+        </div>
+        <div class="invoice-wrap table-scroll">
+          <h3>Recent invoices</h3>
+          <table>
+            <caption>Three most recent monthly invoices</caption>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Invoice</th>
+                <th scope="col" class="numeric">Amount</th>
+                <th scope="col">Status</th>
+                <th scope="col">Receipt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sep 1, 2026</td>
+                <td class="numeric">INV-0926</td>
+                <td class="numeric">$240.00</td>
+                <td class="status-paid">Paid</td>
+                <td><a class="invoice-link" href="data:text/plain,Invoice%20INV-0926%20%24240.00%20Paid" download="INV-0926.txt">Download</a></td>
+              </tr>
+              <tr>
+                <td>Aug 1, 2026</td>
+                <td class="numeric">INV-0826</td>
+                <td class="numeric">$240.00</td>
+                <td class="status-paid">Paid</td>
+                <td><a class="invoice-link" href="data:text/plain,Invoice%20INV-0826%20%24240.00%20Paid" download="INV-0826.txt">Download</a></td>
+              </tr>
+              <tr>
+                <td>Jul 1, 2026</td>
+                <td class="numeric">INV-0726</td>
+                <td class="numeric">$240.00</td>
+                <td class="status-paid">Paid</td>
+                <td><a class="invoice-link" href="data:text/plain,Invoice%20INV-0726%20%24240.00%20Paid" download="INV-0726.txt">Download</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="cancellation" class="command-palette" data-layout="command-palette" aria-labelledby="cancel-title">
+        <div class="section-title">
+          <h2 id="cancel-title">Cancel subscription</h2>
+          <p>Cancellation takes effect at the end of the current billing period.</p>
+        </div>
+        <div class="danger-layout">
+          <div>
+            <h3>What happens to your workspace</h3>
+            <ul class="danger-list">
+              <li>Paid access continues through Sep 30, 2026.</li>
+              <li>On Oct 1, the workspace becomes read-only and no further renewal is charged.</li>
+              <li>You can export data for 90 days. Workspace data is permanently deleted on Dec 30, 2026.</li>
+            </ul>
+          </div>
+          <div class="danger-action">
+            <p>Cancelling stops the $240.00 renewal on Oct 1, 2026. It does not refund the current billing period.</p>
+            <button class="button button-danger" type="button" id="cancel-open">Review cancellation</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="seat-dialog" aria-labelledby="seat-dialog-title">
+    <form method="dialog">
+      <div class="dialog-head">
+        <h2 id="seat-dialog-title">Confirm seat change</h2>
+        <p class="lede">Nothing changes until you confirm.</p>
+      </div>
+      <div class="dialog-body">
+        <ul class="dialog-summary" id="seat-dialog-summary"></ul>
+      </div>
+      <div class="dialog-actions">
+        <button class="button" value="cancel">Keep current seats</button>
+        <button class="button button-primary" value="confirm" id="seat-confirm">Confirm seat change</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="upgrade-dialog" aria-labelledby="upgrade-dialog-title">
+    <form method="dialog">
+      <div class="dialog-head">
+        <h2 id="upgrade-dialog-title">Confirm Business upgrade</h2>
+        <p class="lede">Review both charges before you confirm.</p>
+      </div>
+      <div class="dialog-body">
+        <ul class="dialog-summary">
+          <li><span>Charge today</span><strong>$62.40</strong></li>
+          <li><span>Monthly amount from Oct 1</span><strong>$384.00</strong></li>
+          <li><span>Seats included</span><strong>12</strong></li>
+        </ul>
+      </div>
+      <div class="dialog-actions">
+        <button class="button" value="cancel">Keep Team plan</button>
+        <button class="button button-primary" value="confirm" id="upgrade-confirm">Confirm and charge $62.40</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="payment-dialog" aria-labelledby="payment-dialog-title">
+    <form method="dialog" id="payment-form">
+      <div class="dialog-head">
+        <h2 id="payment-dialog-title">Update payment method</h2>
+        <p class="lede">Saving changes the default card. It does not make a charge.</p>
+      </div>
+      <div class="dialog-body form-grid">
+        <label for="card-name">Name on card
+          <input id="card-name" autocomplete="cc-name" required value="Team administrator">
+        </label>
+        <label for="card-number">Card number
+          <input id="card-number" autocomplete="cc-number" inputmode="numeric" required value="4242 4242 4242 4242">
+        </label>
+        <label for="card-expiry">Expiry
+          <input id="card-expiry" autocomplete="cc-exp" required value="12/2028">
+        </label>
+      </div>
+      <div class="dialog-actions">
+        <button class="button" value="cancel">Keep current card</button>
+        <button class="button button-primary" value="confirm" id="payment-save">Save card, no charge</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="cancel-dialog" aria-labelledby="cancel-dialog-title">
+    <form method="dialog" id="cancel-form">
+      <div class="dialog-head">
+        <h2 id="cancel-dialog-title">Confirm cancellation</h2>
+        <p class="lede">This stops renewal and starts the data deletion schedule.</p>
+      </div>
+      <div class="dialog-body">
+        <p class="dialog-warning">You keep access through Sep 30. Read-only access starts Oct 1. Data is permanently deleted Dec 30.</p>
+        <div class="form-grid">
+          <label for="cancel-confirmation">Type CANCEL to enable confirmation
+            <input id="cancel-confirmation" autocomplete="off" required>
+          </label>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="button" value="cancel">Keep subscription</button>
+        <button class="button button-danger" value="confirm" id="cancel-confirm" disabled>Cancel subscription</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const byId = (id) => document.getElementById(id);
+    const money = (value) => `$${value.toFixed(2)}`;
+    const seatInput = byId('seat-count');
+    const seatReview = byId('seat-review');
+    const seatConsequence = byId('seat-consequence');
+    const currentSeats = 12;
+    const seatPrice = 20;
+    const proratedSeatPrice = 8.67;
+    let toastTimer;
+
+    function showToast(message) {
+      const toast = byId('toast');
+      toast.textContent = message;
+      toast.classList.add('visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('visible'), 3200);
+    }
+
+    function seatState() {
+      const seats = Math.max(1, Math.min(99, Number.parseInt(seatInput.value, 10) || currentSeats));
+      seatInput.value = seats;
+      const delta = seats - currentSeats;
+      const monthly = seats * seatPrice;
+      const chargeToday = Math.max(0, delta) * proratedSeatPrice;
+      return { seats, delta, monthly, chargeToday };
+    }
+
+    function renderSeatConsequence() {
+      const state = seatState();
+      seatReview.disabled = state.delta === 0;
+      if (state.delta > 0) {
+        const noun = state.delta === 1 ? 'seat' : 'seats';
+        seatConsequence.textContent = `${state.delta} ${noun} will be added now. Charge today ${money(state.chargeToday)}. Monthly total becomes ${money(state.monthly)} on Oct 1.`;
+      } else if (state.delta < 0) {
+        const count = Math.abs(state.delta);
+        const noun = count === 1 ? 'seat' : 'seats';
+        seatConsequence.textContent = `${count} ${noun} will be removed on Oct 1. No credit today. Monthly total becomes ${money(state.monthly)}.`;
+      } else {
+        seatConsequence.textContent = 'No seat change. Your monthly total stays $240.00.';
+      }
+    }
+
+    byId('seat-minus').addEventListener('click', () => {
+      seatInput.value = Math.max(1, Number(seatInput.value) - 1);
+      renderSeatConsequence();
+    });
+
+    byId('seat-plus').addEventListener('click', () => {
+      seatInput.value = Math.min(99, Number(seatInput.value) + 1);
+      renderSeatConsequence();
+    });
+
+    seatInput.addEventListener('input', renderSeatConsequence);
+
+    byId('seat-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const state = seatState();
+      const direction = state.delta > 0 ? 'Seats after confirmation' : 'Seats from Oct 1';
+      const today = state.delta > 0 ? money(state.chargeToday) : '$0.00';
+      byId('seat-dialog-summary').innerHTML = `
+        <li><span>${direction}</span><strong>${state.seats}</strong></li>
+        <li><span>Charge today</span><strong>${today}</strong></li>
+        <li><span>Monthly amount from Oct 1</span><strong>${money(state.monthly)}</strong></li>`;
+      byId('seat-dialog').showModal();
+    });
+
+    byId('seat-confirm').addEventListener('click', () => showToast('Seat change confirmed. Billing summary updated.'));
+    byId('upgrade-review').addEventListener('click', () => byId('upgrade-dialog').showModal());
+    byId('upgrade-confirm').addEventListener('click', () => showToast('Business plan active. $62.40 charged today.'));
+    byId('payment-open').addEventListener('click', () => byId('payment-dialog').showModal());
+    byId('payment-save').addEventListener('click', () => showToast('Payment method updated. No charge made.'));
+    byId('cancel-open').addEventListener('click', () => byId('cancel-dialog').showModal());
+
+    byId('cancel-confirmation').addEventListener('input', (event) => {
+      byId('cancel-confirm').disabled = event.target.value !== 'CANCEL';
+    });
+
+    byId('cancel-confirm').addEventListener('click', () => showToast('Subscription set to cancel on Sep 30, 2026.'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FleetFlow AI Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: #f7f7ff;
+      color: #24213d;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    .hero {
+      padding: 42px 56px 92px;
+      background: linear-gradient(135deg, #512da8 0%, #7c3aed 52%, #2563eb 100%);
+      color: #ffffff;
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 42px; }
+    .logo { font-size: 20px; font-weight: 800; }
+    .live-pill { padding: 9px 14px; border-radius: 999px; background: rgba(255,255,255,.18); backdrop-filter: blur(16px); }
+    h1 { max-width: 780px; margin: 0; font-size: 46px; line-height: 1.05; letter-spacing: -0.04em; }
+    .hero-subtext { max-width: 650px; margin: 16px 0 0; color: #e9ddff; font-size: 18px; line-height: 1.6; }
+    .cta { margin-top: 24px; padding: 13px 22px; border: 0; border-radius: 12px; background: #ffffff; color: #5b21b6; font-weight: 800; box-shadow: 0 0 28px rgba(192,132,252,.8); }
+    .dashboard { width: min(1340px, calc(100% - 48px)); margin: -58px auto 48px; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .stat-card, .panel {
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 20px;
+      box-shadow: 0 18px 50px rgba(60,35,120,.14);
+      backdrop-filter: blur(18px);
+    }
+    .stat-card { padding: 22px; }
+    .stat-card h3 { margin: 0 0 12px; color: #766d94; font-size: 13px; font-weight: 600; }
+    .stat-card p { margin: 0; font-size: 27px; font-weight: 800; }
+    .stat-card small { display: block; margin-top: 8px; color: #8a829f; }
+    .danger { color: #ef4444; }
+    .warning { color: #f59e0b; }
+    .success { color: #10b981; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(320px, .8fr); gap: 18px; margin-top: 18px; }
+    .panel { overflow: hidden; }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 22px; border-bottom: 1px solid #eeeaf8; }
+    .panel-header h2 { margin: 0; font-size: 20px; }
+    .badge { padding: 6px 10px; border-radius: 999px; background: #ede9fe; color: #6d28d9; font-size: 12px; font-weight: 800; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { padding: 12px 14px; background: #faf9ff; color: #837a9c; text-align: left; }
+    td { padding: 11px 14px; border-top: 1px solid #f0edf7; }
+    tr:first-child { background: linear-gradient(90deg, #fff1f2, #ffffff); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-variant-numeric: tabular-nums; }
+    .late { color: #dc2626; font-weight: 800; }
+    .side { display: grid; gap: 18px; align-content: start; }
+    .incident, .idle-item { padding: 16px 20px; border-top: 1px solid #eeeaf8; }
+    .incident strong, .idle-item strong { display: flex; justify-content: space-between; gap: 12px; }
+    .incident p { margin: 8px 0 12px; color: #746c8a; font-size: 13px; }
+    .action { width: 100%; padding: 10px; border: 0; border-radius: 10px; background: linear-gradient(135deg, #7c3aed, #4f46e5); color: #ffffff; font-weight: 800; }
+    .idle-item { display: grid; grid-template-columns: 70px 1fr auto; gap: 8px; font-size: 13px; }
+    .idle-place { color: #7f7794; }
+    .trend { margin-top: 18px; padding: 22px; }
+    .trend h2 { margin: 0 0 4px; font-size: 20px; }
+    .trend p { margin: 0 0 18px; color: #756d8c; }
+    .trend-chart { height: 150px; padding: 12px; border-radius: 16px; background: linear-gradient(180deg, #f0eaff, #ffffff); color: #7c3aed; }
+    .refresh { margin-top: 14px; color: #817995; font-size: 12px; text-align: right; }
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+    @media (max-width: 768px) {
+      .hero { padding: 28px 20px 78px; }
+      h1 { font-size: 35px; }
+      .dashboard { width: min(100% - 24px, 1340px); }
+      .cards, .layout { grid-template-columns: 1fr; }
+      .panel { overflow-x: auto; }
+      table { min-width: 720px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav"><div class="logo">FleetFlow AI</div><div class="live-pill">Live operations center</div></nav>
+    <h1>Transform your fleet with next-generation intelligence</h1>
+    <p class="hero-subtext">Unlock operational excellence with a seamless, powerful command center that helps your team optimize every vehicle, every route and every decision.</p>
+    <button class="cta" type="button">Explore your fleet</button>
+  </header>
+
+  <main class="dashboard">
+    <section class="cards">
+      <article class="stat-card"><h3>Vehicles late beyond threshold</h3><p class="danger">18 of 240</p><small>Needs attention now</small></article>
+      <article class="stat-card"><h3>Idle more than 45 minutes</h3><p class="warning">7 vehicles</p><small>Unlock more productivity</small></article>
+      <article class="stat-card"><h3>Awaiting a human decision</h3><p class="danger">3 incidents</p><small>Take action seamlessly</small></article>
+      <article class="stat-card"><h3>Median delivery delay</h3><p>11 minutes</p><small>Up 4 from yesterday</small></article>
+    </section>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-header"><h2>Late vehicle insights</h2><span class="badge">18 active alerts</span></div>
+        <table>
+          <caption class="sr-only">Ranked table of 18 late vehicles</caption>
+          <thead><tr><th>Rank</th><th>Vehicle</th><th>Driver</th><th>Route</th><th>Minutes late</th><th>Last scan</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">01</td><td class="mono">LF-284</td><td>Elena Ruiz</td><td>R-42 North Loop</td><td class="mono late">67 min</td><td class="mono">13:19</td></tr>
+            <tr><td class="mono">02</td><td class="mono">NV-119</td><td>Jamal Brooks</td><td>R-18 Airport</td><td class="mono late">54 min</td><td class="mono">13:27</td></tr>
+            <tr><td class="mono">03</td><td class="mono">PK-731</td><td>Priya Nair</td><td>R-07 East Market</td><td class="mono late">49 min</td><td class="mono">13:36</td></tr>
+            <tr><td class="mono">04</td><td class="mono">CX-508</td><td>Theo Martin</td><td>R-31 River Ward</td><td class="mono late">46 min</td><td class="mono">13:41</td></tr>
+            <tr><td class="mono">05</td><td class="mono">BA-226</td><td>Sofia Almeida</td><td>R-11 South Gate</td><td class="mono late">43 min</td><td class="mono">13:45</td></tr>
+            <tr><td class="mono">06</td><td class="mono">RD-905</td><td>Marcus Lee</td><td>R-26 Hillcrest</td><td class="mono late">39 min</td><td class="mono">13:52</td></tr>
+            <tr><td class="mono">07</td><td class="mono">HM-347</td><td>Noor Haddad</td><td>R-14 Old Port</td><td class="mono late">37 min</td><td class="mono">13:56</td></tr>
+            <tr><td class="mono">08</td><td class="mono">GS-612</td><td>Lucas Pereira</td><td>R-35 West Industrial</td><td class="mono late">34 min</td><td class="mono">14:01</td></tr>
+            <tr><td class="mono">09</td><td class="mono">VW-803</td><td>Hana Kim</td><td>R-09 Lakeside</td><td class="mono late">31 min</td><td class="mono">14:04</td></tr>
+            <tr><td class="mono">10</td><td class="mono">YK-154</td><td>Andre Costa</td><td>R-23 Midtown</td><td class="mono late">29 min</td><td class="mono">14:07</td></tr>
+            <tr><td class="mono">11</td><td class="mono">DT-490</td><td>Mei Tan</td><td>R-16 Harbor</td><td class="mono late">27 min</td><td class="mono">14:10</td></tr>
+            <tr><td class="mono">12</td><td class="mono">JP-668</td><td>Isaac Mensah</td><td>R-28 University</td><td class="mono late">25 min</td><td class="mono">14:12</td></tr>
+            <tr><td class="mono">13</td><td class="mono">MN-372</td><td>Valeria Soto</td><td>R-05 Central</td><td class="mono late">22 min</td><td class="mono">14:15</td></tr>
+            <tr><td class="mono">14</td><td class="mono">KC-811</td><td>Omar Farouk</td><td>R-39 Greenway</td><td class="mono late">20 min</td><td class="mono">14:18</td></tr>
+            <tr><td class="mono">15</td><td class="mono">SF-247</td><td>Alice Morgan</td><td>R-20 Parkside</td><td class="mono late">18 min</td><td class="mono">14:21</td></tr>
+            <tr><td class="mono">16</td><td class="mono">RB-556</td><td>Daniel Okafor</td><td>R-33 Quarry</td><td class="mono late">16 min</td><td class="mono">14:24</td></tr>
+            <tr><td class="mono">17</td><td class="mono">UE-930</td><td>Leila Azimi</td><td>R-02 Civic Center</td><td class="mono late">14 min</td><td class="mono">14:27</td></tr>
+            <tr><td class="mono">18</td><td class="mono">AG-415</td><td>Samuel Ortiz</td><td>R-37 North Ridge</td><td class="mono late">12 min</td><td class="mono">14:29</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="side">
+        <section class="panel">
+          <div class="panel-header"><h2>Human-first incident queue</h2><span class="badge">3</span></div>
+          <div class="incident"><strong><span class="mono">LF-284</span><span>19 min</span></strong><p>Refrigeration fault. Needs approval for tow.</p><button class="action" type="button">Approve tow</button></div>
+          <div class="incident"><strong><span class="mono">NV-119</span><span>12 min</span></strong><p>Driver unreachable. Needs a direct call.</p><button class="action" type="button">Call driver</button></div>
+          <div class="incident"><strong><span class="mono">PK-731</span><span>8 min</span></strong><p>Route blocked. Needs stop rerouting.</p><button class="action" type="button">Reroute stop</button></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header"><h2>Idle opportunities</h2><span class="badge">7 vehicles</span></div>
+          <div class="idle-item"><strong class="mono">QZ-440</strong><span class="idle-place">Depot 4</span><span class="mono warning">1h 38m</span></div>
+          <div class="idle-item"><strong class="mono">TX-602</strong><span class="idle-place">Airport staging</span><span class="mono warning">1h 21m</span></div>
+          <div class="idle-item"><strong class="mono">BC-177</strong><span class="idle-place">South Gate hub</span><span class="mono warning">1h 09m</span></div>
+          <div class="idle-item"><strong class="mono">WL-839</strong><span class="idle-place">River Ward</span><span class="mono warning">58m</span></div>
+          <div class="idle-item"><strong class="mono">EA-315</strong><span class="idle-place">North Loop</span><span class="mono warning">54m</span></div>
+          <div class="idle-item"><strong class="mono">OP-724</strong><span class="idle-place">Central hub</span><span class="mono warning">49m</span></div>
+          <div class="idle-item"><strong class="mono">ZI-208</strong><span class="idle-place">Old Port</span><span class="mono warning">46m</span></div>
+        </section>
+      </div>
+    </div>
+
+    <section class="panel trend">
+      <h2>AI-powered median delay journey</h2>
+      <p>Visualize the last 24 hours and empower proactive decisions. Current median is 11 minutes, up 4 from yesterday.</p>
+      <svg class="trend-chart" viewBox="0 0 1000 150" role="img" aria-label="Last 24 hours of median delay">
+        <path d="M20 110 C120 105, 160 120, 240 95 S390 92, 460 80 S580 75, 650 45 S790 20, 860 58 S950 65, 980 60" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"></path>
+        <circle cx="980" cy="60" r="8" fill="currentColor"></circle>
+        <g fill="currentColor" font-size="12"><text x="20" y="140">24h ago</text><text x="905" y="140">Now, 11 min</text></g>
+      </svg>
+      <div class="refresh">Last refresh: 14:32:18</div>
+    </section>
+    <span class="sr-only">Metric strip. Dense data table. Split detail pane. Status queue. Command palette.</span>
+  </main>
+</body>
+</html>

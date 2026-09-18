@@ -1,0 +1,33 @@
+{
+  "demand": "B4-operate-settings",
+  "runtime_seconds": 459.61,
+  "designcourt_version": {
+    "file": "b4_page.html",
+    "verdict": "clean",
+    "slop_index": 2.5,
+    "blockers": 0,
+    "majors": 0,
+    "minors": 5,
+    "impeccable_issues_count": 1,
+    "impeccable_issues": [
+      "flat-type-hierarchy (minor second per contract)"
+    ]
+  },
+  "competitor_baseline": {
+    "file": "b4_competitor_standard.html",
+    "verdict": "fail",
+    "slop_index": 10,
+    "blockers": 17,
+    "majors": 27,
+    "minors": 7,
+    "impeccable_issues_count": 19,
+    "impeccable_issues": [
+      "gradient-text",
+      "low-contrast (8 instances)",
+      "overused-font (Inter)",
+      "kicker-above-heading (6 instances)",
+      "nested-cards",
+      "marketing-buzzword"
+    ]
+  }
+}

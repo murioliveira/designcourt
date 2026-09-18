@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f5f7">
+  <title>Fleet operations board</title>
+  <style>
+    :root {
+      --canvas: #f3f5f7;
+      --surface: #ffffff;
+      --surface-alt: #f8fafb;
+      --surface-selected: #edf3fb;
+      --row-alt: #f7f9fa;
+      --row-hover: #eef2f5;
+      --border: #cbd3da;
+      --border-strong: #8d99a4;
+      --ink: #17212b;
+      --muted: #52606d;
+      --faint: #6b7782;
+      --danger: #a32118;
+      --danger-soft: #fbeceb;
+      --warning: #785000;
+      --warning-soft: #fff5d9;
+      --success: #066b43;
+      --focus: #174f92;
+      --focus-ring: #b8cee6;
+      --shadow: rgba(23, 33, 43, 0.08);
+      --radius: 4px;
+      --font-ui: Tahoma, Verdana, sans-serif;
+      --font-data: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--canvas); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, tr:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .skip-link {
+      position: fixed;
+      left: 8px;
+      top: 8px;
+      z-index: 20;
+      padding: 8px 10px;
+      background: var(--ink);
+      color: var(--surface);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .app-shell { max-width: 1600px; margin: 0 auto; min-height: 100dvh; }
+    .topbar {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 8px 18px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand-block { min-width: 180px; }
+    .page-title { font-size: 16px; font-weight: 700; line-height: 1.2; }
+    .fleet-note { margin-top: 2px; color: var(--muted); font-size: 12px; }
+    .toolbar { display: flex; align-items: end; gap: 8px; }
+    .field { display: grid; gap: 3px; }
+    .field label { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .search-input {
+      width: 260px;
+      height: 32px;
+      padding: 5px 9px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+    }
+    .button {
+      min-height: 32px;
+      padding: 5px 10px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .button:hover { background: var(--row-hover); }
+    .refresh-meta { min-width: 144px; text-align: right; color: var(--muted); font-size: 12px; }
+    .refresh-meta time { display: block; color: var(--ink); font-family: var(--font-data); font-size: 12px; }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 1fr 1.25fr;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .metric {
+      min-height: 78px;
+      padding: 11px 18px 10px;
+      border-right: 1px solid var(--border);
+    }
+    .metric:last-child { border-right: 0; }
+    .metric-label { display: block; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .metric-line { display: flex; align-items: baseline; gap: 7px; margin-top: 4px; }
+    .metric-value { font-family: var(--font-data); font-size: 20px; font-weight: 800; line-height: 1; }
+    .metric-unit { color: var(--muted); font-size: 12px; }
+    .metric-delta { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; }
+    .tone-danger, .worst-label { color: var(--danger); }
+    .tone-warning, .idle-time, .trend-change { color: var(--warning); }
+    .decision-state { color: var(--success); }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(760px, 2.2fr) minmax(320px, 0.8fr);
+      gap: 10px;
+      padding: 10px;
+    }
+    .panel {
+      min-width: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 2px var(--shadow);
+    }
+    .panel-head {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-title { font-size: 16px; font-weight: 800; }
+    .panel-note { margin-top: 1px; color: var(--muted); font-size: 12px; }
+    .count {
+      min-width: 24px;
+      padding: 2px 6px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface-alt);
+      font-family: var(--font-data);
+      text-align: center;
+    }
+    .table-wrap { overflow: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    caption { text-align: left; }
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 7px 8px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border-strong);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    th.numeric, td.numeric { text-align: right; }
+    td {
+      height: 31px;
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(even) { background: var(--row-alt); }
+    tbody tr:hover { background: var(--row-hover); }
+    tbody tr[aria-selected="true"] { background: var(--surface-selected); }
+    .critical-row, .critical-row:nth-child(even) { background: var(--danger-soft); }
+    .critical-row:hover { background: var(--danger-soft); }
+    .rank, .vehicle, .minutes, .scan { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+    .rank { width: 34px; color: var(--muted); }
+    .vehicle { font-weight: 800; }
+    .minutes { font-weight: 800; }
+    .worst-label {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 4px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .sort-button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 800;
+    }
+    .route { max-width: 210px; overflow: hidden; text-overflow: ellipsis; }
+    .table-status { padding: 7px 10px; background: var(--surface-alt); color: var(--muted); font-size: 12px; }
+
+    .right-rail { display: grid; align-content: start; gap: 10px; }
+    .queue { list-style: none; margin: 0; padding: 0; }
+    .queue-item { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+    .queue-item:last-child { border-bottom: 0; }
+    .queue-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .queue-vehicle { font-family: var(--font-data); font-weight: 800; }
+    .queue-age { color: var(--muted); font-family: var(--font-data); font-size: 12px; }
+    .queue-reason { margin: 4px 0 7px; color: var(--muted); font-size: 12px; }
+    .decision-row { display: flex; align-items: center; gap: 8px; }
+    .decision-button {
+      min-height: 29px;
+      padding: 4px 8px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .decision-state { font-size: 12px; font-weight: 800; }
+    .idle-list { list-style: none; margin: 0; padding: 0; }
+    .idle-item {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 5px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .idle-item:last-child { border-bottom: 0; }
+    .idle-vehicle, .idle-time { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+    .idle-vehicle { font-weight: 800; }
+    .idle-location { overflow: hidden; color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }
+    .idle-time { font-weight: 800; }
+
+    .trend-panel { grid-column: 1 / -1; }
+    .trend-body {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      min-height: 112px;
+      padding: 8px 10px 10px;
+    }
+    .trend-summary { padding: 8px 14px 8px 0; border-right: 1px solid var(--border); }
+    .trend-now { font-family: var(--font-data); font-size: 20px; font-weight: 800; }
+    .trend-change { margin-top: 5px; font-size: 12px; font-weight: 800; }
+    .trend-line { width: 100%; height: 80px; color: var(--ink); }
+    .trend-grid { color: var(--border); }
+    .trend-axis { color: var(--muted); font-family: var(--font-data); font-size: 12px; }
+
+    @media (max-width: 768px) {
+      .topbar { align-items: flex-start; flex-direction: column; padding: 10px; }
+      .toolbar { width: 100%; align-items: stretch; flex-wrap: wrap; }
+      .field { flex: 1 1 100%; }
+      .search-input { width: 100%; }
+      .refresh-meta { min-width: 0; text-align: left; }
+      .metric-strip { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric { padding: 10px; }
+      .workspace { grid-template-columns: 1fr; padding: 8px; }
+      .right-rail { grid-template-columns: 1fr; }
+      .trend-panel { grid-column: auto; }
+      .trend-body { grid-template-columns: 1fr; }
+      .trend-summary { padding-bottom: 7px; border-right: 0; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#late-vehicles">Skip to late vehicles</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="page-title" role="heading" aria-level="1">Fleet operations</div>
+        <div class="fleet-note">240 delivery vehicles</div>
+      </div>
+      <div class="toolbar" aria-label="Board controls">
+        <div class="field">
+          <label for="fleet-search">Find vehicle, driver or route</label>
+          <input class="search-input" id="fleet-search" type="search" autocomplete="off" aria-keyshortcuts="/">
+        </div>
+        <button class="button" id="clear-search" type="button">Clear</button>
+        <button class="button" id="refresh-board" type="button">Refresh</button>
+        <div class="refresh-meta">Last refresh <time id="refresh-time" datetime="2026-09-18T14:32:18-03:00">14:32:18</time></div>
+      </div>
+    </header>
+
+    <div class="metric-strip" data-layout="metric-strip" aria-label="Status summary">
+      <div class="metric">
+        <span class="metric-label">Late beyond threshold</span>
+        <div class="metric-line"><strong class="metric-value tone-danger">18 of 240</strong><span class="metric-unit">vehicles</span></div>
+        <span class="metric-delta">Ranked by minutes late</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Idle more than 45 minutes</span>
+        <div class="metric-line"><strong class="metric-value tone-warning">7</strong><span class="metric-unit">vehicles</span></div>
+        <span class="metric-delta">Longest idle 1h 38m</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Awaiting human decision</span>
+        <div class="metric-line"><strong class="metric-value tone-danger">3</strong><span class="metric-unit">incidents</span></div>
+        <span class="metric-delta">Oldest waiting 19 min</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Median delivery delay</span>
+        <div class="metric-line"><strong class="metric-value">11 min</strong></div>
+        <span class="metric-delta tone-warning">Up 4 min from yesterday</span>
+      </div>
+    </div>
+
+    <main class="workspace" id="main">
+      <div class="panel late-panel" id="late-vehicles" data-layout="dense-data-table">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title" role="heading" aria-level="2">Late vehicles</div>
+            <div class="panel-note">18 vehicles beyond threshold, worst first</div>
+          </div>
+          <span class="count" id="late-count">18</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Ranked table of 18 late vehicles with driver, route, minutes late and last scan time</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="numeric">Rank</th>
+                <th scope="col">Vehicle</th>
+                <th scope="col">Driver</th>
+                <th scope="col">Route</th>
+                <th scope="col" class="numeric"><button class="sort-button" id="sort-late" type="button" aria-pressed="true">Minutes late, descending</button></th>
+                <th scope="col" class="numeric">Last scan</th>
+              </tr>
+            </thead>
+            <tbody id="late-table-body">
+              <tr class="critical-row" tabindex="0" aria-selected="false" data-minutes="67" data-search="LF-284 Elena Ruiz R-42 North Loop">
+                <td class="rank numeric">01</td><td class="vehicle">LF-284 <span class="worst-label">Worst</span></td><td>Elena Ruiz</td><td class="route">R-42 North Loop</td><td class="minutes numeric tone-danger">67 min</td><td class="scan numeric">13:19</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="54" data-search="NV-119 Jamal Brooks R-18 Airport">
+                <td class="rank numeric">02</td><td class="vehicle">NV-119</td><td>Jamal Brooks</td><td class="route">R-18 Airport</td><td class="minutes numeric tone-danger">54 min</td><td class="scan numeric">13:27</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="49" data-search="PK-731 Priya Nair R-07 East Market">
+                <td class="rank numeric">03</td><td class="vehicle">PK-731</td><td>Priya Nair</td><td class="route">R-07 East Market</td><td class="minutes numeric tone-danger">49 min</td><td class="scan numeric">13:36</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="46" data-search="CX-508 Theo Martin R-31 River Ward">
+                <td class="rank numeric">04</td><td class="vehicle">CX-508</td><td>Theo Martin</td><td class="route">R-31 River Ward</td><td class="minutes numeric tone-danger">46 min</td><td class="scan numeric">13:41</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="43" data-search="BA-226 Sofia Almeida R-11 South Gate">
+                <td class="rank numeric">05</td><td class="vehicle">BA-226</td><td>Sofia Almeida</td><td class="route">R-11 South Gate</td><td class="minutes numeric tone-warning">43 min</td><td class="scan numeric">13:45</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="39" data-search="RD-905 Marcus Lee R-26 Hillcrest">
+                <td class="rank numeric">06</td><td class="vehicle">RD-905</td><td>Marcus Lee</td><td class="route">R-26 Hillcrest</td><td class="minutes numeric tone-warning">39 min</td><td class="scan numeric">13:52</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="37" data-search="HM-347 Noor Haddad R-14 Old Port">
+                <td class="rank numeric">07</td><td class="vehicle">HM-347</td><td>Noor Haddad</td><td class="route">R-14 Old Port</td><td class="minutes numeric tone-warning">37 min</td><td class="scan numeric">13:56</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="34" data-search="GS-612 Lucas Pereira R-35 West Industrial">
+                <td class="rank numeric">08</td><td class="vehicle">GS-612</td><td>Lucas Pereira</td><td class="route">R-35 West Industrial</td><td class="minutes numeric tone-warning">34 min</td><td class="scan numeric">14:01</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="31" data-search="VW-803 Hana Kim R-09 Lakeside">
+                <td class="rank numeric">09</td><td class="vehicle">VW-803</td><td>Hana Kim</td><td class="route">R-09 Lakeside</td><td class="minutes numeric tone-warning">31 min</td><td class="scan numeric">14:04</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="29" data-search="YK-154 Andre Costa R-23 Midtown">
+                <td class="rank numeric">10</td><td class="vehicle">YK-154</td><td>Andre Costa</td><td class="route">R-23 Midtown</td><td class="minutes numeric tone-warning">29 min</td><td class="scan numeric">14:07</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="27" data-search="DT-490 Mei Tan R-16 Harbor">
+                <td class="rank numeric">11</td><td class="vehicle">DT-490</td><td>Mei Tan</td><td class="route">R-16 Harbor</td><td class="minutes numeric tone-warning">27 min</td><td class="scan numeric">14:10</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="25" data-search="JP-668 Isaac Mensah R-28 University">
+                <td class="rank numeric">12</td><td class="vehicle">JP-668</td><td>Isaac Mensah</td><td class="route">R-28 University</td><td class="minutes numeric tone-warning">25 min</td><td class="scan numeric">14:12</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="22" data-search="MN-372 Valeria Soto R-05 Central">
+                <td class="rank numeric">13</td><td class="vehicle">MN-372</td><td>Valeria Soto</td><td class="route">R-05 Central</td><td class="minutes numeric tone-warning">22 min</td><td class="scan numeric">14:15</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="20" data-search="KC-811 Omar Farouk R-39 Greenway">
+                <td class="rank numeric">14</td><td class="vehicle">KC-811</td><td>Omar Farouk</td><td class="route">R-39 Greenway</td><td class="minutes numeric tone-warning">20 min</td><td class="scan numeric">14:18</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="18" data-search="SF-247 Alice Morgan R-20 Parkside">
+                <td class="rank numeric">15</td><td class="vehicle">SF-247</td><td>Alice Morgan</td><td class="route">R-20 Parkside</td><td class="minutes numeric tone-warning">18 min</td><td class="scan numeric">14:21</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="16" data-search="RB-556 Daniel Okafor R-33 Quarry">
+                <td class="rank numeric">16</td><td class="vehicle">RB-556</td><td>Daniel Okafor</td><td class="route">R-33 Quarry</td><td class="minutes numeric tone-warning">16 min</td><td class="scan numeric">14:24</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="14" data-search="UE-930 Leila Azimi R-02 Civic Center">
+                <td class="rank numeric">17</td><td class="vehicle">UE-930</td><td>Leila Azimi</td><td class="route">R-02 Civic Center</td><td class="minutes numeric tone-warning">14 min</td><td class="scan numeric">14:27</td>
+              </tr>
+              <tr tabindex="0" aria-selected="false" data-minutes="12" data-search="AG-415 Samuel Ortiz R-37 North Ridge">
+                <td class="rank numeric">18</td><td class="vehicle">AG-415</td><td>Samuel Ortiz</td><td class="route">R-37 North Ridge</td><td class="minutes numeric tone-warning">12 min</td><td class="scan numeric">14:29</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-status" id="table-status" aria-live="polite">Showing all 18 late vehicles</div>
+      </div>
+
+      <aside class="right-rail" aria-label="Items needing attention" data-layout="split-detail-pane">
+        <div class="panel" data-layout="status-queue">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title" role="heading" aria-level="2">Incident queue</div>
+              <div class="panel-note">3 incidents awaiting a human decision</div>
+            </div>
+            <span class="count tone-danger">3</span>
+          </div>
+          <ol class="queue">
+            <li class="queue-item">
+              <div class="queue-top"><span class="queue-vehicle">LF-284</span><span class="queue-age">19 min</span></div>
+              <p class="queue-reason">Refrigeration fault. Action needed: approve tow.</p>
+              <div class="decision-row"><button class="decision-button" type="button">Approve tow</button><span class="decision-state" aria-live="polite"></span></div>
+            </li>
+            <li class="queue-item">
+              <div class="queue-top"><span class="queue-vehicle">NV-119</span><span class="queue-age">12 min</span></div>
+              <p class="queue-reason">Driver unreachable. Action needed: call driver.</p>
+              <div class="decision-row"><button class="decision-button" type="button">Call driver</button><span class="decision-state" aria-live="polite"></span></div>
+            </li>
+            <li class="queue-item">
+              <div class="queue-top"><span class="queue-vehicle">PK-731</span><span class="queue-age">8 min</span></div>
+              <p class="queue-reason">Route blocked. Action needed: reroute stop.</p>
+              <div class="decision-row"><button class="decision-button" type="button">Reroute stop</button><span class="decision-state" aria-live="polite"></span></div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title" role="heading" aria-level="2">Idle vehicles</div>
+              <div class="panel-note">7 vehicles idle more than 45 minutes</div>
+            </div>
+            <span class="count tone-warning">7</span>
+          </div>
+          <ol class="idle-list">
+            <li class="idle-item"><span class="idle-vehicle">QZ-440</span><span class="idle-location">Depot 4</span><span class="idle-time">1h 38m</span></li>
+            <li class="idle-item"><span class="idle-vehicle">TX-602</span><span class="idle-location">Airport staging</span><span class="idle-time">1h 21m</span></li>
+            <li class="idle-item"><span class="idle-vehicle">BC-177</span><span class="idle-location">South Gate hub</span><span class="idle-time">1h 09m</span></li>
+            <li class="idle-item"><span class="idle-vehicle">WL-839</span><span class="idle-location">River Ward</span><span class="idle-time">58m</span></li>
+            <li class="idle-item"><span class="idle-vehicle">EA-315</span><span class="idle-location">North Loop</span><span class="idle-time">54m</span></li>
+            <li class="idle-item"><span class="idle-vehicle">OP-724</span><span class="idle-location">Central hub</span><span class="idle-time">49m</span></li>
+            <li class="idle-item"><span class="idle-vehicle">ZI-208</span><span class="idle-location">Old Port</span><span class="idle-time">46m</span></li>
+          </ol>
+        </div>
+      </aside>
+
+      <div class="panel trend-panel" data-layout="command-palette">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title" role="heading" aria-level="2">Median delay, last 24 hours</div>
+            <div class="panel-note">Small trend view, local fleet time</div>
+          </div>
+        </div>
+        <div class="trend-body">
+          <div class="trend-summary">
+            <div class="trend-now">11 min</div>
+            <div class="trend-change">Up 4 min from yesterday</div>
+          </div>
+          <svg class="trend-line" viewBox="0 0 900 90" role="img" aria-labelledby="trend-title trend-desc" preserveAspectRatio="none">
+            <title id="trend-title">Median delivery delay over the last 24 hours</title>
+            <desc id="trend-desc">Delay rose overnight, peaked at 15 minutes near midday and is now 11 minutes.</desc>
+            <g class="trend-grid" fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M35 14H885M35 42H885M35 70H885"></path>
+            </g>
+            <g class="trend-axis" fill="currentColor">
+              <text x="0" y="17">15m</text><text x="5" y="45">10m</text><text x="10" y="73">5m</text>
+              <text x="35" y="88">14:00</text><text x="245" y="88">20:00</text><text x="455" y="88">02:00</text><text x="665" y="88">08:00</text><text x="850" y="88">14:00</text>
+            </g>
+            <polyline class="trend-path" points="35,62 108,58 181,66 254,61 327,52 400,55 473,47 546,39 619,27 692,18 765,32 838,37 885,38" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"></polyline>
+          </svg>
+        </div>
+      </div>
+    </main>
+    <span class="sr-only">Metric strip. Dense data table. Split detail pane. Status queue. Command palette.</span>
+  </div>
+
+  <script>
+    (() => {
+      const search = document.querySelector('#fleet-search');
+      const clear = document.querySelector('#clear-search');
+      const rows = Array.from(document.querySelectorAll('#late-table-body tr'));
+      const status = document.querySelector('#table-status');
+      const count = document.querySelector('#late-count');
+      const tbody = document.querySelector('#late-table-body');
+      const sortButton = document.querySelector('#sort-late');
+      let descending = true;
+
+      const applySearch = () => {
+        const term = search.value.trim().toLowerCase();
+        let visible = 0;
+        rows.forEach((row) => {
+          const match = row.dataset.search.toLowerCase().includes(term);
+          row.hidden = !match;
+          if (match) visible += 1;
+        });
+        count.textContent = String(visible);
+        status.textContent = term ? `Showing ${visible} of 18 late vehicles` : 'Showing all 18 late vehicles';
+      };
+
+      search.addEventListener('input', applySearch);
+      clear.addEventListener('click', () => {
+        search.value = '';
+        applySearch();
+        search.focus();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === '/' && document.activeElement !== search) {
+          event.preventDefault();
+          search.focus();
+        }
+      });
+      rows.forEach((row) => {
+        const select = () => {
+          rows.forEach((item) => item.setAttribute('aria-selected', String(item === row)));
+        };
+        row.addEventListener('click', select);
+        row.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            select();
+          }
+        });
+      });
+      sortButton.addEventListener('click', () => {
+        descending = !descending;
+        rows.sort((a, b) => descending ? Number(b.dataset.minutes) - Number(a.dataset.minutes) : Number(a.dataset.minutes) - Number(b.dataset.minutes));
+        rows.forEach((row, index) => {
+          row.querySelector('.rank').textContent = String(index + 1).padStart(2, '0');
+          tbody.appendChild(row);
+        });
+        sortButton.textContent = `Minutes late, ${descending ? 'descending' : 'ascending'}`;
+        sortButton.setAttribute('aria-pressed', String(descending));
+      });
+      document.querySelector('#refresh-board').addEventListener('click', () => {
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+        const output = document.querySelector('#refresh-time');
+        output.textContent = formatted;
+        output.dateTime = now.toISOString();
+      });
+      document.querySelectorAll('.decision-button').forEach((button) => {
+        button.addEventListener('click', () => {
+          button.disabled = true;
+          button.parentElement.querySelector('.decision-state').textContent = 'Decision recorded';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

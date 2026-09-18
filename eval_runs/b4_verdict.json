@@ -1,0 +1,82 @@
+{
+  "judge_version": "1.0",
+  "files_scanned": 1,
+  "findings": [
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 471,
+        "selector": "div.app-shell > main#billing-main > section#current-plan.metric-strip",
+        "snippet": "family text-only is not in the plan (metric strip, dense data table, split detail pane, status queue, command palette)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 497,
+        "selector": "div.app-shell > main#billing-main > section#seats.dense-data-table",
+        "snippet": "family text-only is not in the plan (metric strip, dense data table, split detail pane, status queue, command palette)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 543,
+        "selector": "div.app-shell > main#billing-main > section#plans.split-detail-pane",
+        "snippet": "family text-only is not in the plan (metric strip, dense data table, split detail pane, status queue, command palette)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 592,
+        "selector": "div.app-shell > main#billing-main > section#payment.status-queue",
+        "snippet": "family text-only is not in the plan (metric strip, dense data table, split detail pane, status queue, command palette)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    },
+    {
+      "check_id": "DC-402",
+      "tell_id": "contract-family-drift",
+      "severity": "minor",
+      "title": "Section family not in the contract layout plan",
+      "evidence": {
+        "line": 650,
+        "selector": "div.app-shell > main#billing-main > section#cancellation.command-palette",
+        "snippet": "family text-only is not in the plan (metric strip, dense data table, split detail pane, status queue, command palette)"
+      },
+      "fix": "Rebuild the section with a family from the plan, or amend the contract.",
+      "why": "The contract fixed the layout families: a section outside the plan means the build drifted from the ruling."
+    }
+  ],
+  "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 5
+  },
+  "score": {
+    "slop_index": 2.5,
+    "layout_families": 1,
+    "contrast_failures": 0
+  },
+  "verdict": "clean"
+}

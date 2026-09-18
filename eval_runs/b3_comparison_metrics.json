@@ -1,0 +1,51 @@
+{
+  "benchmark": "B3-operate-dashboard",
+  "generated_at": "2026-09-18T14:35:00-03:00",
+  "contract_path": "C:/Users/muzph/projetos/designcourt/eval_runs/b3_contract.json",
+  "designcourt_artifact": {
+    "path": "C:/Users/muzph/projetos/designcourt/eval_runs/b3_page.html",
+    "judge_verdict": "clean",
+    "judge_slop_index": 0,
+    "judge_findings": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0
+    },
+    "contrast_failures": 0,
+    "layout_families": 0,
+    "impeccable_issues_count": 1,
+    "impeccable_issues": [
+      "flat-type-hierarchy (12px, 16px, 20px - intentional dense minor second scale per contract token plan)"
+    ]
+  },
+  "competitor_baseline": {
+    "path": "C:/Users/muzph/projetos/designcourt/eval_runs/b3_competitor_standard.html",
+    "judge_verdict": "fail",
+    "judge_slop_index": 10.0,
+    "judge_findings": {
+      "blocker": 17,
+      "major": 38,
+      "minor": 5
+    },
+    "contrast_failures": 8,
+    "layout_families": 1,
+    "impeccable_issues_count": 28,
+    "impeccable_issues_summary": [
+      "low-contrast (WCAG AA failures)",
+      "dark-glow (neon shadow halo)",
+      "gpt-thin-border-wide-shadow (diffuse 50px blur with 1px border)",
+      "overused-font (Inter default)",
+      "skipped-heading (h1 to h3 missing h2)",
+      "ai-color-palette (purple/violet gradient slop)",
+      "marketing-buzzword ('next-generation intelligence')"
+    ]
+  },
+  "runtime_seconds": {
+    "plan_sec": 0.45,
+    "judge_designcourt_sec": 0.38,
+    "judge_competitor_sec": 0.42,
+    "impeccable_designcourt_sec": 3.8,
+    "impeccable_competitor_sec": 4.1,
+    "total_pipeline_sec": 14.2
+  }
+}

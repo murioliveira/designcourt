@@ -1,0 +1,74 @@
+{
+  "contract_version": "1.0",
+  "brief": {
+    "goal": "Fleet board for 240 delivery vehicles",
+    "audience": "Target users and operators",
+    "success_metric": "Observed goal completion"
+  },
+  "mode": "operate",
+  "rationale": {
+    "problem": "User needs to achieve: Fleet board for 240 delivery vehicles",
+    "user": "Target users and operators",
+    "trade_off": "Deliberately prioritizing density and scan speed over visual ornament"
+  },
+  "dials": {
+    "expressiveness": 1,
+    "density": 5,
+    "motion": 1,
+    "ornament": 1
+  },
+  "layout_plan": [
+    {
+      "section": "metric strip",
+      "family": "metric-strip",
+      "why": "Chosen for mode operate section 1 to avoid adjacent family repetition."
+    },
+    {
+      "section": "dense data table",
+      "family": "dense-data-table",
+      "why": "Chosen for mode operate section 2 to avoid adjacent family repetition."
+    },
+    {
+      "section": "split detail pane",
+      "family": "split-detail-pane",
+      "why": "Chosen for mode operate section 3 to avoid adjacent family repetition."
+    },
+    {
+      "section": "status queue",
+      "family": "status-queue",
+      "why": "Chosen for mode operate section 4 to avoid adjacent family repetition."
+    },
+    {
+      "section": "command palette",
+      "family": "command-palette",
+      "why": "Chosen for mode operate section 5 to avoid adjacent family repetition."
+    }
+  ],
+  "token_plan": {
+    "accent": "Functional status palette: amber warning, red error, emerald success, neutral blue focus. Zero decorative color.",
+    "neutrals": "Muted slate borders and alternating row backgrounds for scanability. Monospace numerals for all data columns.",
+    "type_scale": "Minor second (1.067) compact scale: 11px, 12px, 13px, 14px, 16px. Nothing larger than 20px."
+  },
+  "bans": [
+    "em-dash",
+    "purple-gradient",
+    "neon-glow",
+    "inter-default",
+    "three-equal-cards",
+    "repeated-zigzag",
+    "fake-screenshot",
+    "filler-verbs",
+    "generic-names",
+    "fake-precise-numbers",
+    "scroll-cues",
+    "bento-empty-cell",
+    "decorative-chrome"
+  ],
+  "not_for": "Not for landing pages, marketing collateral, or consumer editorial content.",
+  "decisions_used": [
+    "master-detail-rail",
+    "reject-decorative-bento",
+    "matrix-grid-over-card-row",
+    "labeled-controls-not-placeholder-hints"
+  ]
+}

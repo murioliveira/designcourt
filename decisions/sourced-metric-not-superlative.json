@@ -1,0 +1,32 @@
+{
+  "id": "sourced-metric-not-superlative",
+  "title": "Cite the number or drop the claim",
+  "mode": [
+    "persuade"
+  ],
+  "intent": "Make every quantified claim verifiable and delete the claims that only assert enthusiasm.",
+  "when_to_use": [
+    "the copy contains a percentage, a multiple, a user count, or a time saved",
+    "the audience is technical or evaluative and will check the claim"
+  ],
+  "when_not_to_use": [
+    "the wording is a legal or regulatory statement where the phrasing is fixed",
+    "the figure is a live value the page reads from its own product, where the source is the page itself and must be stated as such"
+  ],
+  "rules": [
+    "every numeral resolves either to a cited source line on the page or to an inline marker naming the value as illustrative",
+    "the copy contains none of: elevate, seamless, unleash, revolutionize, next-gen, transform your, supercharge, game-changing, unlock the power",
+    "a claim of speed, scale, or accuracy states the comparison base, not only the multiple",
+    "no figure is shaped to look measured, such as repeated nines or trailing zeros, without the source line"
+  ],
+  "trade_off": "Sourced claims sound weaker and take longer to write, and some get cut because nobody can produce the source. You accept a shorter, duller page that survives a skeptical reader.",
+  "failure_mode": "Sources become decoration: a footnote marker with no matching entry, or a link that points at a page repeating the same figure. The claim is then still unsourced and the page reads as evasive.",
+  "prevents_tells": [
+    "fake-precise-numbers",
+    "filler-verbs"
+  ],
+  "example": {
+    "brief": "Analytics product page claiming teams ship faster.",
+    "ruling": "The speed claim becomes median time from commit to first chart in the pilot cohort, with the cohort date and repository count in the caption, and the adjective layer deleted. Nothing survives that is not worth an evidence line."
+  }
+}

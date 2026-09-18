@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrbitView: live telemetry for distributed infrastructure</title>
+<style>
+:root {
+  --bg: #0b0f17;
+  --surface: #121a27;
+  --ink: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #22d3ee;
+  --line: #1e293b;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+.slide { height: 100vh; padding: 48px; border-bottom: 1px solid var(--line); display: flex; align-items: center; transition: height 400ms ease; }
+.inner { width: min(1120px, 100%); margin-inline: auto; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+h1, h2 { margin: 0 0 16px; font-size: 2.4rem; }
+p { color: var(--muted); line-height: 1.55; }
+.kpi { border: 1px solid var(--line); border-radius: 12px; padding: 24px; background: var(--surface); margin-bottom: 16px; }
+.kpi--live { filter: drop-shadow(0 0 18px #22d3ee); border-color: var(--accent); }
+.kpi__num { font-size: 2.2rem; font-weight: 700; color: var(--accent); }
+.shot { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 24px; }
+.shot__head { display: flex; gap: 8px; margin-bottom: 20px; }
+.shot__head span { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+.shot__row { height: 28px; background: #1e293b; border-radius: 6px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<section class="slide family-slide" id="s1">
+<div class="inner grid-2">
+<div>
+<h1>Instant telemetry across nine cloud regions</h1>
+<p>OrbitView monitors every packet across edge and core with sub-millisecond trace fidelity.</p>
+</div>
+<div class="shot" role="img" aria-label="Dashboard">
+<div class="shot__head"><span></span><span></span><span></span></div>
+<div class="shot__row"></div>
+<div class="shot__row"></div>
+<div class="shot__row"></div>
+<div class="shot__row"></div>
+</div>
+</div>
+</section>
+<section class="slide family-slide" id="s2">
+<div class="inner grid-2">
+<div>
+<h2>Real-time KPI routing</h2>
+<p>Filter noise before it wakes up your engineering team.</p>
+</div>
+<div>
+<div class="kpi kpi--live"><span class="kpi__num">12,480</span><p>Packets per second</p></div>
+<div class="kpi"><span class="kpi__num">0.12ms</span><p>Median latency</p></div>
+</div>
+</div>
+</section>
+<section class="slide family-slide" id="s3"><div class="inner grid-2"><div><h2>Global routing map</h2><p>Trace every hop as it moves across regions.</p></div><div class="shot"><div class="shot__row"></div><div class="shot__row"></div></div></div></section>
+<section class="slide family-slide" id="s4"><div class="inner grid-2"><div><h2>Automatic failover</h2><p>Bypass degraded transit providers in seconds.</p></div><div class="shot"><div class="shot__row"></div><div class="shot__row"></div></div></div></section>
+<section class="slide family-slide" id="s5"><div class="inner grid-2"><div><h2>Fleet configuration</h2><p>Declarative policy deployed to every host in lockstep.</p></div><div class="shot"><div class="shot__row"></div><div class="shot__row"></div></div></div></section>
+<section class="slide family-slide" id="s6"><div class="inner grid-2"><div><h2>Audit trails</h2><p>Immutable log of every route table adjustment.</p></div><div class="shot"><div class="shot__row"></div><div class="shot__row"></div></div></div></section>
+<section class="slide family-slide" id="s7"><div class="inner grid-2"><div><h2>Incident response</h2><p>Correlate service disruption to infrastructure commits.</p></div><div class="shot"><div class="shot__row"></div><div class="shot__row"></div></div></div></section>
+<section class="slide family-slide" id="s8"><div class="inner grid-2"><div><h2>Cost forecasting</h2><p>Track egress spend across each transit partner in real time.</p></div><div class="shot"><div class="shot__row"></div><div class="shot__row"></div></div></div></section>
+<section class="slide family-slide" id="s9"><div class="inner grid-2"><div><h2>Connect your first cluster</h2><p>Deploy the agent via helm or single binary.</p></div><div class="shot"><div class="shot__row"></div></div></div></section>
+<script>
+function onScroll() {
+  const scrolled = window.scrollY;
+  document.body.style.opacity = (1 - scrolled * 0.0001).toString();
+}
+window.addEventListener('scroll', onScroll);
+</script>
+</body>
+</html>

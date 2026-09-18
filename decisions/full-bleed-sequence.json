@@ -1,0 +1,32 @@
+{
+  "id": "full-bleed-sequence",
+  "title": "Sequence full bleed moments, do not alternate",
+  "mode": [
+    "experience"
+  ],
+  "intent": "Tell one continuous story across screens so the page reads as a single arc.",
+  "when_to_use": [
+    "the page's job is atmosphere, place, or a narrative order the reader follows",
+    "the content ships with strong imagery or long form media"
+  ],
+  "when_not_to_use": [
+    "the reader arrives to extract a fact or compare options",
+    "the media is weak or borrowed, where full bleed amplifies the weakness"
+  ],
+  "rules": [
+    "no more than two consecutive sections use the same media plus text alternation",
+    "each moment states its own idea once, and a screen with no idea is cut",
+    "text over media reaches a contrast ratio of 4.5 to 1 against the lightest region of the media it covers",
+    "a page with five or more sections uses at least three distinct families and never repeats one in adjacent sections"
+  ],
+  "trade_off": "Full bleed constrains type placement, eats the performance budget, and demands real media, so a page holding placeholder imagery cannot ship in this family.",
+  "failure_mode": "Every section goes full bleed, so nothing is emphasised, and the reader passes four equally loud screens with no memory of any of them.",
+  "prevents_tells": [
+    "repeated-zigzag",
+    "low-layout-diversity"
+  ],
+  "example": {
+    "brief": "Launch page for a hardware product with real photography.",
+    "ruling": "Four full bleed moments, each with one idea and one caption, then a split-asymmetric specifications section and a single column compatibility list, so no family repeats adjacently."
+  }
+}

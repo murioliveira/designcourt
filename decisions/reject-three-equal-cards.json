@@ -1,0 +1,33 @@
+{
+  "id": "reject-three-equal-cards",
+  "title": "Reject the equal card row",
+  "mode": [
+    "persuade"
+  ],
+  "intent": "Force a ranking of claims so the strongest one gets the most space and the most evidence.",
+  "when_to_use": [
+    "a section must present three or more benefits, features, or claims",
+    "the claims differ in strength, in evidence type, or in how much convincing they need"
+  ],
+  "when_not_to_use": [
+    "the items are genuinely interchangeable and the reader compares them by the same fields, as in pricing tiers or a spec matrix",
+    "the count varies by customer or region, as in integrations or coverage",
+    "the section is a navigation index where equal weight is the point"
+  ],
+  "rules": [
+    "no row of three or more equal width, equal height siblings carries the page's main argument",
+    "each claim names one supporting artifact, number, or example, or is cut",
+    "the strongest claim occupies at least twice the area of the next strongest",
+    "genuinely interchangeable items are rendered with aligned fields, as a table or a definition list, not as cards"
+  ],
+  "trade_off": "Ranking costs the tidy symmetry a card row gives for free and forces a judgement about which claim is strongest, which a person then has to defend.",
+  "failure_mode": "The ranking is asserted and not shown: the top claim gets a wider box with the same single sentence inside, so the section is still three equal claims wearing different widths.",
+  "prevents_tells": [
+    "three-equal-cards",
+    "low-layout-diversity"
+  ],
+  "example": {
+    "brief": "Developer tool landing page with three stated benefits, skeptical audience.",
+    "ruling": "Section two is a proof stack rather than a card row: the strongest benefit runs full width with a benchmark excerpt and its source line, the other two sit in a compact aligned list with an evidence column, so the section reads as one argument with two footnotes."
+  }
+}

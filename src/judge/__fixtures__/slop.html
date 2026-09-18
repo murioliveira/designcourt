@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slop Fixture</title>
+  <style>
+    /* DC-104: Inter as the default font */
+    body {
+      font-family: Inter, sans-serif;
+      margin: 0;
+      padding: 0;
+      /* DC-103: premium consumer palette beige background */
+      background-color: #f7f5f1;
+      color: #1a1714;
+    }
+
+    /* DC-103: brass and oxblood components */
+    .brass-accent {
+      color: #b08947;
+    }
+    .oxblood-badge {
+      background-color: #9a2436;
+      color: #ffffff;
+    }
+
+    /* DC-107: multi-accent (blue and green both saturated and used twice) */
+    .accent-blue-1 { color: #2563eb; }
+    .accent-blue-2 { background-color: #2563eb; }
+    .accent-green-1 { color: #16a34a; }
+    .accent-green-2 { background-color: #16a34a; }
+
+    /* DC-101: purple gradient */
+    .hero-slop {
+      padding-top: 8rem; /* DC-316: top padding > 6rem */
+      padding-bottom: 4rem;
+      background: radial-gradient(circle at 50% 50%, #7c3aed 0%, #1e1b4b 100%);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    /* DC-102: neon glow */
+    .neon-button {
+      padding: 12px 24px;
+      background-color: #a855f7;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #9333ea;
+    }
+
+    /* DC-105: hardcoded hex outside token block */
+    .hardcoded-box {
+      background-color: #e0e7ff;
+      border: 1px solid #4338ca;
+    }
+
+    /* DC-106: contrast failure (light gray text on white background: ~1.5:1) */
+    .low-contrast-text {
+      background-color: #ffffff;
+      color: #cccccc;
+      font-size: 14px;
+    }
+
+    /* DC-201: three equal cards row */
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 24px;
+    }
+    .equal-card {
+      padding: 20px;
+      border: 1px solid #d1d5db;
+    }
+
+    /* DC-311 and DC-312: animations on layout property without prefers-reduced-motion */
+    .animated-item-1 {
+      transition: width 0.3s ease;
+    }
+    .animated-item-2 {
+      transition: height 0.3s ease;
+    }
+    .animated-item-3 {
+      transition: top 0.3s ease;
+    }
+    .animated-item-4 {
+      animation: pulse-width 1s infinite;
+    }
+    @keyframes pulse-width {
+      0% { width: 100px; }
+      100% { width: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DC-316: Hero discipline broken (top padding > 6rem, subtext > 20 words, 5 text elements) -->
+  <section class="hero hero-slop" id="hero" data-layout="hero">
+    <!-- DC-307: numbered eyebrow -->
+    <div class="eyebrow">001.CAPABILITIES</div>
+    <!-- DC-001: em-dash via HTML entity to keep file clean of banned literal characters -->
+    <h1>Transform your work &mdash; the ultimate platform</h1>
+    <!-- DC-002: filler verbs (elevate, revolutionize, seamless) -->
+    <!-- DC-316: subtext over 20 words -->
+    <p class="hero-subtext">
+      Elevate your team with our seamless engine designed to revolutionize and supercharge your entire digital strategy across all modern workflows everywhere today.
+    </p>
+    <div class="hero-extra-note">Trusted worldwide</div>
+    <div class="hero-meta">Deploy instantly</div>
+    <button class="neon-button">Get started</button>
+  </section>
+
+  <!-- DC-302: scroll cues -->
+  <div class="scroll-cue">
+    Scroll down for details &#8595;
+  </div>
+
+  <!-- DC-204: split-header (headline left, loose paragraph right with two-col) -->
+  <section class="section split-header-section" data-layout="text-only" style="display: flex; gap: 24px;">
+    <h2>Features built for speed</h2>
+    <p>We designed every module to operate cleanly without extra overhead or setup required.</p>
+  </section>
+
+  <!-- DC-201: three equal cards -->
+  <section class="section cards-row-section" data-layout="cards-row">
+    <div class="cards-row">
+      <div class="equal-card">
+        <h3>Card one</h3>
+        <p>First equal card with standard text.</p>
+      </div>
+      <div class="equal-card">
+        <h3>Card two</h3>
+        <p>Second equal card with standard text.</p>
+      </div>
+      <div class="equal-card">
+        <h3>Card three</h3>
+        <p>Third equal card with standard text.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DC-202: repeated zigzag (3 consecutive alternating sections) -->
+  <section class="section row-item-1" data-layout="text-only">
+    <div class="text-col"><h3>Rhythm one</h3><p>Left side text.</p></div>
+    <img src="shot1.png" alt="visual 1">
+  </section>
+  <section class="section row-item-2 reverse" data-layout="text-only">
+    <div class="text-col"><h3>Rhythm two</h3><p>Right side text.</p></div>
+    <img src="shot2.png" alt="visual 2">
+  </section>
+  <section class="section row-item-3" data-layout="text-only">
+    <div class="text-col"><h3>Rhythm three</h3><p>Left side text repeating alternation.</p></div>
+    <img src="shot3.png" alt="visual 3">
+  </section>
+
+  <!-- DC-203: bento with empty cell -->
+  <section class="section bento-area" data-layout="text-only" style="display: grid; grid-template-areas: 'a b' 'c d';">
+    <div class="bento-cell"><h3>Bento item</h3><p>Real content.</p></div>
+    <div class="bento-cell"><h3>Bento item 2</h3><p>More real content.</p></div>
+    <div class="bento-cell"><h3>Bento item 3</h3><p>Extra content.</p></div>
+    <div class="bento-cell"></div>
+  </section>
+
+  <!-- DC-304: fake screenshot made of divs -->
+  <section class="section screenshot-section" data-layout="text-only">
+    <div class="fake-screenshot">
+      <div class="window-bar">Terminal preview</div>
+      <div class="window-body">
+        <div class="fake-ui-line"></div>
+        <div class="fake-ui-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DC-003: generic names (Jane Doe, Acme) -->
+  <!-- DC-004: fake precise numbers (99.99%, 4.1x, 48k without citation or mock comment) -->
+  <!-- DC-106: low contrast text on background -->
+  <section class="section low-contrast-text" data-layout="text-only">
+    <p>Jane Doe reported that Acme grew 99.99% with 4.1x velocity and 48k users.</p>
+  </section>
+
+  <!-- DC-008: placeholder as label (input with placeholder and no associated label) -->
+  <section class="section subscribe-section" data-layout="text-only">
+    <form action="#">
+      <input type="text" name="subscriber" placeholder="Your work email here">
+      <button type="submit" class="brass-accent accent-blue-1 accent-green-1">Subscribe</button>
+    </form>
+    <div class="oxblood-badge accent-blue-2 accent-green-2 hardcoded-box">Notice</div>
+  </section>
+
+  <!-- DC-306: version footer in marketing page -->
+  <footer class="site-footer">
+    <p>Acme Corporation. All rights reserved. v1.4.2</p>
+  </footer>
+
+  <!-- DC-310: scroll listener driving animation -->
+  <script>
+    window.addEventListener('scroll', function() {
+      var header = document.querySelector('.hero');
+      if (header) {
+        header.style.transform = 'translateY(' + window.scrollY * 0.5 + 'px)';
+      }
+    });
+  </script>
+</body>
+</html>

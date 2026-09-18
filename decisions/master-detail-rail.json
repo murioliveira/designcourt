@@ -1,0 +1,35 @@
+{
+  "id": "master-detail-rail",
+  "title": "Use a master detail rail for repeat visits",
+  "mode": [
+    "operate"
+  ],
+  "intent": "Let a returning user reach any object in one click without losing their place.",
+  "when_to_use": [
+    "the user picks one object from a set of many similar objects and works inside it",
+    "the same screen is opened many times a day by the same person",
+    "the selection must be linkable so it can be shared or reopened"
+  ],
+  "when_not_to_use": [
+    "the objects are compared across several shared columns, where the table is the right family",
+    "the set is under five items, where inline expansion is cheaper than a rail",
+    "the detail view is a long document read once, where the rail steals reading width"
+  ],
+  "rules": [
+    "the list is persistent and is never replaced by a modal or a route change",
+    "the selected row is identifiable at rest, without hover, by at least two signals",
+    "the selected object appears in the URL so the view can be reopened or shared",
+    "the rail width is fixed at every breakpoint below the layout switch, and the detail pane never reflows it",
+    "no decorative status dot carries meaning; a status is a word plus, where useful, a shape"
+  ],
+  "trade_off": "You give up the full canvas of a list page and the freedom to give each object its own view, because a persistent rail constrains every detail layout to the same width.",
+  "failure_mode": "The rail becomes a second navigation layer: nested lists inside the list, a detail pane that scrolls inside a page that also scrolls, and a selection state visible only on hover.",
+  "prevents_tells": [
+    "low-layout-diversity",
+    "decorative-chrome"
+  ],
+  "example": {
+    "brief": "Support inbox where an agent handles dozens of conversations a day.",
+    "ruling": "Shell family master-detail-rail: fixed 320px conversation list on the leading edge, selected thread in the URL, detail pane on the trailing side. Status is a word in the row, not a coloured dot."
+  }
+}

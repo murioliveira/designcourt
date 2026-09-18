@@ -1,0 +1,43 @@
+{
+  "name": "designcourt",
+  "version": "0.1.0",
+  "description": "An explicit design decision your agent can be held to, plus a deterministic judge that proves the render. Decide, build, judge.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "designcourt": "src/cli.mjs"
+  },
+  "main": "src/judge/judge.mjs",
+  "files": [
+    "src/",
+    "decisions/",
+    "skills/",
+    "templates/",
+    "spec/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "court": "node src/cli.mjs",
+    "judge": "node src/judge/cli.mjs",
+    "plan": "node src/contract/cli.mjs",
+    "bench": "node bench/run-all.mjs",
+    "mcp": "node mcp/server.mjs",
+    "test": "node test/all.mjs"
+  },
+  "keywords": [
+    "design",
+    "agent",
+    "mcp",
+    "ai-slop",
+    "ui",
+    "audit",
+    "lint",
+    "deterministic"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}

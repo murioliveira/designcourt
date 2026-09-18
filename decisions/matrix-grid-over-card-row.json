@@ -1,0 +1,34 @@
+{
+  "id": "matrix-grid-over-card-row",
+  "title": "Compare in a matrix, not in cards",
+  "mode": [
+    "operate"
+  ],
+  "intent": "Let the user compare many objects across shared attributes in one pass.",
+  "when_to_use": [
+    "the set is eight or more objects read across at least three shared attributes",
+    "the user's job is to spot outliers, gaps, or state changes"
+  ],
+  "when_not_to_use": [
+    "each object needs a different set of fields, which leaves an aligned grid mostly empty",
+    "the set is a gallery where each object's own image is the primary content",
+    "the set is three or four items, where a matrix is heavier than the content"
+  ],
+  "rules": [
+    "column headers stay available while the body scrolls",
+    "row height is constant and the identity column stays visible at the leading edge",
+    "numeric columns share one alignment and one decimal rule",
+    "state uses at most one accent plus a neutral, and every state also carries a word",
+    "cells hold values, not mini charts; a sparkline appears only in a column that declares one"
+  ],
+  "trade_off": "A matrix reads as a tool rather than as a pitch, so it cannot carry brand expression, and it collapses on a narrow viewport where it must scroll sideways or fall back to a ranked list.",
+  "failure_mode": "The matrix grows one column per stakeholder until it is unreadable, or it is used for content too sparse to align, leaving a grid of dashes and empty cells.",
+  "prevents_tells": [
+    "three-equal-cards",
+    "low-layout-diversity"
+  ],
+  "example": {
+    "brief": "Admin view listing 40 scheduled jobs with status, owner, and last run.",
+    "ruling": "Family dense-grid-matrix with a sticky header row, right aligned numeric columns, and statuses that pair a word with one accent. No card row is used anywhere in the view."
+  }
+}

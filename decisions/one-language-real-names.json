@@ -1,0 +1,33 @@
+{
+  "id": "one-language-real-names",
+  "title": "Use one language and named entities",
+  "mode": [
+    "persuade"
+  ],
+  "intent": "Keep credibility and mechanical cleanliness by removing stock names and mixed languages from shipped copy.",
+  "when_to_use": [
+    "the page names customers, people, or companies in shipped copy",
+    "the artifact declares a language and the audience is single language"
+  ],
+  "when_not_to_use": [
+    "the artifact is a fixture or demo where stock names are expected and the file is marked as a fixture",
+    "the page is deliberately bilingual and states that on the page"
+  ],
+  "rules": [
+    "the copy contains no Jane Doe, John Doe, Acme, Nexus, SmartFlow, or Lorem ipsum",
+    "the declared lang matches the dominant language of the visible copy, including alt text, aria labels, and button text",
+    "the copy contains no em-dash and no en-dash; ranges and asides use a hyphen, a comma, or a colon",
+    "every named customer, person, or company exists and is permitted to be named, or the name is removed and the claim weakened to what can be supported"
+  ],
+  "trade_off": "Real names need permission and review, and removing them weakens proof sections, so some sections shrink instead of shipping with placeholders that everyone has learned to ignore.",
+  "failure_mode": "One stock name survives in a testimonial, an alt attribute, or an aria label after the visible copy is cleaned, which is exactly where the tell is machine checked.",
+  "prevents_tells": [
+    "generic-names",
+    "mixed-language",
+    "em-dash"
+  ],
+  "example": {
+    "brief": "SaaS landing page that needs social proof.",
+    "ruling": "Two placeholder testimonials are cut rather than renamed, the surviving quote keeps its real author and role, lang matches the copy, and every numeric range is rewritten with a hyphen."
+  }
+}

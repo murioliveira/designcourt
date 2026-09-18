@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Forma: digital products that endure</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --ink: #111827;
+  --muted: #4b5563;
+  --accent: #2563eb;
+  --line: #e5e7eb;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, sans-serif; }
+.nav { padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
+.nav a { color: var(--ink); text-decoration: none; }
+.btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; }
+.btn--primary { background: var(--accent); color: #fff; }
+.hero { padding: 96px 32px; text-align: center; }
+.hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); max-width: 22ch; margin: 0 auto 16px; }
+.hero__cue { margin-top: 32px; color: var(--muted); }
+.row { padding: 80px 32px; border-top: 1px solid var(--line); }
+.row__inner { max-width: 1080px; margin-inline: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.row--flip .row__media { order: 2; }
+.row__media { border: 1px solid var(--line); height: 280px; background: #f9fafb; display: flex; align-items: center; justify-content: center; }
+.row__icon { width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 2; }
+.row__icon--filled { fill: currentColor; stroke: none; }
+</style>
+</head>
+<body>
+<header class="nav">
+<a href="#">Studio Forma</a>
+<div>
+<a href="#work">Work <span aria-hidden="true">&#x2728;</span></a>
+<a class="btn btn--primary" href="#contact">Start a project</a>
+</div>
+</header>
+<section class="hero family-center-hero">
+<h1>Digital craft for teams with high taste</h1>
+<p>We partner with ambitious founders to build products, brands, and interactive systems.</p>
+<p><a class="btn btn--primary" href="#contact">Start a project</a></p>
+<p class="hero__cue">Scroll for more</p>
+</section>
+<section class="row family-zigzag-media" id="row1">
+<div class="row__inner">
+<div class="row__media"><svg class="row__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle></svg></div>
+<div><h2>Kite OS</h2><p>A new operating model for climate finance instruments, built from core tokens to web app.</p></div>
+</div>
+</section>
+<section class="row row--flip family-zigzag-media" id="row2">
+<div class="row__inner">
+<div class="row__media"><svg class="row__icon row__icon--filled" viewBox="0 0 24 24"><polygon points="12 2 22 22 2 22"></polygon></svg></div>
+<div><h2>Beacon Health</h2><p>Clinical trial enrollment interface designed for low-friction patient consent.</p></div>
+</div>
+</section>
+<section class="row family-zigzag-media" id="row3">
+<div class="row__inner">
+<div class="row__media"><svg class="row__icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg></div>
+<div><h2>Verve Coffee</h2><p>Headless commerce platform delivering 1.8s page loads across Europe.</p></div>
+</div>
+</section>
+<section class="row row--flip family-zigzag-media" id="row4">
+<div class="row__inner">
+<div class="row__media"><svg class="row__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle></svg></div>
+<div><h2>Tandem Security</h2><p>Identity dashboard helping security teams track posture across four clouds.</p></div>
+</div>
+</section>
+<section class="row row--flip family-zigzag-media" id="row5">
+<div class="row__inner">
+<div class="row__media"><svg class="row__icon" viewBox="0 0 24 24"><polygon points="12 2 22 22 2 22"></polygon></svg></div>
+<div><h2>Arc Light</h2><p>Hardware companion app managing stage fixtures for live performances.</p></div>
+</div>
+</section>
+<footer id="contact" style="padding: 48px 32px; border-top: 1px solid var(--line); text-align: center;">
+<p>hello@studioforma.pt &bull; Lisboa, Portugal</p>
+</footer>
+</body>
+</html>

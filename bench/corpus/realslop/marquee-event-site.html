@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VectorConf 2026: systems conference on applied retrieval</title>
+<style>
+.site { font-family: Inter, 'Helvetica Neue', Arial, sans-serif; margin: 0; background: #0b0f19; color: #f8fafc; }
+*, *::before, *::after { box-sizing: border-box; }
+.wrap { max-width: 1040px; margin-inline: auto; padding: 48px 24px; }
+.hero { padding: 64px 0 32px; text-align: center; }
+.hero h1 { font-size: 3rem; margin: 0 0 16px; }
+.dots { display: inline-flex; gap: 4px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; }
+.marquee { overflow: hidden; padding: 12px 0; border-block: 1px solid #1e293b; white-space: nowrap; margin: 24px 0; }
+.marquee--fast { animation: marquee-anim 12s linear infinite; }
+.marquee--slow { animation: marquee-anim 28s linear infinite; }
+.band { padding: 48px 0; border-top: 1px solid #1e293b; }
+.schedule-mock { border: 1px solid #1e293b; border-radius: 8px; padding: 16px; background: #0f172a; margin-top: 24px; }
+.schedule-mock__row { height: 24px; background: #1e293b; margin-bottom: 8px; border-radius: 4px; }
+.footer { border-top: 1px solid #1e293b; padding: 32px 0; color: #64748b; font-size: 0.85rem; }
+</style>
+</head>
+<body class="site">
+<div class="wrap">
+<header class="hero family-center-hero">
+<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+<h1>VectorConf 2026</h1>
+<p>Two days of technical talks on vector index architecture, retrieval pipelines, and distributed memory.</p>
+</header>
+<div class="marquee marquee--slow" data-speed="0.4">
+<span>SEPTEMBER 24-25 &bull; BERLIN &bull; 800 ATTENDEES &bull; 24 PAPERS PRESENTED &bull; ZERO SPONSORED TALKS &bull; </span>
+</div>
+<section class="band family-band" id="band1"><h2>Keynotes</h2><p>Three principal engineers on what broke when their indices crossed one billion vectors.</p></section>
+<section class="band family-band" id="band2"><h2>Index Layouts</h2><p>Quantization tradeoffs, cache hierarchy alignment, and GPU-assisted graph traversal.</p></section>
+<section class="band family-band" id="band3"><h2>Memory Hierarchy</h2><p>NVMe vs HBM for persistent graph indices under high query concurrency.</p></section>
+<section class="band family-band" id="band4"><h2>Evaluation</h2><p>Realistic recall benchmarks under non-stationary query distributions.</p></section>
+<section class="band family-band" id="band5"><h2>Distributed Consensus</h2><p>Multi-node replication topologies for real-time vector ingest.</p></section>
+<section class="band family-band" id="band6"><h2>Hardware Accelerators</h2><p>Custom ASICs and FPGA offload engines for approximate nearest neighbors.</p></section>
+<section class="band family-band" id="band7">
+<h2>Full Schedule</h2>
+<div class="schedule-mock" role="img" aria-label="Schedule">
+<div class="schedule-mock__row"></div>
+<div class="schedule-mock__row"></div>
+<div class="schedule-mock__row"></div>
+<div class="schedule-mock__row"></div>
+</div>
+</section>
+<section class="band family-band" id="band8"><h2>Registration</h2><p>Standard and academic passes available through August 31.</p></section>
+<div class="marquee marquee--fast">
+<span>REGISTRATION CLOSING SOON &bull; LIMITED BURSARY TICKETS REMAINING &bull; </span>
+</div>
+<footer class="footer">
+<p>VectorConf is organized by the Applied Systems Foundation.</p>
+<p class="footer__version">v1.0.3, build 2024</p>
+</footer>
+</div>
+</body>
+</html>

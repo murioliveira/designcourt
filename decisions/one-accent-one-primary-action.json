@@ -1,0 +1,34 @@
+{
+  "id": "one-accent-one-primary-action",
+  "title": "One accent, one primary action",
+  "mode": [
+    "persuade"
+  ],
+  "intent": "Make the next step unambiguous by spending colour and emphasis on exactly one thing.",
+  "when_to_use": [
+    "the page has one conversion goal",
+    "the brand already has a single colour that carries meaning"
+  ],
+  "when_not_to_use": [
+    "the surface is a dashboard where colour encodes state and the state palette is separate from the accent",
+    "the page compares two paths that must read as equally valid, where the equality is the design and the accent is removed instead",
+    "the identity is monochrome by charter"
+  ],
+  "rules": [
+    "one accent hue is declared as a token and every emphasised interactive element uses it",
+    "exactly one primary action intent per view, with no second control expressing the same verb intent",
+    "no gradient between two hues exists; a gradient is allowed only between two steps of one neutral ramp",
+    "colour never carries meaning alone: every state also carries a word, an icon, or a shape"
+  ],
+  "trade_off": "You lose the ability to signal hierarchy with colour variety, so hierarchy must be carried by size, position, and weight, which is more work and less forgiving of a weak copy deck.",
+  "failure_mode": "Emphasis leaks: each section claims its own accent for a local reason, the page ends with four coloured buttons, and the accent stops meaning anything.",
+  "prevents_tells": [
+    "multi-accent",
+    "duplicate-cta-intent",
+    "purple-gradient"
+  ],
+  "example": {
+    "brief": "Signup page for a paid plan with a free trial.",
+    "ruling": "One accent token drives the trial button and the focus rings only. The documentation, pricing, and login links are neutral text. No gradient anywhere, the page background stays one neutral step."
+  }
+}

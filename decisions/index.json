@@ -1,0 +1,156 @@
+{
+  "library_version": "1.0",
+  "modes": [
+    "persuade",
+    "operate",
+    "read",
+    "experience"
+  ],
+  "count": 24,
+  "decisions": [
+    {
+      "id": "asymmetric-hero-over-centered",
+      "mode": "persuade",
+      "title": "Split the hero asymmetric",
+      "intent": "Buy attention with a primary object the reader can inspect, instead of a centered sentence they have to believe."
+    },
+    {
+      "id": "reject-three-equal-cards",
+      "mode": "persuade",
+      "title": "Reject the equal card row",
+      "intent": "Force a ranking of claims so the strongest one gets the most space and the most evidence."
+    },
+    {
+      "id": "sourced-metric-not-superlative",
+      "mode": "persuade",
+      "title": "Cite the number or drop the claim",
+      "intent": "Make every quantified claim verifiable and delete the claims that only assert enthusiasm."
+    },
+    {
+      "id": "one-accent-one-primary-action",
+      "mode": "persuade",
+      "title": "One accent, one primary action",
+      "intent": "Make the next step unambiguous by spending colour and emphasis on exactly one thing."
+    },
+    {
+      "id": "risk-reversal-before-ask",
+      "mode": "persuade",
+      "title": "Answer the objection before the ask",
+      "intent": "Remove the last reason to hesitate at the moment the reader decides, not three sections later."
+    },
+    {
+      "id": "one-language-real-names",
+      "mode": "persuade",
+      "title": "Use one language and named entities",
+      "intent": "Keep credibility and mechanical cleanliness by removing stock names and mixed languages from shipped copy."
+    },
+    {
+      "id": "master-detail-rail",
+      "mode": "operate",
+      "title": "Use a master detail rail for repeat visits",
+      "intent": "Let a returning user reach any object in one click without losing their place."
+    },
+    {
+      "id": "reject-decorative-bento",
+      "mode": "operate",
+      "title": "Reject the decorative bento grid",
+      "intent": "Keep the grid only when the content is truly heterogeneous, because otherwise the page has no argument left to make with layout."
+    },
+    {
+      "id": "matrix-grid-over-card-row",
+      "mode": "operate",
+      "title": "Compare in a matrix, not in cards",
+      "intent": "Let the user compare many objects across shared attributes in one pass."
+    },
+    {
+      "id": "labeled-controls-not-placeholder-hints",
+      "mode": "operate",
+      "title": "Label every control, never the placeholder",
+      "intent": "Keep the field's purpose visible after the user has typed into it."
+    },
+    {
+      "id": "persistent-scope-over-scroll-cue",
+      "mode": "operate",
+      "title": "Show scope, never ask for scrolling",
+      "intent": "Tell the user where they are and how far the surface goes, instead of instructing them to move."
+    },
+    {
+      "id": "nav-bar-under-80px",
+      "mode": "operate",
+      "title": "Keep the app bar to one short line",
+      "intent": "Protect working height and keep the primary surface reachable without a scroll."
+    },
+    {
+      "id": "single-column-measure",
+      "mode": "read",
+      "title": "Read in one measured column",
+      "intent": "Let a reader finish a passage without tracking back to the start of the line."
+    },
+    {
+      "id": "margin-annotation-rail",
+      "mode": "read",
+      "title": "Annotate in a narrow margin rail",
+      "intent": "Give definitions, sources, and asides a home without breaking the reading line."
+    },
+    {
+      "id": "contents-first-disclosure",
+      "mode": "read",
+      "title": "Open with contents, not with eyebrows",
+      "intent": "Let the reader choose a section instead of walking a fixed sequence of labels."
+    },
+    {
+      "id": "no-chrome-text-page",
+      "mode": "read",
+      "title": "Ship text without decorative chrome",
+      "intent": "Keep attention on the argument by removing everything that is not the argument."
+    },
+    {
+      "id": "reading-typeface-over-default-stack",
+      "mode": "read",
+      "title": "Choose a reading typeface, do not inherit one",
+      "intent": "Make the body type a decision with a reason rather than the first font in a starter template."
+    },
+    {
+      "id": "full-bleed-sequence",
+      "mode": "experience",
+      "title": "Sequence full bleed moments, do not alternate",
+      "intent": "Tell one continuous story across screens so the page reads as a single arc."
+    },
+    {
+      "id": "declared-motion-budget",
+      "mode": "experience",
+      "title": "Declare a motion budget and honour it",
+      "intent": "Make motion an amount stated before the build and checked afterwards, not a taste improvised during it."
+    },
+    {
+      "id": "view-entry-motion-not-scroll-scrub",
+      "mode": "experience",
+      "title": "Animate on entry, never on scroll position",
+      "intent": "Pay for motion once when a section arrives instead of paying on every scroll frame."
+    },
+    {
+      "id": "depth-by-scale-not-glow",
+      "mode": "experience",
+      "title": "Build depth with scale and spacing, not glow",
+      "intent": "Get separation from size, weight, and space so the page holds up on any background and in both colour modes."
+    },
+    {
+      "id": "honest-constructed-media",
+      "mode": "experience",
+      "title": "Show real media or show nothing",
+      "intent": "Keep the page's credibility by never staging a product screen the product cannot produce."
+    },
+    {
+      "id": "token-locked-surface",
+      "mode": "experience",
+      "title": "Lock every surface value to a token",
+      "intent": "Make the palette and geometry an enumerable set so an undeclared value is detectable rather than debatable."
+    },
+    {
+      "id": "viewport-and-contrast-floor",
+      "mode": "experience",
+      "title": "Set the viewport unit and the contrast floor first",
+      "intent": "Fix the two measurable properties that decide whether the page is usable before any layout work starts."
+    }
+  ]
+}

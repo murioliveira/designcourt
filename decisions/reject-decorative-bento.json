@@ -1,0 +1,33 @@
+{
+  "id": "reject-decorative-bento",
+  "title": "Reject the decorative bento grid",
+  "mode": [
+    "operate"
+  ],
+  "intent": "Keep the grid only when the content is truly heterogeneous, because otherwise the page has no argument left to make with layout.",
+  "when_to_use": [
+    "the cells hold different kinds of content with different natural shapes: a chart, a quote, a captured screen, a spec list",
+    "the grid is the argument, as in an evidence wall for a case study"
+  ],
+  "when_not_to_use": [
+    "the cell count does not equal the content count, so a cell is empty or the last row is short",
+    "all cells hold the same kind of content, which makes it a card row with irregular gaps",
+    "the grid exists to make a thin page look designed"
+  ],
+  "rules": [
+    "cell count equals content count exactly, with no filler cell and no empty cell",
+    "no two adjacent cells share the same aspect ratio",
+    "every cell's span is justified by its content type in the layout plan, not chosen for visual balance",
+    "if replacing the grid with equal cells loses nothing but rhythm, the layout is rejected and a ranked stack or a table is used instead"
+  ],
+  "trade_off": "You hand back an easy way to look busy. A heterogeneous grid is harder to fill, and any cell you cannot fill with a different content type has to be cut from the page.",
+  "failure_mode": "The grid is filled with decoration: oversized numerals, icon tiles, and a colour block carrying a slogan, so the section is a mosaic of nothing and the empty cells multiply.",
+  "prevents_tells": [
+    "bento-empty-cell",
+    "three-equal-cards"
+  ],
+  "example": {
+    "brief": "Dashboard product page holding five unrelated claims.",
+    "ruling": "Bento is rejected. Two claims are cut, one becomes a wide chart panel with its source, one becomes a quote with attribution, and the rest fold into a written list. Four cells, four kinds of content."
+  }
+}

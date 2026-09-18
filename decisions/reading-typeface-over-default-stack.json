@@ -1,0 +1,31 @@
+{
+  "id": "reading-typeface-over-default-stack",
+  "title": "Choose a reading typeface, do not inherit one",
+  "mode": [
+    "read"
+  ],
+  "intent": "Make the body type a decision with a reason rather than the first font in a starter template.",
+  "when_to_use": [
+    "any page whose primary content is text",
+    "the page must carry a point of view without spending colour or imagery"
+  ],
+  "when_not_to_use": [
+    "the artifact is a throwaway internal note where the typeface has no audience",
+    "the surface is a dense tool where the platform UI font genuinely reads better and is the fastest thing to render"
+  ],
+  "rules": [
+    "the body font stack is declared and its first entry is neither Inter nor a bare system stack without a stated reason",
+    "the first entry of the stack is a family that ships with the artifact or is loaded explicitly; no stack starts with an undefined name",
+    "body size is at least 16px and line height sits between 1.4 and 1.7 times the body size",
+    "the type scale has at least four steps and no two adjacent steps differ by less than 1.15 times"
+  ],
+  "trade_off": "A chosen typeface adds a loading decision, a licence question, and a fallback metric problem, while the system stack is free and always available.",
+  "failure_mode": "A fashionable face is loaded for headings and reused for body copy at small size, or the stack asks for a weight the page never ships, so the browser synthesises it and the text looks damaged.",
+  "prevents_tells": [
+    "inter-default"
+  ],
+  "example": {
+    "brief": "Long form research summary read on desktop and phone.",
+    "ruling": "A serif with real text sizes for body at 17px and 1.6 line height, a neutral sans for interface text only, four scale steps with a 1.25 ratio, and both families shipped rather than requested."
+  }
+}

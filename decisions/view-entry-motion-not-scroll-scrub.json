@@ -1,0 +1,33 @@
+{
+  "id": "view-entry-motion-not-scroll-scrub",
+  "title": "Animate on entry, never on scroll position",
+  "mode": [
+    "experience"
+  ],
+  "intent": "Pay for motion once when a section arrives instead of paying on every scroll frame.",
+  "when_to_use": [
+    "sections enter the viewport and the entrance is the effect being designed",
+    "the page must stay responsive while the user scrolls fast"
+  ],
+  "when_not_to_use": [
+    "the brief requires a timeline tied to scroll position, which is a different decision with its own frame budget and a complete static first frame",
+    "the content must be readable at every scroll position, where an entrance animation would hide text"
+  ],
+  "rules": [
+    "no window scroll listener drives an animation",
+    "an entrance animation runs at most once per element",
+    "the animated properties are transform and opacity only",
+    "the reduced motion path shows the final state immediately, with no fade and no delay"
+  ],
+  "trade_off": "You give up motion that answers the reader's hand continuously, which is what makes a long page feel alive, and the page can read as a set of separate slides.",
+  "failure_mode": "One observer per element with no shared threshold, so sections animate at inconsistent moments and the page flickers during fast scrolling.",
+  "prevents_tells": [
+    "scroll-listener-animation",
+    "property-animation",
+    "reduced-motion-missing"
+  ],
+  "example": {
+    "brief": "Story page with six sections that reveal as the reader advances.",
+    "ruling": "One shared observer with a single threshold triggers a translate and opacity entrance once per section, no scroll listener exists, and reduced motion renders every section already in place."
+  }
+}

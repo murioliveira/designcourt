@@ -1,0 +1,36 @@
+{
+  "id": "nav-bar-under-80px",
+  "title": "Keep the app bar to one short line",
+  "mode": [
+    "operate"
+  ],
+  "intent": "Protect working height and keep the primary surface reachable without a scroll.",
+  "when_to_use": [
+    "a tool surface the user operates for long sessions",
+    "the nav carries one wordmark, one product switcher, and at most four destinations"
+  ],
+  "when_not_to_use": [
+    "the surface is a marketing site with a long destination list, where the fix is a different family rather than a taller bar",
+    "the layout is a rail based shell, where navigation lives in the rail and the bar stays nearly empty"
+  ],
+  "rules": [
+    "the nav element is at most 80px tall on desktop and never wraps to two lines",
+    "destinations beyond four move into a menu or into a rail, never into a second row",
+    "no build number, version string, or environment label appears in a shipped marketing nav or footer",
+    "the wordmark is a mark or set type; a row of typed company names is not a logo wall",
+    "app bar and account menu icons come from one family at one stroke width, and no emoji is used as an interface icon"
+  ],
+  "trade_off": "Folding destinations into a menu lowers their discovery, so secondary surfaces get fewer visits and turn into documentation problems instead of product paths.",
+  "failure_mode": "The bar creeps: a beta badge, a status pill, then a second row for modules, until the working area loses 40 pixels on a laptop and the first content row is below the fold.",
+  "prevents_tells": [
+    "nav-too-tall",
+    "version-footer",
+    "text-logo-wall",
+    "emoji-as-icon",
+    "mixed-icon-family"
+  ],
+  "example": {
+    "brief": "Internal analytics tool used for hours at a time.",
+    "ruling": "Nav is a single 64px row: mark, four destinations, account menu. The beta badge moves into the product menu and the footer keeps only links and support contact."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "declared-motion-budget",
+  "title": "Declare a motion budget and honour it",
+  "mode": [
+    "experience"
+  ],
+  "intent": "Make motion an amount stated before the build and checked afterwards, not a taste improvised during it.",
+  "when_to_use": [
+    "the brief calls for an expressive page and motion is part of the intended experience",
+    "a reduced motion path can ship in the same pass as the animation"
+  ],
+  "when_not_to_use": [
+    "the surface is a tool where motion competes with input latency",
+    "the team cannot ship a reduced motion path in this release, in which case the budget is zero"
+  ],
+  "rules": [
+    "the contract motion dial and the artifact agree: a dial above 2 requires at least one real animated transition, and a dial at 1 forbids them",
+    "every animation is accompanied by a reduced motion rule that removes it",
+    "animated properties are limited to transform and opacity; width, height, top, and left are never animated",
+    "no animation is driven by a scroll event listener",
+    "at most one marquee exists on a page, it pauses on hover and on focus, and its content is readable without it moving"
+  ],
+  "trade_off": "A stated budget caps expressiveness and turns over performance into a visible defect rather than a flourish, so a page that would have been dressed up stays plain.",
+  "failure_mode": "The dial is written into the contract to look ambitious while the page ships static, which is a declared claim the artifact never delivers.",
+  "prevents_tells": [
+    "motion-claimed-not-shown",
+    "reduced-motion-missing",
+    "property-animation",
+    "multi-marquee"
+  ],
+  "example": {
+    "brief": "Product tour page, brief asks for a lively feel.",
+    "ruling": "Motion dial 3, realised as three entrance transitions on transform and opacity, each wrapped in a reduced motion rule, and the contract records the three so the check can compare the claim with the artifact."
+  }
+}

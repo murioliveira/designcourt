@@ -1,0 +1,31 @@
+{
+  "id": "single-column-measure",
+  "title": "Read in one measured column",
+  "mode": [
+    "read"
+  ],
+  "intent": "Let a reader finish a passage without tracking back to the start of the line.",
+  "when_to_use": [
+    "the content is continuous prose the reader works through in order",
+    "the page's job is comprehension rather than comparison"
+  ],
+  "when_not_to_use": [
+    "the content is reference material the reader jumps around, where an index and short titled sections win",
+    "the content needs a data display beside the text, where the figure must sit in the flow at full width"
+  ],
+  "rules": [
+    "body text runs between 60 and 80 characters per line at the widest breakpoint",
+    "a section support paragraph stays under 25 words, and anything longer becomes body copy with its own title",
+    "the reading column keeps one left edge across every section, so the start of the line never moves",
+    "no sidebar carries navigation on the reading page; navigation sits above the column or excludes itself from it"
+  ],
+  "trade_off": "One column wastes horizontal space on a wide screen and rules out parallel content, so asides and figures must live in the flow and lengthen the reading order.",
+  "failure_mode": "The column is stretched wide while the type stays small, so lines run past 110 characters and the reader loses the line return.",
+  "prevents_tells": [
+    "subtext-length"
+  ],
+  "example": {
+    "brief": "Post mortem document, around 2000 words, read once by an engineering team.",
+    "ruling": "Family single-column-measure capped at 72 characters, every section titled, figures full width with numbered captions, and no support paragraph above 25 words."
+  }
+}

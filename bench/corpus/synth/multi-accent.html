@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harborline: berth and crew scheduling for mid-size terminals</title>
+<!-- tokens -->
+<style>
+/* token declaration block: the only place literal color values live in this page */
+:root {
+  --token-bg: #ffffff;
+  --token-surface: #f4f6f8;
+  --token-ink: #14202b;
+  --token-muted: #5a6774;
+  --token-accent: #1d4ed8;
+  --token-accent-text: #1d4ed8;
+  --token-accent-soft: #dbe6ff;
+  --token-on-accent: #ffffff;
+  --token-line: #d7dee5;
+  --token-accent-alt: #0f766e;
+  --token-radius: 8px;
+  --token-space-2: 0.5rem;
+  --token-space-3: 0.75rem;
+  --token-space-4: 1rem;
+  --token-space-6: 1.5rem;
+  --token-space-8: 2rem;
+  --token-space-12: 3rem;
+  --token-space-16: 4rem;
+  --token-nav-h: 68px;
+  --token-hero-pad-top: 4rem;
+  --token-measure: 65ch;
+  --token-font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--token-bg); color: var(--token-ink); font-family: var(--token-font); font-size: 1rem; line-height: 1.55; }
+h1, h2, h3 { margin: 0 0 var(--token-space-4); line-height: 1.15; letter-spacing: -0.015em; }
+h1 { font-size: clamp(2rem, 4vw, 2.9rem); max-width: 20ch; }
+h2 { font-size: 1.55rem; max-width: 30ch; }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 var(--token-space-4); }
+a { color: var(--token-accent-text); text-underline-offset: 3px; }
+ul, ol { margin: 0 0 var(--token-space-4); padding-left: 1.1rem; }
+figure { margin: 0; }
+svg { max-width: 100%; height: auto; }
+.inner { width: min(1080px, 100% - 3rem); margin-inline: auto; }
+.sec { padding-block: var(--token-space-16); border-top: 1px solid var(--token-line); }
+.sec__intro { max-width: var(--token-measure); color: var(--token-muted); }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--token-accent-text); margin-bottom: var(--token-space-3); }
+.btn { display: inline-block; padding: 0.7rem 1.1rem; border: 1px solid transparent; border-radius: var(--token-radius); font: inherit; font-weight: 600; cursor: pointer; transition: transform 140ms ease, opacity 140ms ease; }
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--token-accent); color: var(--token-on-accent); }
+.btn--secondary { background: var(--token-bg); color: var(--token-ink); border-color: var(--token-line); }
+:focus-visible { outline: 2px solid var(--token-accent); outline-offset: 2px; }
+.icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.mark { width: 100%; fill: none; stroke: var(--token-accent); stroke-width: 1.75; stroke-linecap: round; }
+.mark circle { fill: var(--token-accent-soft); stroke: none; }
+.site-head { height: var(--token-nav-h); display: flex; align-items: center; border-bottom: 1px solid var(--token-line); }
+.site-head .inner { display: flex; align-items: center; gap: var(--token-space-8); }
+.brand { font-weight: 700; color: var(--token-ink); text-decoration: none; }
+.site-nav { display: flex; gap: var(--token-space-6); margin-left: auto; }
+.site-nav a { color: var(--token-muted); text-decoration: none; }
+.sec--hero { display: flex; flex-direction: column; justify-content: center; min-height: 100dvh; padding-top: var(--token-hero-pad-top); border-top: 0; background: var(--token-bg); }
+.hero__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--token-space-12); align-items: center; }
+.lead { font-size: 1.12rem; color: var(--token-muted); max-width: 46ch; }
+.media { border: 1px solid var(--token-line); border-radius: var(--token-radius); background: var(--token-surface); padding: var(--token-space-6); }
+.family-prose-wide .inner { max-width: var(--token-measure); }
+.note { border-left: 3px solid var(--token-line); padding-left: var(--token-space-4); color: var(--token-muted); }
+.zigzag { display: grid; grid-template-columns: 1fr 1fr; gap: var(--token-space-12); align-items: center; }
+.zigzag--reverse .zigzag__media { order: 2; }
+.quote { margin: 0 0 var(--token-space-8); border-left: 3px solid var(--token-accent); padding-left: var(--token-space-6); }
+.quote p { font-size: 1.25rem; }
+.quote footer { color: var(--token-muted); font-size: 0.92rem; }
+.proof { display: grid; grid-template-columns: 1fr 1fr; gap: var(--token-space-8); margin: 0; }
+.proof dt { font-weight: 600; }
+.proof dd { margin: 0; color: var(--token-muted); }
+.steps { list-style: none; margin: 0; padding: 0; }
+.steps__item { border-top: 1px solid var(--token-line); padding-block: var(--token-space-6); }
+.steps__item p { margin: 0; color: var(--token-muted); max-width: var(--token-measure); }
+.cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--token-space-12); }
+.cols__list { list-style: none; margin: 0; padding: 0; color: var(--token-muted); }
+.cols__list li { border-top: 1px solid var(--token-line); padding-block: var(--token-space-3); }
+.disc { border-top: 1px solid var(--token-line); }
+.disc summary { display: flex; justify-content: space-between; gap: var(--token-space-6); padding-block: var(--token-space-4); font-weight: 600; cursor: pointer; }
+.disc p { color: var(--token-muted); max-width: var(--token-measure); }
+.disc__icon { flex: 0 0 auto; }
+.form { display: grid; gap: var(--token-space-6); max-width: 34rem; }
+.field { display: grid; gap: var(--token-space-2); }
+.field label { font-weight: 600; font-size: 0.92rem; }
+.field input { font: inherit; padding: 0.6rem 0.7rem; border: 1px solid var(--token-line); border-radius: var(--token-radius); background: var(--token-bg); color: var(--token-ink); }
+.footer { border-top: 1px solid var(--token-line); padding-block: var(--token-space-12); color: var(--token-muted); }
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--token-space-8); }
+.footer__brand { font-weight: 700; color: var(--token-accent-alt); margin-bottom: var(--token-space-2); }
+.footer__nav { display: flex; flex-direction: column; gap: var(--token-space-2); }
+.footer__nav a { color: var(--token-muted); text-decoration: none; }
+.footer__legal { grid-column: 1 / -1; font-size: 0.88rem; margin: 0; }
+@media (max-width: 760px) {
+  .hero__grid, .zigzag, .cols, .proof, .footer__grid { grid-template-columns: 1fr; }
+  .zigzag--reverse .zigzag__media { order: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
+}
+</style>
+</head>
+<body>
+<!-- nav -->
+<header class="site-head">
+<div class="inner">
+<a class="brand" href="#hero">Harborline</a>
+<nav class="site-nav" aria-label="Main">
+<a href="#approach">Approach</a>
+<a href="#security">Security</a>
+<a href="#faq">FAQ</a>
+</nav>
+</div>
+</header>
+<!-- hero -->
+<section id="hero" class="sec sec--hero family-split-hero">
+<div class="inner hero__grid">
+<div class="hero__copy">
+<h1>Berth schedules that hold up on a bad weather day</h1>
+<p class="lead">Harborline puts berths, cranes and crew turnarounds on one board your dock office can read at a glance.</p>
+<p class="hero__cta"><a class="btn btn--primary" href="#contact">Book a walkthrough</a></p>
+</div>
+<figure class="media hero__media" aria-hidden="true">
+<svg class="mark" viewBox="0 0 320 220" role="presentation">
+<path d="M12 196 C 74 196, 96 96, 156 96 S 226 150, 308 44"></path>
+<path d="M12 152 C 84 152, 108 62, 168 62 S 240 108, 308 96"></path>
+<circle cx="156" cy="96" r="7"></circle>
+<circle cx="64" cy="176" r="5"></circle>
+</svg>
+</figure>
+</div>
+</section>
+<!-- problem -->
+<section id="problem" class="sec family-prose-wide">
+<div class="inner">
+<h2>Most delays start in a spreadsheet</h2>
+<p class="sec__intro">Terminal offices still run on a shared sheet, two chat threads and a whiteboard that nobody updates after noon.</p>
+<p>Crews call the dock office to ask which berth is free. The answer lives in a cell that was true two hours ago, and the plan is rebuilt by hand on every shift.</p>
+<p class="note">One terminal we worked with kept four versions of the same morning plan.</p>
+</div>
+</section>
+<!-- approach -->
+<section id="approach" class="sec family-zigzag-media">
+<div class="inner">
+<p class="eyebrow">How the work runs</p>
+<div class="zigzag">
+<figure class="media" aria-hidden="true">
+<svg class="mark" viewBox="0 0 320 220" role="presentation">
+<path d="M24 180 L120 180 L120 108 L216 108 L216 40 L300 40"></path>
+<circle cx="120" cy="108" r="6"></circle>
+<circle cx="216" cy="40" r="6"></circle>
+</svg>
+</figure>
+<div class="zigzag__copy">
+<h2>One board, one version of the truth</h2>
+<p>The board reads berth, crane and shift data from the systems you already run, so the dock office stops reconciling copies of the same morning.</p>
+<p><a href="#process">How a rollout runs</a></p>
+</div>
+</div>
+</div>
+</section>
+<!-- casestudy -->
+<section id="casestudy" class="sec family-zigzag-media">
+<div class="inner">
+<div class="zigzag zigzag--reverse">
+<div class="zigzag__copy">
+<h2>Two weeks at Fathom Terminal Group</h2>
+<p>Fathom runs four berths and eleven cranes. The board went live on a Tuesday morning shift, with the spreadsheet left open beside it for two weeks.</p>
+</div>
+<figure class="media" aria-hidden="true">
+<svg class="mark" viewBox="0 0 320 220" role="presentation">
+<path d="M20 60 C 90 60, 110 168, 180 168 S 250 88, 300 88"></path>
+<circle cx="180" cy="168" r="6"></circle>
+</svg>
+</figure>
+</div>
+</div>
+</section>
+<!-- evidence -->
+<section id="evidence" class="sec family-quote-rail">
+<div class="inner">
+<h2>What changed on the dock</h2>
+<blockquote class="quote">
+<p>We stopped calling the crane operator to ask which berth was free.</p>
+<footer>Ines Duarte, Operations Lead, Fathom Terminal Group</footer>
+</blockquote>
+<dl class="proof">
+<div><dt>Berth handover</dt><dd>One board, updated by the duty officer, visible to the whole gang.</dd></div>
+<div><dt>Shift planning</dt><dd>The next plan starts from the current one instead of a blank sheet.</dd></div>
+</dl>
+</div>
+</section>
+<!-- process -->
+<section id="process" class="sec family-stacked-steps">
+<div class="inner">
+<h2>From first call to live board</h2>
+<p class="sec__intro">Four steps, about five weeks for a terminal of your size.</p>
+<ol class="steps">
+<li class="steps__item"><h3>Dock walk</h3><p>Half a day with the people who move the cargo and the people who answer the phone.</p></li>
+<li class="steps__item"><h3>Board model</h3><p>Berths, cranes and shifts become one structure, agreed on paper before we build.</p></li>
+<li class="steps__item"><h3>Parallel week</h3><p>The board runs beside the spreadsheet for seven shifts, and the gang decides which one to trust.</p></li>
+<li class="steps__item"><h3>Handover</h3><p>Your duty officer owns the board and the rules behind it. We stay on call for the first month.</p></li>
+</ol>
+</div>
+</section>
+<!-- security -->
+<section id="security" class="sec family-two-col-asym">
+<div class="inner cols">
+<div>
+<h2>Who sees what</h2>
+<p class="sec__intro">Crews see the shift they work. The dock office sees the day. Customs sees the manifest line it asked for.</p>
+</div>
+<ul class="cols__list">
+<li>Role based access, set per terminal, not per vendor.</li>
+<li>Every edit carries a name and a timestamp.</li>
+<li>Data stays in the region your contract names.</li>
+</ul>
+</div>
+</section>
+<!-- faq -->
+<section id="faq" class="sec family-disclosure">
+<div class="inner">
+<h2>Questions we get on the first call</h2>
+<details class="disc">
+<summary>Does it replace our terminal operating system?<span class="disc__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary>
+<p>No. Harborline reads the berth and crane data that system already holds.</p>
+</details>
+<details class="disc">
+<summary>How long until the gang trusts it?<span class="disc__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary>
+<p>Two weeks of running both boards side by side is usually enough.</p>
+</details>
+</div>
+</section>
+<!-- contact -->
+<section id="contact" class="sec family-form-panel">
+<div class="inner">
+<h2>Talk to the dock team</h2>
+<p class="sec__intro">Thirty minutes on your terminal, with your berth list and your worst shift.</p>
+<form class="form" action="/contact" method="post">
+<div class="field"><label for="name">Name</label><input id="name" name="name" type="text" placeholder="Duty officer name"></div>
+<div class="field"><label for="terminal">Terminal</label><input id="terminal" name="terminal" type="text" placeholder="Terminal or port"></div>
+<div class="field"><label for="shift">Worst shift</label><input id="shift" name="shift" type="text" placeholder="Optional, one line"></div>
+<button class="btn btn--secondary" type="submit">Send request</button>
+</form>
+</div>
+</section>
+<!-- footer -->
+<footer class="footer">
+<div class="inner footer__grid">
+<div>
+<p class="footer__brand">Harborline</p>
+<p>Pier 7, Viana do Castelo, Portugal</p>
+</div>
+<nav class="footer__nav" aria-label="Footer">
+<a href="#approach">Approach</a>
+<a href="#security">Security</a>
+<a href="#faq">FAQ</a>
+</nav>
+<p class="footer__legal">Harborline Lda, 2026. All rights reserved.</p>
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Designkit Escape Regression Fixture</title>
+  <style>
+    :root {
+      /* Exact token ramp from designkit/styles/tokens.css */
+      --c-primary-50:  #eef2ff;
+      --c-primary-100: #e0e7ff;
+      --c-primary-400: #818cf8;
+      --c-primary-500: #6366f1;
+      --c-primary-600: #4f46e5;
+
+      --color-primary:         var(--c-primary-600);
+      --color-primary-soft:    var(--c-primary-50);
+      --color-primary-soft-strong: var(--c-primary-100);
+
+      --color-surface:         #ffffff;
+      --color-surface-muted:   #f8fafc;
+      --color-border:          #e2e8f0;
+      --color-text:            #0f172a;
+      --color-text-muted:      #64748b;
+
+      --font-body:             system-ui, -apple-system, sans-serif;
+      --space-4:               1rem;
+      --space-8:               2rem;
+      --space-16:              4rem;
+      --radius-xl:             1.5rem;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-surface);
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+
+    /* Exact hero block from designkit/styles/layout.css lines 316 to 325.
+       The previous gate (anti-slop-check.py) returned PASS on this page.
+       The judge must fail with a DC-101 blocker. */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: var(--space-16) var(--space-8);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(120% 120% at 100% 0%, var(--color-primary-soft) 0%, transparent 60%),
+        var(--color-surface);
+    }
+
+    .hero__title {
+      margin-top: var(--space-4);
+      font-size: 2.5rem;
+      color: var(--color-text);
+    }
+
+    .hero__lead {
+      margin-top: var(--space-4);
+      max-width: 56ch;
+      font-size: 1.25rem;
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1 class="hero__title">Designkit overview</h1>
+      <p class="hero__lead">A documented design system where an AI purple gradient slipped into production.</p>
+    </section>
+  </main>
+</body>
+</html>

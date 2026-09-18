@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axiom Trace: enterprise observability pricing</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --ink: #f8fafc;
+  --muted: #94a3b8;
+  --line: #334155;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, sans-serif; }
+.wrap { max-width: 1080px; margin-inline: auto; padding: 64px 24px; }
+.hero { text-align: center; margin-bottom: 48px; }
+.eyebrow { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; color: #38bdf8; margin-bottom: 8px; }
+.tiers { display: grid; grid-template-columns: repeat(3, 1fr); align-items: stretch; gap: 24px; margin-bottom: 64px; }
+.tier { border: 1px solid var(--line); border-radius: 8px; padding: 32px; background: var(--surface); display: flex; flex-direction: column; }
+.tier h3 { margin: 0 0 8px; }
+.price { font-size: 2.2rem; font-weight: 700; margin: 16px 0 8px; }
+.price__note { font-size: 0.85rem; color: #64748b; margin-bottom: 24px; }
+.bento { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 64px; }
+.bento__cell { border: 1px solid var(--line); border-radius: 8px; padding: 24px; background: var(--surface); }
+.footer { border-top: 1px solid var(--line); padding: 32px 0; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero family-center-hero">
+<p class="eyebrow">Plans</p>
+<h1>Predictable pricing for high-throughput teams</h1>
+<p>Choose an ingest tier that matches your peak span volume.</p>
+</header>
+<section class="tiers family-three-up">
+<article class="tier">
+<p class="eyebrow">Starter</p>
+<h3>Developer</h3>
+<div class="price">$49</div>
+<p class="price__note">Up to 50M spans per month, 7 days retention.</p>
+</article>
+<article class="tier">
+<p class="eyebrow">Growth</p>
+<h3>Production</h3>
+<div class="price">$249</div>
+<p class="price__note">Up to 500M spans per month, 30 days retention.</p>
+</article>
+<article class="tier">
+<p class="eyebrow">Scale</p>
+<h3>Enterprise</h3>
+<div class="price">Custom</div>
+<p class="price__note">Unlimited spans, dedicated ingest gateway, 90 days retention.</p>
+</article>
+</section>
+<section class="family-bento">
+<p class="eyebrow">Included Features</p>
+<div class="bento">
+<div class="bento__cell"><h3>Full Ingest SLA</h3><p>Every tier guarantees 99.9% ingest availability backed by credit.</p></div>
+<div class="bento__cell"></div>
+</div>
+</section>
+<section class="family-prose-wide">
+<p class="eyebrow">Billing FAQ</p>
+<h3>Can I change tiers mid-cycle?</h3>
+<p>Yes, plan changes take effect immediately and are prorated to the day.</p>
+</section>
+<footer class="footer">
+<p class="eyebrow">About Axiom</p>
+<p>Axiom Trace Inc. High-throughput distributed tracing.</p>
+<p class="footer__meta">v3.2.0, build 1120</p>
+</footer>
+</div>
+<script>
+function reveal() {
+  document.querySelectorAll('.tier').forEach(function(el) {
+    el.style.opacity = '1';
+  });
+}
+document.addEventListener('scroll', reveal);
+</script>
+</body>
+</html>

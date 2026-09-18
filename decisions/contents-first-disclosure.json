@@ -1,0 +1,33 @@
+{
+  "id": "contents-first-disclosure",
+  "title": "Open with contents, not with eyebrows",
+  "mode": [
+    "read"
+  ],
+  "intent": "Let the reader choose a section instead of walking a fixed sequence of labels.",
+  "when_to_use": [
+    "the document has six or more sections and a reader who will not read all of them",
+    "sections can be entered in any order"
+  ],
+  "when_not_to_use": [
+    "the sequence is the argument and skipping breaks comprehension",
+    "the document is under three sections, where a contents block costs more than it saves"
+  ],
+  "rules": [
+    "the page opens with a contents list using the section titles as written, not paraphrases",
+    "the eyebrow count stays at or below one for every three sections, counting the hero as a section",
+    "no eyebrow is numbered, and no section carries a coded two part label",
+    "every contents entry links to an anchor that exists in the document"
+  ],
+  "trade_off": "A contents block spends the strongest screen on navigation instead of the first idea, and it commits the document to titled sections that survive editing.",
+  "failure_mode": "The contents list drifts from the document: renamed sections, anchors that no longer resolve, and a list longer than the page it describes.",
+  "prevents_tells": [
+    "eyebrow-density",
+    "numbered-eyebrow",
+    "scroll-cues"
+  ],
+  "example": {
+    "brief": "Policy page with nine sections read selectively by different roles.",
+    "ruling": "A contents block lists the nine titles as written with anchors, no eyebrows or numbered labels are used anywhere, and each section title is unique so the anchor set stays stable."
+  }
+}

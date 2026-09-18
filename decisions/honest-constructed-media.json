@@ -1,0 +1,33 @@
+{
+  "id": "honest-constructed-media",
+  "title": "Show real media or show nothing",
+  "mode": [
+    "experience"
+  ],
+  "intent": "Keep the page's credibility by never staging a product screen the product cannot produce.",
+  "when_to_use": [
+    "the page needs to demonstrate a product surface, a customer, or a proof of scale",
+    "the section's claim only lands if the reader believes the product actually looks like this"
+  ],
+  "when_not_to_use": [
+    "the product genuinely renders that surface and the image is a capture of it",
+    "the artifact is an internal wireframe where a labelled schematic is honest and faster"
+  ],
+  "rules": [
+    "no screen image is assembled from divs, including task lists, terminal windows, and dashboards of rectangles",
+    "a real capture is used, or the section states in place that the visual is a schematic",
+    "photo credit lines name only people whose photograph is on the page",
+    "a logo wall uses real logo marks with permission, and typed company names are never presented as logos"
+  ],
+  "trade_off": "Real media takes time to capture, needs refreshing as the product changes, and may expose rough edges that staged rectangles never would.",
+  "failure_mode": "A staged panel is labelled as a real capture and a reader notices invented values, which costs more trust than an empty section would have.",
+  "prevents_tells": [
+    "fake-screenshot",
+    "fake-credits",
+    "text-logo-wall"
+  ],
+  "example": {
+    "brief": "Landing page for a scheduling product needing a product shot.",
+    "ruling": "The scheduling view is captured from the real build at a declared state, the caption names the state and date, and the two invented customer quotes are removed rather than illustrated."
+  }
+}

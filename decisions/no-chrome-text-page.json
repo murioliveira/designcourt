@@ -1,0 +1,33 @@
+{
+  "id": "no-chrome-text-page",
+  "title": "Ship text without decorative chrome",
+  "mode": [
+    "read"
+  ],
+  "intent": "Keep attention on the argument by removing everything that is not the argument.",
+  "when_to_use": [
+    "the artifact is read once and its value is the text: a policy, a post mortem, a specification, a paper",
+    "the reader is already convinced enough to open the page"
+  ],
+  "when_not_to_use": [
+    "the surface is a product screen where a legend, a status, or a scale label carries real information",
+    "the brand needs a visual identity carrier on this page and has no other page to carry it"
+  ],
+  "rules": [
+    "no status dots, no decorative label over an image, and no brand strip in the hero footer",
+    "no version, build, or commit string in a marketing or documentation footer",
+    "every graphic element is either labelled and referenced by the text, or deleted",
+    "no image credit line exists unless a real photograph with a named author is on the page"
+  ],
+  "trade_off": "The page has no visual relief, so a weak argument has nothing to lean on and the reading pace becomes entirely the writer's problem.",
+  "failure_mode": "Chrome is removed from the article while the template still injects a hero band, a badge row, and a footer strip, so the text arrives wrapped in decoration anyway.",
+  "prevents_tells": [
+    "decorative-chrome",
+    "version-footer",
+    "fake-credits"
+  ],
+  "example": {
+    "brief": "Incident review published to customers after an outage.",
+    "ruling": "No hero image, no badge row, no build string. The two diagrams are numbered and referenced by paragraph, the footer carries support contact only, and no credit line appears because no photograph is used."
+  }
+}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vesper Logistics: regional haulage optimization</title>
+<style>
+/* CSS tokens: mirrors designkit/styles/layout.css line 323 where a radial gradient
+   uses a purple variable stop. The old gate (anti-slop-check.py) checks only seven
+   lexical tells: em-dash, hex, inter, eyebrows, names, palette, scroll. It does not
+   inspect radial-gradient or CSS variables, so it returns PASS on this page. */
+:root {
+  --color-primary: rebeccapurple;
+  --color-primary-soft: mediumpurple;
+  --color-surface: white;
+  --color-border: #e2e8f0;
+  --radius-xl: 16px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--color-surface); font-family: system-ui, sans-serif; line-height: 1.5; }
+.wrap { max-width: 960px; margin-inline: auto; padding: 48px 24px; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(120% 120% at 100% 0%, var(--color-primary-soft) 0%, transparent 60%),
+    var(--color-surface);
+}
+.hero h1 { margin: 0 0 16px; font-size: 2.4rem; }
+.hero p { max-width: 48ch; margin: 0 0 24px; }
+.cta { display: inline-block; padding: 12px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; color: #000000; background: #ffd24a; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; }
+.card { border: 1px solid var(--color-border); border-radius: 8px; padding: 24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero family-split-hero">
+<h1>Regional freight dispatch that adapts to road closures</h1>
+<p>Vesper recalculates regional haulage routes when corridors close, keeping cargo moving without dispatcher overtime.</p>
+<a class="cta" href="#contact">Request terminal demo</a>
+</header>
+<main class="grid family-two-col-asym">
+<article class="card">
+<h2>Route Rebalancing</h2>
+<p>Automated lane swaps when weather or construction blocks a primary corridor.</p>
+</article>
+<article class="card">
+<h2>Fuel Optimization</h2>
+<p>Telemetry-backed idle reduction across nine regional distribution centers.</p>
+</article>
+</main>
+</div>
+</body>
+</html>

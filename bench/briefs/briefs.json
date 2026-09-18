@@ -1,0 +1,143 @@
+{
+  "briefs_version": "1.0",
+  "purpose": "Fixed test material for the blind pairwise benchmark. Content is frozen here so that only design varies between methods. A method may not add, remove, or rewrite content; it may only decide layout, hierarchy, type, color, spacing, and motion.",
+  "rules_for_generation": [
+    "Use every content item given. Add none.",
+    "Do not invent statistics, testimonials, logos, or prices.",
+    "No em-dash or en-dash in visible text.",
+    "The artifact must be a single self contained HTML file with inline CSS and inline JS only if needed.",
+    "Fonts: system stack or a single named family loaded from Google Fonts. No more than two families.",
+    "Deliver at a 1440px desktop viewport; include one breakpoint at 768px."
+  ],
+  "briefs": [
+    {
+      "id": "B1-persuade-devtool",
+      "mode": "persuade",
+      "product": "Postmortem, a service that turns an incident timeline into a written postmortem document",
+      "goal": "Convince an engineering lead to start a 14 day trial",
+      "audience": "Engineering leads at 20 to 200 person software companies who run on call rotations",
+      "success_metric": "Trial starts per visitor",
+      "content": {
+        "headline_facts": [
+          "Six hours of on call work become a document in four minutes",
+          "Reads Slack, PagerDuty, and your deploy log",
+          "Every claim it writes links to the source message"
+        ],
+        "sections": [
+          "Hero with the primary action and one product proof",
+          "How it works in three steps: connect sources, run the incident, receive the draft",
+          "One worked example showing a raw timeline next to the finished document",
+          "Security and data handling: what is stored, what is deleted, where it runs",
+          "Pricing logic: per seat, no per incident charge, free for teams under five",
+          "Closing action with a two line objection handler"
+        ],
+        "required_detail": "The worked example must show real looking log lines and a real looking paragraph of prose, not placeholder text"
+      }
+    },
+    {
+      "id": "B2-persuade-physical",
+      "mode": "persuade",
+      "product": "Kettle 03, a stovetop pour over kettle with a 0.6mm spout and a flat bottom",
+      "goal": "Sell direct to consumer at 89 euros, no discount",
+      "audience": "People who already brew filter coffee at home and own at least one scale",
+      "success_metric": "Add to cart rate",
+      "content": {
+        "headline_facts": [
+          "Gooseneck spout machined to 0.6mm for a 4mm stream",
+          "Flat bottom plate for even heat, works on induction",
+          "0.9 litre, 480 grams empty, brushed 304 steel"
+        ],
+        "sections": [
+          "Hero with the object large and the price stated plainly",
+          "One detail section on the spout and why 0.6mm matters, with a close view",
+          "One section on material and the three year warranty",
+          "Care instructions and what not to do with it",
+          "Shipping, returns, and the fact that it ships in four days",
+          "Closing action"
+        ],
+        "required_detail": "Because there is no photograph available, the page must communicate the object without pretending a fake photo exists. A drawn or typographic treatment of the spout dimension is expected."
+      }
+    },
+    {
+      "id": "B3-operate-dashboard",
+      "mode": "operate",
+      "product": "Fleet board for a company running 240 delivery vehicles",
+      "goal": "Let a dispatcher answer three questions in under five seconds: what is late, what is idle, what needs a human",
+      "audience": "Dispatchers working an eight hour shift on a 27 inch monitor, plus a supervisor who checks twice a day",
+      "success_metric": "Time to identify the worst performing vehicle",
+      "content": {
+        "top_level_numbers": [
+          "18 of 240 vehicles late beyond threshold",
+          "7 vehicles idle more than 45 minutes",
+          "3 incidents awaiting a human decision",
+          "median delivery delay 11 minutes, up 4 from yesterday"
+        ],
+        "sections": [
+          "A status header with the four numbers and the time of last refresh",
+          "A ranked table of the 18 late vehicles with driver, route, minutes late, and last scan time",
+          "An idle list with the seven vehicles and how long they have been idle",
+          "An incident queue with the three items and the action each needs",
+          "A small trend view for the last 24 hours of median delay"
+        ],
+        "required_detail": "This is a working surface, not a marketing page. Density is a feature. The worst row must be findable without reading every row."
+      }
+    },
+    {
+      "id": "B4-operate-settings",
+      "mode": "operate",
+      "product": "Billing and plan settings for a team collaboration product",
+      "goal": "Let an administrator change plan, seats, and payment method without contacting support",
+      "audience": "A team administrator who opens this page twice a year and is slightly anxious about money",
+      "success_metric": "Completed plan change without a support ticket",
+      "content": {
+        "sections": [
+          "Current plan summary with renewal date, seat count, and monthly amount",
+          "Seat management: add or remove seats with the price consequence stated before confirmation",
+          "Plan comparison between the current plan and the one above it, limited to the differences that matter",
+          "Payment method: card on file with last four digits and an expiry warning",
+          "Invoices: a short list with date, amount, and status",
+          "Danger area: cancel the subscription, with what happens to data stated plainly"
+        ],
+        "required_detail": "Every destructive or payment action must state its consequence in the same block as the control. The user must never be surprised by a number."
+      }
+    },
+    {
+      "id": "B5-read-research",
+      "mode": "read",
+      "product": "A published research note of 2,400 words about failure rates in automated deployment",
+      "goal": "Let a senior engineer read the whole note and reach the conclusion without leaving the page",
+      "audience": "Senior engineers and engineering managers, reading on a laptop, often skimming first",
+      "success_metric": "Completion rate and time on page",
+      "content": {
+        "structure": [
+          "A title, a one line summary, and the author with a date",
+          "A findings list of four items at the top, each one sentence",
+          "Five body sections with real headings: method, sample, the three failure classes, the cost model, and limitations",
+          "Two data tables: sample composition and cost per failure class",
+          "One chart: failure rate by deploy size, five data points",
+          "A limitations section that honestly reduces the strength of the claims",
+          "A citation list of six sources"
+        ],
+        "required_detail": "Long form reading surface. Line length, rhythm, and heading hierarchy are the design. No product marketing anywhere on the page."
+      }
+    },
+    {
+      "id": "B6-experience-editorial",
+      "mode": "experience",
+      "product": "An online companion piece for a museum exhibition about deep sea mapping",
+      "goal": "Make a visitor spend four minutes moving through the piece and leave with one strong image in mind",
+      "audience": "Curious general public, on a phone in a queue or on a laptop at home",
+      "success_metric": "Scroll depth past the halfway point",
+      "content": {
+        "structure": [
+          "An opening statement of three lines, no image",
+          "A depth scale that runs the length of the piece, from surface to 6,000 metres, marked with five real events",
+          "Five stations, each one short paragraph and one piece of data",
+          "One moment where the visitor must act to continue, revealing the deepest station",
+          "A closing line and the exhibition details: dates, city, ticket note"
+        ],
+        "required_detail": "The depth scale is the spine of the piece. Motion is allowed here and expected, but it must serve the depth metaphor, and it must respect a reduced motion preference."
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-09-18T03:28:19.853Z",
+  "results": [
+    {
+      "fixture": "designkit DESIGN.md (founder spec)",
+      "status": "pass",
+      "output": "",
+      "elapsed": "5.8"
+    }
+  ]
+}

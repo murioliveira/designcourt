@@ -1,0 +1,31 @@
+{
+  "id": "labeled-controls-not-placeholder-hints",
+  "title": "Label every control, never the placeholder",
+  "mode": [
+    "operate"
+  ],
+  "intent": "Keep the field's purpose visible after the user has typed into it.",
+  "when_to_use": [
+    "any field that holds a value the user can edit later",
+    "any field where an error must be shown in place"
+  ],
+  "when_not_to_use": [
+    "a single field search in a persistent toolbar, where an icon and an accessible name carry the purpose",
+    "a filter chip row where the control text itself is the label"
+  ],
+  "rules": [
+    "every input has a visible label bound by for and id; an icon only search field carries an accessible name instead",
+    "the placeholder is either absent or holds an example value, and it never repeats the field name",
+    "an error message replaces the helper text in place and is tied to the field with aria-describedby",
+    "the required state is visible before submission, not only after a failed attempt"
+  ],
+  "trade_off": "Visible labels cost vertical space and make dense forms taller, and a placeholder styled form will look cleaner in the first screenshot while failing the second use.",
+  "failure_mode": "Labels are added but never bound, so they are not announced, and the placeholder keeps the only copy of the expected format, which disappears the moment the user types.",
+  "prevents_tells": [
+    "placeholder-as-label"
+  ],
+  "example": {
+    "brief": "Invoice form for a bookkeeper entering many records.",
+    "ruling": "Every field keeps a bound visible label, the placeholder shows a format example only, and an invalid amount replaces the helper line with the error text and aria-describedby to the same field."
+  }
+}

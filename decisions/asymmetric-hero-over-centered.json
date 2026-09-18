@@ -1,0 +1,35 @@
+{
+  "id": "asymmetric-hero-over-centered",
+  "title": "Split the hero asymmetric",
+  "mode": [
+    "persuade"
+  ],
+  "intent": "Buy attention with a primary object the reader can inspect, instead of a centered sentence they have to believe.",
+  "when_to_use": [
+    "the page has at least one concrete artifact to show: a product surface, a chart, a document, a rendered output",
+    "traffic arrives from search or paid with a specific question already in mind",
+    "the second section must continue the same story rather than restart it"
+  ],
+  "when_not_to_use": [
+    "the page has one action and no artifact to display, such as a single field signup or an install prompt",
+    "the artifact is full width and interactive, such as a live demo or a long video",
+    "the success metric is recall of a short slogan rather than inspection of an object"
+  ],
+  "rules": [
+    "the primary object occupies at least 45 percent of the hero width at 1440px",
+    "the headline block renders in at most two lines at the widest breakpoint",
+    "the hero holds at most four text elements: headline, one support line, one action, one label or caption",
+    "the object is a real rendered thing, never a card of grey rectangles standing in for one"
+  ],
+  "trade_off": "A centered hero is symmetric and survives any length of copy; the split commits you to having a real object ready before the page is written and it shortens the headline budget.",
+  "failure_mode": "The split turns into decoration: a wide illustration that says nothing, a headline that keeps growing until it wraps to three lines, and the object demoted to a tinted panel with no readable content.",
+  "prevents_tells": [
+    "hero-discipline",
+    "low-layout-diversity",
+    "split-header"
+  ],
+  "example": {
+    "brief": "Invoicing tool for small agencies, landing page, goal is a demo booking.",
+    "ruling": "Hero family split-asymmetric: headline and one action left, the reconciliation view rendered as the primary object right, no support paragraph. Section two continues with the setup steps, so the hero is not repeated as a second header."
+  }
+}

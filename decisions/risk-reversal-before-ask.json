@@ -1,0 +1,34 @@
+{
+  "id": "risk-reversal-before-ask",
+  "title": "Answer the objection before the ask",
+  "mode": [
+    "persuade"
+  ],
+  "intent": "Remove the last reason to hesitate at the moment the reader decides, not three sections later.",
+  "when_to_use": [
+    "price, contract, data access, or a required account stands between the reader and the action",
+    "the audience buys for a team or through a regulated process"
+  ],
+  "when_not_to_use": [
+    "the action is free, reversible, and carries no data, such as a newsletter or a read only guide",
+    "the objection is already answered inside the action itself, such as a card free trial that says so on the button"
+  ],
+  "rules": [
+    "the reversal statement sits in the same viewport as the primary action or in the section immediately preceding it",
+    "the statement names a specific term in one sentence: the cancellation path, the data export, the refund window, or the information required",
+    "the statement carries no support paragraph over 25 words and no repeated adjectives",
+    "each objection is answered once on the page, and a repeated objection block is removed",
+    "trust marks are real logo marks with permission or they are omitted, never typed company names presented as logos"
+  ],
+  "trade_off": "Putting the terms next to the action shortens the emotional high of the pitch and publishes constraints the sales conversation used to handle.",
+  "failure_mode": "The reversal becomes a reassurance band: a row of badges and a sentence about being trusted, with no term named, so the reader learns nothing and the block buys no confidence.",
+  "prevents_tells": [
+    "subtext-length",
+    "filler-verbs",
+    "text-logo-wall"
+  ],
+  "example": {
+    "brief": "Team plan page where a card is required before the trial.",
+    "ruling": "Directly under the primary action: one line naming the trial length, the fact that no card is required, and how data is exported on cancel. The badge row is deleted because no real logo marks were available."
+  }
+}

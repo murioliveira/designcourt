@@ -1,0 +1,32 @@
+{
+  "id": "margin-annotation-rail",
+  "title": "Annotate in a narrow margin rail",
+  "mode": [
+    "read"
+  ],
+  "intent": "Give definitions, sources, and asides a home without breaking the reading line.",
+  "when_to_use": [
+    "the text needs repeated small annotations: figures, sources, definitions, alternative phrasings",
+    "the reader benefits from a reference layer at the same position on every screen"
+  ],
+  "when_not_to_use": [
+    "the annotations are load bearing and must be read in sequence, where they belong in the body",
+    "the annotation count per screen is below two, where inline parentheses are cheaper"
+  ],
+  "rules": [
+    "the rail holds at most three entries per screen, each under 20 words",
+    "each entry aligns to the line it annotates, or to the top of its paragraph when the line is unknown",
+    "the rail is a labelled repeated structure with a visible column heading, never a loose paragraph set beside a headline",
+    "below the layout switch the rail collapses into inline notes and the note text does not change"
+  ],
+  "trade_off": "The rail costs a third of the width on a desktop and forces annotations to be short, which pushes long explanations into the body and makes the document longer.",
+  "failure_mode": "The rail becomes a second article, and the reader alternates between two columns of equal weight with no signal about which one continues the argument.",
+  "prevents_tells": [
+    "split-header",
+    "low-layout-diversity"
+  ],
+  "example": {
+    "brief": "Technical explainer where each figure needs a source and a caveat.",
+    "ruling": "Family side-annotation-margin: 68 character body column, one narrow right rail headed Notes, at most three notes per screen, each tied to a paragraph and collapsed inline on narrow viewports."
+  }
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aura: liquidity infrastructure for modular chains</title>
+<style>
+:root {
+  --ink: #f8fafc;
+  --muted: #94a3b8;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: #0a0a14; color: var(--ink); font-family: system-ui, sans-serif; }
+.wrap { max-width: 1120px; margin-inline: auto; padding: 64px 24px; }
+.hero { text-align: center; margin-bottom: 64px; }
+.hero h1 { font-size: 3rem; margin: 0 0 16px; }
+.hero p { color: var(--muted); max-width: 54ch; margin-inline: auto; }
+.bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.bento__cell { border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 32px; background: #131326; }
+.bento__cell--wide { grid-column: span 2; }
+.bento__cell--brand { background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: #fff; }
+.bento__cell--empty { background: transparent; border: 1px dashed rgba(255,255,255,0.12); }
+.pill--teal { background: #14b8a6; color: #042f2e; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: 0.8rem; display: inline-block; margin-bottom: 12px; }
+.card { border-radius: 32px; padding: 24px; background: rgba(255,255,255,0.04); margin-top: 48px; border: 1px solid rgba(255,255,255,0.08); }
+.stats { list-style: none; padding: 0; display: flex; gap: 32px; }
+.credit { font-size: 0.75rem; color: var(--muted); margin-top: 32px; text-align: center; }
+</style>
+</head>
+<body style="background: #0f0f23;">
+<div class="wrap">
+<header class="hero family-center-hero">
+<h1>Programmable liquidity for every rollup</h1>
+<p>Deploy cross-chain pools with single-block finality and automated yield routing.</p>
+</header>
+<main class="bento family-bento">
+<div class="bento__cell bento__cell--wide bento__cell--brand">
+<h2>Atomic Settlement Engine</h2>
+<p>Batched rollups clear directly against underlying collateral without bridging latency.</p>
+</div>
+<div class="bento__cell">
+<span class="pill--teal">Active</span>
+<h3>Yield Director</h3>
+<p>Dynamic rebalancing across approved lending markets.</p>
+</div>
+<div class="bento__cell bento__cell--empty"></div>
+<div class="bento__cell bento__cell--wide">
+<h3>Native Oracle Feeds</h3>
+<p>Sub-second price aggregation from thirty distinct venues.</p>
+</div>
+</main>
+<section class="card family-band">
+<h2>Network Highlights</h2>
+<ul class="stats">
+<li>$480M total value routed</li>
+<li>99.99% uptime since launch</li>
+<li>14 rollup integrations</li>
+</ul>
+</section>
+<p class="credit">Photograph: Ansel Adams, 1941.</p>
+</div>
+</body>
+</html>

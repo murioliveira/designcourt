@@ -1,0 +1,32 @@
+{
+  "id": "viewport-and-contrast-floor",
+  "title": "Set the viewport unit and the contrast floor first",
+  "mode": [
+    "experience"
+  ],
+  "intent": "Fix the two measurable properties that decide whether the page is usable before any layout work starts.",
+  "when_to_use": [
+    "any page with a full height section",
+    "any page with text or controls over imagery, tinted panels, or brand colour"
+  ],
+  "when_not_to_use": [
+    "the artifact never uses a full height section and every surface is a pair of known neutral tokens, where the floor is already satisfied and needs no per section pass",
+    "the artifact renders inside a fixed height frame the host controls, so the viewport unit is not the artifact's choice"
+  ],
+  "rules": [
+    "full height sections use 100dvh, never 100vh, and a literal 100vh in the stylesheet is a defect",
+    "body text reaches at least 4.5 to 1 against its background and large text at least 3 to 1, measured on rendered values",
+    "text over imagery sits on a real scrim and the ratio is checked against the lightest region the text covers",
+    "a colour that cannot be resolved from the token set is reported as unknown, never assumed to pass"
+  ],
+  "trade_off": "A hard contrast floor rules out subtle grey on grey styling and forces scrims that dull the imagery, which is the price of the text being readable.",
+  "failure_mode": "The ratio is checked on token values while the page renders a lighter overlay, so the audit passes on paper and fails on screen.",
+  "prevents_tells": [
+    "h-screen",
+    "contrast-aa"
+  ],
+  "example": {
+    "brief": "Agency portfolio with a full height hero photograph and a caption over it.",
+    "ruling": "Hero height is 100dvh on a solid scrim token, the caption measures 4.6 to 1 against the lightest column it covers, and the image treatment is chosen to meet the floor rather than the floor being waived."
+  }
+}

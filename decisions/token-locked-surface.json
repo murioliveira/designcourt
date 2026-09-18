@@ -1,0 +1,35 @@
+{
+  "id": "token-locked-surface",
+  "title": "Lock every surface value to a token",
+  "mode": [
+    "experience"
+  ],
+  "intent": "Make the palette and geometry an enumerable set so an undeclared value is detectable rather than debatable.",
+  "when_to_use": [
+    "any page whose colours, radii, and sizes must stay reproducible across builds",
+    "the artifact will be audited against its own contract"
+  ],
+  "when_not_to_use": [
+    "a one off prototype whose value is the answer to an idea question, where tokens cost more than the answer",
+    "an artifact that must stay a single file with no build step, where the declaration block costs more than it protects"
+  ],
+  "rules": [
+    "no hex, rgb, or hsl literal appears outside the token declaration block",
+    "every colour and every size used in the artifact exists in the contract token plan",
+    "one border radius scale is used page wide; an element either uses it or has no radius",
+    "spacing values come from one scale and no off scale value is written inline",
+    "neutrals come from one ramp and one accent hue from one family; trend palettes such as beige with brass and oxblood are rejected"
+  ],
+  "trade_off": "Token discipline slows the first build and turns small visual impulses into a two step change, and a wrong token set is wrong everywhere at once.",
+  "failure_mode": "Tokens are declared and then bypassed in one hot spot, typically a hero or a modal, so the real palette silently diverges from the audited one.",
+  "prevents_tells": [
+    "hardcoded-hex",
+    "undeclared-token",
+    "mixed-radii",
+    "premium-consumer-palette"
+  ],
+  "example": {
+    "brief": "Marketing page that will be audited against its contract in CI.",
+    "ruling": "All colour, radius, and spacing values live in one declaration block, the hero references the same accent token as the rest of the page, and the contract token plan lists every value the artifact uses."
+  }
+}

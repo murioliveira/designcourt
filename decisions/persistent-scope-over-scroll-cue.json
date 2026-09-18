@@ -1,0 +1,32 @@
+{
+  "id": "persistent-scope-over-scroll-cue",
+  "title": "Show scope, never ask for scrolling",
+  "mode": [
+    "operate"
+  ],
+  "intent": "Tell the user where they are and how far the surface goes, instead of instructing them to move.",
+  "when_to_use": [
+    "a surface is longer than one viewport and the user needs to know its extent",
+    "several regions compete for the same screen"
+  ],
+  "when_not_to_use": [
+    "the page is a single message that fits one viewport, where any scope indicator is chrome",
+    "the surface is a document read linearly, where the browser already reports position"
+  ],
+  "rules": [
+    "the page contains no instruction to move down, no down arrow, and no animated cue pointing past the fold",
+    "the current region is named in a persistent element that states the total when the content is finite",
+    "below fold content is announced by its own title, never by a teaser line or a partially cut card",
+    "any position indicator is text or a measured value, never a decorative dot"
+  ],
+  "trade_off": "You lose the cheap drama of a cut off element implying more, and a page whose second section is weak has nothing to hide behind.",
+  "failure_mode": "Scope turns into ornament: a dot rail with no labels, a sticky bar repeating the page title, and a progress bar on a page that has no steps.",
+  "prevents_tells": [
+    "scroll-cues",
+    "decorative-chrome"
+  ],
+  "example": {
+    "brief": "Long settings surface with eight grouped sections.",
+    "ruling": "A persistent group list states the eight groups and marks the current one, the last group is preceded by a count of remaining items, and the down arrow in the hero is deleted."
+  }
+}

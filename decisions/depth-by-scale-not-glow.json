@@ -1,0 +1,32 @@
+{
+  "id": "depth-by-scale-not-glow",
+  "title": "Build depth with scale and spacing, not glow",
+  "mode": [
+    "experience"
+  ],
+  "intent": "Get separation from size, weight, and space so the page holds up on any background and in both colour modes.",
+  "when_to_use": [
+    "an expressive page needs layers or focus without a saturated halo",
+    "the page must survive a light mode and a dark mode"
+  ],
+  "when_not_to_use": [
+    "the design has a real light source model, as in a rendered scene or a photographed object, where a directed highlight belongs to the subject",
+    "the surface is a dense tool where elevation signals interaction and a flat treatment would hide the affordance"
+  ],
+  "rules": [
+    "no box shadow or filter blur uses a saturated colour; shadows stay neutral and low alpha",
+    "no gradient between two hues exists anywhere in the artifact",
+    "a gradient, if used at all, runs between two steps of one neutral ramp and covers at most one full bleed band, never a button or a card",
+    "separation is carried by at least one of: a size step, a weight step, a spacing step, or a single neutral border"
+  ],
+  "trade_off": "Flat neutral depth is quiet: the page loses the instant richness a glow gives on a dark hero, and every layer must be earned by composition.",
+  "failure_mode": "Neutral shadows are applied everywhere at the same alpha, so the whole page floats and no element reads as nearer than any other.",
+  "prevents_tells": [
+    "neon-glow",
+    "purple-gradient"
+  ],
+  "example": {
+    "brief": "Dark product page that needs cards to read as layers.",
+    "ruling": "Cards separate by a one step lighter neutral surface, a wider spacing step, and a 1px neutral border. No coloured blur, no two hue gradient, and both colour modes resolve from the same token set."
+  }
+}
